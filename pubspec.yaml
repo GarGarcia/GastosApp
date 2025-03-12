@@ -1,0 +1,33 @@
+name: flutte_scanner_empty
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  english_words: ^4.0.0
+  provider: ^6.1.2
+#  material_color_utilities: ^0.12.0 --- Incompatible actualmente
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.3
+#  async: ^2.13.0 --- Incompatible actualmente
+#  fake_async: ^1.3.3 --- Incompatible actualmente
+#  leak_tracker: ^10.0.9 --- Incompatible actualmente
+#  vm_service: ^15.0.0 --- Incompatible actualmente
+
+flutter:
+  uses-material-design: true
+
+flutter_launcher_icons:
+    android: true
+    ios: true
+    image_path: "assets/icon/icon.png" 
