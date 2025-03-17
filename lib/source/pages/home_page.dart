@@ -19,14 +19,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     getOnePreference(Preference.onboarding).then((dynamic result) {
-      log("===> result: $result");
+      log("==> result: $result");
       mOnBoarding = result;
 
       setState(() {});
 
       if (result == "") {
         setOnePreference(Preference.onboarding, "true");
-        log("===> mOnBoarding: $mOnBoarding");
+        log("==> mOnBoarding: $mOnBoarding");
       }
     });
   }
@@ -43,11 +43,19 @@ class _HomePageState extends State<HomePage> {
           children: [
             const SizedBox(height: 100),
             Text(
+              mOnBoarding,
+              style: TextStyle(
+                fontSize: 50,
+                fontWeight: FontWeight.w800,
+                color: Colors.red,
+              ),
+            ),
+            Text(
               Configurations.mVersion,
               style: TextStyle(
                 fontSize: 50,
                 fontWeight: FontWeight.w800,
-                color: Colors.white,
+                color: Constants.colourTextDefault,
               ),
             ),
           ],

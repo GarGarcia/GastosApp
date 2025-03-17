@@ -85,7 +85,7 @@ extension HexColor on Color {
 
 setOnePreference(Preference mAuxKey, String value) async {
   String mkey = '';
-  switch(mAuxKey){
+  switch (mAuxKey) {
     case Preference.onboarding:
       mkey = 'onboarding';
       break;
@@ -97,17 +97,18 @@ setOnePreference(Preference mAuxKey, String value) async {
 
 getOnePreference(Preference mAuxKey) async {
   String mkey = '';
-  switch(mAuxKey){
+  switch (mAuxKey) {
     case Preference.onboarding:
       mkey = 'onboarding';
       break;
   }
 
-  // ignore: unused_local_variable
   String result = "";
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool checkValue = prefs.containsKey(mkey);
-  if(checkValue){
+  if (checkValue) {
     result = prefs.getString(mkey) ?? '';
   }
+
+  return result;
 }
