@@ -1,5 +1,8 @@
-import 'package:flutte_scanner_empty/source/custom/configuration.dart';
+import 'dart:developer';
+
+import 'package:flutte_scanner_empty/source/custom/configurations.dart';
 import 'package:flutte_scanner_empty/source/custom/constants.dart';
+import 'package:flutte_scanner_empty/source/custom/library.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -7,9 +10,27 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
- }
+}
 
 class _HomePageState extends State<HomePage> {
+  String mOnBoarding = '';
+  @override
+  void initState() {
+    super.initState();
+
+    getOnePreference(Preference.onboarding).then((dynamic result) {
+      log("===> result: $result");
+      mOnBoarding = result;
+
+      setState(() {});
+
+      if (result == "") {
+        setOnePreference(Preference.onboarding, "true");
+        log("===> mOnBoarding: $mOnBoarding");
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,12 +39,18 @@ class _HomePageState extends State<HomePage> {
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
-        child: Text(
-          Configuration.mVersion, 
-          style: TextStyle(
-            fontSize: 50,
-            fontWeight: FontWeight.w800
-          ),
+        child: Column(
+          children: [
+            const SizedBox(height: 100),
+            Text(
+              Configurations.mVersion,
+              style: TextStyle(
+                fontSize: 50,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -112,5 +112,4 @@ class Constants {
   static Color colourTextColor = HexColor.fromHex("#39a0bf");
   static Color colourTextOncolor = HexColor.fromHex("#ffffff");
   static Color colourTextDisable = HexColor.fromHex("#aaaeb9");
-
 }

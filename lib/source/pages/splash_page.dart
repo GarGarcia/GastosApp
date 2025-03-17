@@ -9,15 +9,13 @@ class SplashPage extends StatefulWidget {
 
   @override
   State<SplashPage> createState() => _SplashPageState();
- }
+}
 
 class _SplashPageState extends State<SplashPage> {
-
-  startTime(CustomPage mPage) async{
+  startTime(CustomPage mPage) async {
     Timer(const Duration(seconds: 3), () {
-        navigate(context, CustomPage.home);
-      }
-    );
+      navigate(context, CustomPage.home);
+    });
   }
 
   @override
@@ -29,21 +27,17 @@ class _SplashPageState extends State<SplashPage> {
     startTime(CustomPage.home);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Constants.colourBackgroundOncolor, 
+        color: Constants.colourBackgroundOncolor,
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
         child: const Text(
           'GastosApp',
-          style: TextStyle(
-            fontSize: 50,
-            fontWeight: FontWeight.w800,
-          ),
+          style: TextStyle(fontSize: 50, fontWeight: FontWeight.w800),
         ),
       ),
     );
