@@ -1,9 +1,10 @@
+import 'package:flutte_scanner_empty/source/pages/details_page.dart';
 import 'package:flutte_scanner_empty/source/pages/home_page.dart';
 import 'package:flutte_scanner_empty/source/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum CustomPage { splash, home }
+enum CustomPage { splash, home, details }
 
 enum TypeAnimation { transition }
 
@@ -33,6 +34,12 @@ navigate(
         globalContext!,
         _goPage(const HomePage(), TypeAnimation.transition, 500),
         (Route<dynamic> route) => false,
+      );
+      break;
+    case CustomPage.details:
+      Navigator.push(
+        globalContext!,
+        _goPage(const DetailsPage(), TypeAnimation.transition, 500),
       );
       break;
   }

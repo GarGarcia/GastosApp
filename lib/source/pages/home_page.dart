@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:flutte_scanner_empty/source/custom/configurations.dart';
 import 'package:flutte_scanner_empty/source/custom/constants.dart';
 import 'package:flutte_scanner_empty/source/custom/library.dart';
+import 'package:flutte_scanner_empty/source/providers/global_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -57,6 +59,31 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.w800,
                 color: Constants.colourTextDefault,
               ),
+            ),
+            Text(
+              Provider.of<GlobalProvider>(context, listen: false).mToken,
+              style: TextStyle(
+                fontSize: 50,
+                fontWeight: FontWeight.w800,
+                color: Colors.green,
+              ),
+            ),
+            MaterialButton(
+              onPressed: () {
+                Provider.of<GlobalProvider>(context, listen: false).mToken =
+                    "Ouch!!";
+                setState(() {});
+              },
+              color: Constants.colourActionPrimary,
+              child: const Text('¡Click me!'),
+            ),
+            MaterialButton(
+              onPressed: () {
+                globalContext = context;
+                navigate(globalContext!, CustomPage.details);
+              },
+              color: Constants.colourActionStatusPressedPrimary,
+              child: const Text('¡Go details!'),
             ),
           ],
         ),
