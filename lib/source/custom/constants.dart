@@ -1,5 +1,6 @@
 import 'package:flutte_scanner_empty/source/custom/library.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Constants {
   //Action Colors
@@ -112,4 +113,201 @@ class Constants {
   static Color colourTextColor = HexColor.fromHex("#39a0bf");
   static Color colourTextOncolor = HexColor.fromHex("#ffffff");
   static Color colourTextDisable = HexColor.fromHex("#aaaeb9");
+
+  //Icon Size
+  static double globalIconSizeL = 32;
+  static double globalIconSizeM = 24;
+  static double globalIconSizeS = 16;
+
+  //Radius
+  static double globalRadiusSizeFull = 120;
+  static double globalRadiusSizeM = 16;
+  static double globalRadiusSizeS = 8;
+  static double globalRadiusSizeXS = 4;
+
+  //Spacing
+  static double globalSpacingSize30 = 120;
+  static double globalSpacingSize20 = 80;
+  static double globalSpacingSize18 = 72;
+  static double globalSpacingSize16 = 64;
+  static double globalSpacingSize14 = 56;
+  static double globalSpacingSize12 = 48;
+  static double globalSpacingSize10 = 40;
+  static double globalSpacingSize9 = 36;
+  static double globalSpacingSize8 = 32;
+  static double globalSpacingSize7 = 28;
+  static double globalSpacingSize6 = 24;
+  static double globalSpacingSize5 = 20;
+  static double globalSpacingSize4 = 16;
+  static double globalSpacingSize3 = 12;
+  static double globalSpacingSize2 = 8;
+  static double globalSpacingSize1 = 4;
+  static double globalSpacingSize0 = 0;
+
+  //Spacing Medidas Absolutas
+  static double globalSpacingSizeXXL = 48;
+  static double globalSpacingSizeXL = 32;
+  static double globalSpacingSizeL = 24;
+  static double globalSpacingSizeM = 16;
+  static double globalSpacingSizeS = 12;
+  static double globalSpacingSizeXS = 8;
+  static double globalSpacingSizeXXS = 4;
+
+  //Font Size
+  static double globalTypographyFontSize700 = 64;
+  static double globalTypographyFontSize600 = 44;
+  static double globalTypographyFontSize500 = 36;
+  static double globalTypographyFontSize400 = 32;
+  static double globalTypographyFontSize300 = 24;
+  static double globalTypographyFontSize200 = 20;
+  static double globalTypographyFontSize150 = 18;
+  static double globalTypographyFontSize100 = 16;
+  static double globalTypographyFontSize75 = 14;
+  static double globalTypographyFontSize50 = 12;
+  static double globalTypographyFontSize25 = 10;
+
+  //Font Weight
+  static FontWeight globalTypographyFontWeight700 = FontWeight.w700;
+  static FontWeight globalTypographyFontWeight600 = FontWeight.w600;
+  static FontWeight globalTypographyFontWeight500 = FontWeight.w500;
+  static FontWeight globalTypographyFontWeight400 = FontWeight.w400;
+  static FontWeight globalTypographyFontWeight300 = FontWeight.w300;
+
+  //Font Style
+  static FontStyle globalTypographyFontStyleStandard = FontStyle.normal;
+  static TextDecoration globalTypographyFontStyleUnderline = TextDecoration.underline;
+
+  //Letter Spacing
+  static double globalTypographyFontSpacingS = 0;
+
+  //Line Height
+  static double globalTypographyLineHeight700 = 64;
+  static double globalTypographyLineHeight600 = 44;
+  static double globalTypographyLineHeight500 = 36;
+  static double globalTypographyLineHeight400 = 32;
+  static double globalTypographyLineHeight300 = 24;
+  static double globalTypographyLineHeight200 = 20;
+  static double globalTypographyLineHeight100 = 16;
+
+  //Bold Style
+  static TextStyle typographyBoldL = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize100,
+    //height: globalTypographyLineHeight300,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyBoldM = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize75,
+    //height: globalTypographyLineHeight200,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyBoldS = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize50,
+    //height: globalTypographyLineHeight100,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  //Body Style
+  static TextStyle typographyBodyL = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize100,
+    //height: globalTypographyLineHeight300,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyBodyM = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize75,
+    //height: globalTypographyLineHeight200,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyBodyS = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize50,
+    //height: globalTypographyLineHeight100,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  //Link Style
+  static TextStyle typographyLinkL = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize100,
+    //height: globalTypographyLineHeight300,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    decoration: globalTypographyFontStyleUnderline,
+  );
+
+  static TextStyle typographyLinkM = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize75,
+    //height: globalTypographyLineHeight200,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    decoration: globalTypographyFontStyleUnderline,
+  );
+
+  static TextStyle typographyLinkS = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize50,
+    //height: globalTypographyLineHeight100,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    decoration: globalTypographyFontStyleUnderline,
+  );
+
+  //Button Style
+  static TextStyle typographyButtonM = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize100,
+    //height: globalTypographyLineHeight300,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight500,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  //Heading Style
+  static TextStyle typographyHeadingL = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize400,
+    //height: globalTypographyLineHeight600,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyHeadingM = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize300,
+    //height: globalTypographyLineHeight400,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyHeadingS = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize150,
+    //height: globalTypographyLineHeight300,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight500,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
 }

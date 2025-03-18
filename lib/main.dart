@@ -4,6 +4,7 @@ import 'package:flutte_scanner_empty/source/providers/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/services.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 // Le indica a Flutter que ejecute la app definida en MyApp.
@@ -12,6 +13,8 @@ Future<void> main() async {
     url: Configurations.mSupabaseUrl,
     anonKey: Configurations.mSupabaseKey,
   );
+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
   runApp(
     MultiProvider(

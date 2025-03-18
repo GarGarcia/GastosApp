@@ -12,7 +12,8 @@ dependencies:
   shared_preferences: ^2.5.2
   provider: ^6.1.2
   supabase_flutter: ^2.8.4
-  # google_fonts: ^6.2.1
+  google_fonts: ^6.2.1
+  flutter_tabler_icons: ^1.43.0
   # material_color_utilities: ^0.12.0 --- Incompatible actualmente
 
 dev_dependencies:
