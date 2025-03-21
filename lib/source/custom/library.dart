@@ -1,8 +1,10 @@
+import 'package:flutte_scanner_empty/source/custom/constants.dart';
 import 'package:flutte_scanner_empty/source/pages/details_page.dart';
 import 'package:flutte_scanner_empty/source/pages/home_page.dart';
 import 'package:flutte_scanner_empty/source/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 enum CustomPage { splash, home, details }
 
@@ -118,4 +120,19 @@ getOnePreference(Preference mAuxKey) async {
   }
 
   return result;
+}
+
+customShowToast(BuildContext context, String message){
+  int mTime = (message.length / 3).round();
+  mTime = mTime < 0 ? 1 : mTime;
+
+  Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.TOP,
+    timeInSecForIosWeb: mTime,
+    backgroundColor: Constants.colourBackgroundColor,
+    textColor: Constants.colourTextColor,
+    fontSize: Constants.globalTypographyFontSize75,
+  );
 }

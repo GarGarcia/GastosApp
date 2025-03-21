@@ -3,8 +3,12 @@ import 'dart:developer';
 import 'package:flutte_scanner_empty/source/custom/constants.dart';
 import 'package:flutte_scanner_empty/source/custom/library.dart';
 import 'package:flutte_scanner_empty/source/models/country_model.dart';
+import 'package:flutte_scanner_empty/source/providers/global_provider.dart';
+// import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
+import 'package:flutte_scanner_empty/source/widgets/navbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,9 +46,7 @@ class _HomePageState extends State<HomePage> {
   getCountries() async {
     // Get a reference your Supabase client
     final mSupabase = Supabase.instance.client;
-
     final mResult = await mSupabase.from('countries').select();
-
     log("==> mResult: $mResult");
 
     mCountries = Countries.fromJsonList(mResult);
@@ -55,6 +57,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: NavbarBack(
+        backgroundColor: Constants.colourBackgroundColor,
+        backgroundButtonColor: Constants.colourActionPrimary,
+        tinte: Tinte.light,
+        title: "Países",
+        showBack: false,
+        showMenu: true,
+        mListActions: [],
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: RefreshIndicator(
@@ -76,8 +87,6 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     const SizedBox(width: 20, height: 20),
-                    Text("Paises", style: Constants.typographyHeadingL),
-                    const SizedBox(width: 20, height: 20),
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -96,7 +105,11 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.white,
                           surfaceTintColor: Colors.white,
                           child: InkWell(
-                            onTap: () => {},
+                            onTap: () {
+                              globalContext = context;
+                              Provider.of<GlobalProvider>(context, listen: false).mCountry = mCountries.items[index];
+                              navigate(globalContext!, CustomPage.details);
+                            },
                             borderRadius: BorderRadius.circular(15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +173,18 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                    ),                
+                    ),
+                    // Container(
+                    //   margin: EdgeInsets.only(left: 10, right: 10),
+                    //   child: CustomButton(
+                    //     color: Constants.colourActionPrimary,
+                    //     callback: () {},
+                    //     child: Text(
+                    //       'Click',
+                    //       style: Constants.typographyButtonM,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -168,58 +192,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      // body: Container(
-      //   color: Constants.colourBackgroundColor,
-      //   width: double.infinity,
-      //   height: double.infinity,
-      //   alignment: Alignment.center,
-      //   child: Column(
-      //     children: [
-      //       const SizedBox(height: 100),
-      //       Text(
-      //         mOnBoarding,
-      //         style: TextStyle(
-      //           fontSize: 50,
-      //           fontWeight: FontWeight.w800,
-      //           color: Colors.red,
-      //         ),
-      //       ),
-      //       Text(
-      //         Configurations.mVersion,
-      //         style: TextStyle(
-      //           fontSize: 50,
-      //           fontWeight: FontWeight.w800,
-      //           color: Constants.colourTextDefault,
-      //         ),
-      //       ),
-      //       Text(
-      //         Provider.of<GlobalProvider>(context, listen: false).mToken,
-      //         style: TextStyle(
-      //           fontSize: 50,
-      //           fontWeight: FontWeight.w800,
-      //           color: Colors.green,
-      //         ),
-      //       ),
-      //       MaterialButton(
-      //         onPressed: () {
-      //           Provider.of<GlobalProvider>(context, listen: false).mToken =
-      //               "Ouch!!";
-      //           setState(() {});
-      //         },
-      //         color: Constants.colourActionPrimary,
-      //         child: const Text('¡Click me!'),
-      //       ),
-      //       MaterialButton(
-      //         onPressed: () {
-      //           globalContext = context;
-      //           navigate(globalContext!, CustomPage.details);
-      //         },
-      //         color: Constants.colourActionStatusPressedPrimary,
-      //         child: const Text('¡Go details!'),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Constants {
+  static double radius = 50;
+
   //Action Colors
   static Color colourActionPrimary = HexColor.fromHex("#39a0bf");
   static Color colourActionSecondary = HexColor.fromHex("#262e41");
@@ -175,7 +177,8 @@ class Constants {
 
   //Font Style
   static FontStyle globalTypographyFontStyleStandard = FontStyle.normal;
-  static TextDecoration globalTypographyFontStyleUnderline = TextDecoration.underline;
+  static TextDecoration globalTypographyFontStyleUnderline =
+      TextDecoration.underline;
 
   //Letter Spacing
   static double globalTypographyFontSpacingS = 0;
@@ -193,7 +196,6 @@ class Constants {
   static TextStyle typographyBoldL = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize100,
-    //height: globalTypographyLineHeight300,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
@@ -202,7 +204,6 @@ class Constants {
   static TextStyle typographyBoldM = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize75,
-    //height: globalTypographyLineHeight200,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
@@ -211,7 +212,6 @@ class Constants {
   static TextStyle typographyBoldS = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize50,
-    //height: globalTypographyLineHeight100,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
@@ -221,7 +221,6 @@ class Constants {
   static TextStyle typographyBodyL = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize100,
-    //height: globalTypographyLineHeight300,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
@@ -230,7 +229,6 @@ class Constants {
   static TextStyle typographyBodyM = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize75,
-    //height: globalTypographyLineHeight200,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
@@ -239,7 +237,6 @@ class Constants {
   static TextStyle typographyBodyS = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize50,
-    //height: globalTypographyLineHeight100,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
@@ -249,7 +246,6 @@ class Constants {
   static TextStyle typographyLinkL = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize100,
-    //height: globalTypographyLineHeight300,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
@@ -258,7 +254,6 @@ class Constants {
   static TextStyle typographyLinkM = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize75,
-    //height: globalTypographyLineHeight200,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
@@ -267,7 +262,6 @@ class Constants {
   static TextStyle typographyLinkS = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize50,
-    //height: globalTypographyLineHeight100,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
@@ -275,9 +269,8 @@ class Constants {
 
   //Button Style
   static TextStyle typographyButtonM = GoogleFonts.inter(
-    color: colourTextColor,
+    color: colourTextDefault,
     fontSize: globalTypographyFontSize100,
-    //height: globalTypographyLineHeight300,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight500,
     fontStyle: globalTypographyFontStyleStandard,
@@ -287,7 +280,6 @@ class Constants {
   static TextStyle typographyHeadingL = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize400,
-    //height: globalTypographyLineHeight600,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
@@ -296,7 +288,6 @@ class Constants {
   static TextStyle typographyHeadingM = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize300,
-    //height: globalTypographyLineHeight400,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
@@ -305,9 +296,25 @@ class Constants {
   static TextStyle typographyHeadingS = GoogleFonts.inter(
     color: colourTextColor,
     fontSize: globalTypographyFontSize150,
-    //height: globalTypographyLineHeight300,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight500,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  //Label Style
+  static TextStyle labelDefaultState = GoogleFonts.inter(
+    color: globalColorNeutral70,
+    fontSize: globalTypographyFontSize100,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle labelErrorState = GoogleFonts.inter(
+    color: colourSemanticDanger1,
+    fontSize: globalTypographyFontSize50,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
 }
