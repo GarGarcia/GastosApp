@@ -1,4 +1,5 @@
 import 'package:flutte_scanner_empty/source/custom/configurations.dart';
+import 'package:flutte_scanner_empty/source/custom/library.dart';
 import 'package:flutte_scanner_empty/source/pages/splash_page.dart';
 import 'package:flutte_scanner_empty/source/providers/global_provider.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,7 @@ Future<void> main() async {
 
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => GlobalProvider())
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => GlobalProvider())],
       child: const MyApp(),
     ),
   );
@@ -39,6 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MAC Invoice Scanner',
+      navigatorObservers: [mRouteObserver],
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),

@@ -1,18 +1,24 @@
 import 'package:flutte_scanner_empty/source/custom/constants.dart';
-import 'package:flutte_scanner_empty/source/pages/details_page.dart';
+import 'package:flutte_scanner_empty/source/pages/form_country_page.dart';
 import 'package:flutte_scanner_empty/source/pages/home_page.dart';
 import 'package:flutte_scanner_empty/source/pages/splash_page.dart';
+import 'package:flutte_scanner_empty/source/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'package:overlay_loading_progress/overlay_loading_progress.dart';
 
-enum CustomPage { splash, home, details }
+enum CustomPage { splash, home, formCountry }
 
 enum TypeAnimation { transition }
 
 enum Preference { onboarding }
 
 BuildContext? globalContext;
+
+final RouteObserver<ModalRoute<void>> mRouteObserver =
+    RouteObserver<ModalRoute<void>>();
 
 navigate(
   BuildContext mContext,
@@ -38,10 +44,10 @@ navigate(
         (Route<dynamic> route) => false,
       );
       break;
-    case CustomPage.details:
+    case CustomPage.formCountry:
       Navigator.push(
         globalContext!,
-        _goPage(const DetailsPage(), TypeAnimation.transition, 500),
+        _goPage(const FormCountryPage(), TypeAnimation.transition, 500),
       );
       break;
   }
@@ -122,7 +128,7 @@ getOnePreference(Preference mAuxKey) async {
   return result;
 }
 
-customShowToast(BuildContext context, String message){
+customShowToast(BuildContext context, String message) {
   int mTime = (message.length / 3).round();
   mTime = mTime < 0 ? 1 : mTime;
 
@@ -135,4 +141,52 @@ customShowToast(BuildContext context, String message){
     textColor: Constants.colourTextColor,
     fontSize: Constants.globalTypographyFontSize75,
   );
+}
+
+progressDialogShow(BuildContext context) {
+  FocusScope.of(context).requestFocus(FocusNode());
+  OverlayLoadingProgress.start(
+    context,
+    barrierDismissible: false,
+    widget: Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(left: 20, right: 20),
+      child: Container(
+        padding: const EdgeInsets.only(top: 30),
+        margin: const EdgeInsets.only(top: 15),
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              offset: Offset(0, 10),
+              blurRadius: 50,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("Consultando...", style: Constants.typographyBoldL),
+            SizedBox(
+              height: 80,
+              width: double.infinity,
+              child: Loading(
+                mColor: Constants.globalColorNeutral80,
+                mIndicator: Indicator.ballBeat,
+                mSize: 5,
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+dialogDismiss() {
+  OverlayLoadingProgress.stop();
 }

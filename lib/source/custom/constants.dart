@@ -276,6 +276,14 @@ class Constants {
     fontStyle: globalTypographyFontStyleStandard,
   );
 
+  static TextStyle typographyButtonMSecondary = GoogleFonts.inter(
+    color: colourTextColor,
+    fontSize: globalTypographyFontSize100,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight500,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
   //Heading Style
   static TextStyle typographyHeadingL = GoogleFonts.inter(
     color: colourTextColor,

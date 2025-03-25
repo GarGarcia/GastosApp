@@ -15,6 +15,8 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_tabler_icons: ^1.43.0
   fluttertoast: ^8.2.12
+  overlay_loading_progress: ^1.0.2
+  loading_indicator: ^3.1.1
   # material_color_utilities: ^0.12.0 --- Incompatible actualmente
 
 dev_dependencies:
