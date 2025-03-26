@@ -1,8 +1,9 @@
 import 'package:flutte_scanner_empty/source/custom/library.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 class Constants {
+  //Radius
   static double radius = 50;
 
   //Action Colors
@@ -193,7 +194,8 @@ class Constants {
   static double globalTypographyLineHeight100 = 16;
 
   //Bold Style
-  static TextStyle typographyBoldL = GoogleFonts.inter(
+  static TextStyle typographyBoldL = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize100,
     letterSpacing: globalTypographyFontSpacingS,
@@ -201,128 +203,271 @@ class Constants {
     fontStyle: globalTypographyFontStyleStandard,
   );
 
-  static TextStyle typographyBoldM = GoogleFonts.inter(
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize100,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight600,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
+
+  static TextStyle typographyBoldM = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize75,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize75,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight600,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
-  static TextStyle typographyBoldS = GoogleFonts.inter(
+  static TextStyle typographyBoldS = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize50,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize50,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight600,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
   //Body Style
-  static TextStyle typographyBodyL = GoogleFonts.inter(
+  static TextStyle typographyBodyL = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize100,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize100,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight400,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
-  static TextStyle typographyBodyM = GoogleFonts.inter(
+  static TextStyle typographyBodyM = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize75,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize75,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight400,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
-  static TextStyle typographyBodyS = GoogleFonts.inter(
+  static TextStyle typographyBodyS = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize50,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize50,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight400,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
   //Link Style
-  static TextStyle typographyLinkL = GoogleFonts.inter(
+  static TextStyle typographyLinkL = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize100,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize100,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight400,
+  //   decoration: globalTypographyFontStyleUnderline,
+  // );
 
-  static TextStyle typographyLinkM = GoogleFonts.inter(
+  static TextStyle typographyLinkM = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize75,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize75,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight400,
+  //   decoration: globalTypographyFontStyleUnderline,
+  // );
 
-  static TextStyle typographyLinkS = GoogleFonts.inter(
+  static TextStyle typographyLinkS = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize50,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
-  );
+  ); 
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize50,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight400,
+  //   decoration: globalTypographyFontStyleUnderline,
+  // );
 
   //Button Style
-  static TextStyle typographyButtonM = GoogleFonts.inter(
+  static TextStyle typographyButtonM = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextDefault,
     fontSize: globalTypographyFontSize100,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight500,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextDefault,
+  //   fontSize: globalTypographyFontSize100,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight500,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
-  static TextStyle typographyButtonMSecondary = GoogleFonts.inter(
+  static TextStyle typographyButtonMSecondary = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize100,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight500,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize100,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight500,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
   //Heading Style
-  static TextStyle typographyHeadingL = GoogleFonts.inter(
+  static TextStyle typographyHeadingL = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize400,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize400,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight600,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
-  static TextStyle typographyHeadingM = GoogleFonts.inter(
+  static TextStyle typographyHeadingM = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize300,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize300,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight600,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
-  static TextStyle typographyHeadingS = GoogleFonts.inter(
+  static TextStyle typographyHeadingS = TextStyle(
+    fontFamily: 'Inter',
     color: colourTextColor,
     fontSize: globalTypographyFontSize150,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight500,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourTextColor,
+  //   fontSize: globalTypographyFontSize150,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight500,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
   //Label Style
-  static TextStyle labelDefaultState = GoogleFonts.inter(
+  static TextStyle labelDefaultState = TextStyle(
+    fontFamily: 'Inter',
     color: globalColorNeutral70,
     fontSize: globalTypographyFontSize100,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: globalColorNeutral70,
+  //   fontSize: globalTypographyFontSize100,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight400,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 
-  static TextStyle labelErrorState = GoogleFonts.inter(
+  static TextStyle labelErrorState = TextStyle(
+    fontFamily: 'Inter',
     color: colourSemanticDanger1,
     fontSize: globalTypographyFontSize50,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
+  
+  // GoogleFonts.inter(
+  //   color: colourSemanticDanger1,
+  //   fontSize: globalTypographyFontSize50,
+  //   letterSpacing: globalTypographyFontSpacingS,
+  //   fontWeight: globalTypographyFontWeight400,
+  //   fontStyle: globalTypographyFontStyleStandard,
+  // );
 }

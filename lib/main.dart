@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // Le indica a Flutter que ejecute la app definida en MyApp.
 Future<void> main() async {
@@ -42,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        textTheme: GoogleFonts.interTextTheme(),
+        fontFamily: 'Inter',
       ),
       home: const SplashPage(),
     );

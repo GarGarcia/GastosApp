@@ -31,6 +31,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/interItalicVariable.ttf
+        - asset: assets/fonts/interVariableFont.ttf
+
 
 flutter_launcher_icons:
     android: true

@@ -114,7 +114,7 @@ class _CustomInputState extends State<CustomInput> {
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide: BorderSide(
-              color: Constants.colourSemanticDanger2,
+              color: Constants.colourSemanticDanger1,
               width: 1,
             ),
           ),

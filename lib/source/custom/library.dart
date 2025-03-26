@@ -1,6 +1,7 @@
 import 'package:flutte_scanner_empty/source/custom/constants.dart';
 import 'package:flutte_scanner_empty/source/pages/form_country_page.dart';
 import 'package:flutte_scanner_empty/source/pages/home_page.dart';
+import 'package:flutte_scanner_empty/source/pages/login_page.dart';
 import 'package:flutte_scanner_empty/source/pages/splash_page.dart';
 import 'package:flutte_scanner_empty/source/widgets/loading.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:overlay_loading_progress/overlay_loading_progress.dart';
 
-enum CustomPage { splash, home, formCountry }
+enum CustomPage { splash, home, formCountry, loginPage }
 
 enum TypeAnimation { transition }
 
@@ -48,6 +49,12 @@ navigate(
       Navigator.push(
         globalContext!,
         _goPage(const FormCountryPage(), TypeAnimation.transition, 500),
+      );
+      break;
+    case CustomPage.loginPage:
+      Navigator.push(
+        globalContext!,
+        _goPage(const LoginPage(), TypeAnimation.transition, 500),
       );
       break;
   }
@@ -89,13 +96,6 @@ extension HexColor on Color {
     buffer.write(hexString.replaceFirst('#', ''));
     return Color(int.parse(buffer.toString(), radix: 16));
   }
-
-  //String toHex ({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}';
-  // '${alpha.toRadixString(16).padLeft(2, '0')}'
-  // '${red.toRadixString(16).padLeft(2, '0')}'
-  // '${green.toRadixString(16).padLeft(2, '0')}'
-  // '${blue.toRadixString(16).padLeft(2, '0')}'
-  // ;
 }
 
 setOnePreference(Preference mAuxKey, String value) async {
@@ -179,7 +179,6 @@ progressDialogShow(BuildContext context) {
                 mSize: 5,
               ),
             ),
-            const SizedBox(height: 20),
           ],
         ),
       ),
