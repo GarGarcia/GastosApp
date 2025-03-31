@@ -70,9 +70,7 @@ class _FormCountryPageState extends State<FormCountryPage> {
       _clear();
     } else {
       if (mCountryNameController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Por favor, complete todos los campos')),
-        );
+        customShowToast(globalContext!, 'Por favor, complete todos los campos');
         return;
       }
 
@@ -89,9 +87,7 @@ class _FormCountryPageState extends State<FormCountryPage> {
           });
           dialogDismiss();
 
-          ScaffoldMessenger.of(globalContext!).showSnackBar(
-            const SnackBar(content: Text('País creado exitosamente')),
-          );
+          customShowToast(globalContext!, 'País creado exitosamente');
         } else {
           progressDialogShow(globalContext!);
           await supabase
@@ -110,9 +106,7 @@ class _FormCountryPageState extends State<FormCountryPage> {
               );
           dialogDismiss();
 
-          ScaffoldMessenger.of(globalContext!).showSnackBar(
-            const SnackBar(content: Text('País actualizado exitosamente')),
-          );
+          customShowToast(globalContext!, 'País actualizado exitosamente');
         }
 
         Navigator.of(globalContext!).pop();

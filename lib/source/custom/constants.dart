@@ -203,14 +203,6 @@ class Constants {
     fontStyle: globalTypographyFontStyleStandard,
   );
 
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize100,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight600,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
-
   static TextStyle typographyBoldM = TextStyle(
     fontFamily: 'Inter',
     color: colourTextColor,
@@ -219,14 +211,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize75,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight600,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 
   static TextStyle typographyBoldS = TextStyle(
     fontFamily: 'Inter',
@@ -236,14 +220,33 @@ class Constants {
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize50,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight600,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
+
+  static TextStyle typographyBlackBoldL = TextStyle(
+    fontFamily: 'Inter',
+    color: globalColorNeutral100,
+    fontSize: globalTypographyFontSize100,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyBlackBoldM = TextStyle(
+    fontFamily: 'Inter',
+    color: globalColorNeutral100,
+    fontSize: globalTypographyFontSize75,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyBlackBoldS = TextStyle(
+    fontFamily: 'Inter',
+    color: globalColorNeutral100,
+    fontSize: globalTypographyFontSize50,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
 
   //Body Style
   static TextStyle typographyBodyL = TextStyle(
@@ -254,14 +257,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize100,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight400,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 
   static TextStyle typographyBodyM = TextStyle(
     fontFamily: 'Inter',
@@ -271,14 +266,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize75,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight400,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 
   static TextStyle typographyBodyS = TextStyle(
     fontFamily: 'Inter',
@@ -288,14 +275,33 @@ class Constants {
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize50,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight400,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
+
+  static TextStyle typographyBlackBodyL = TextStyle(
+    fontFamily: 'Inter',
+    color: globalColorNeutral100,
+    fontSize: globalTypographyFontSize100,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyBlackBodyM = TextStyle(
+    fontFamily: 'Inter',
+    color: globalColorNeutral100,
+    fontSize: globalTypographyFontSize75,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyBlackBodyS = TextStyle(
+    fontFamily: 'Inter',
+    color: globalColorNeutral100,
+    fontSize: globalTypographyFontSize50,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight400,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
 
   //Link Style
   static TextStyle typographyLinkL = TextStyle(
@@ -307,14 +313,6 @@ class Constants {
     decoration: globalTypographyFontStyleUnderline,
   );
   
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize100,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight400,
-  //   decoration: globalTypographyFontStyleUnderline,
-  // );
-
   static TextStyle typographyLinkM = TextStyle(
     fontFamily: 'Inter',
     color: colourTextColor,
@@ -323,14 +321,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize75,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight400,
-  //   decoration: globalTypographyFontStyleUnderline,
-  // );
 
   static TextStyle typographyLinkS = TextStyle(
     fontFamily: 'Inter',
@@ -340,14 +330,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
   ); 
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize50,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight400,
-  //   decoration: globalTypographyFontStyleUnderline,
-  // );
 
   //Button Style
   static TextStyle typographyButtonM = TextStyle(
@@ -358,14 +340,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight500,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextDefault,
-  //   fontSize: globalTypographyFontSize100,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight500,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 
   static TextStyle typographyButtonMSecondary = TextStyle(
     fontFamily: 'Inter',
@@ -375,14 +349,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight500,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize100,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight500,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 
   //Heading Style
   static TextStyle typographyHeadingL = TextStyle(
@@ -393,14 +359,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize400,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight600,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 
   static TextStyle typographyHeadingM = TextStyle(
     fontFamily: 'Inter',
@@ -410,14 +368,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize300,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight600,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 
   static TextStyle typographyHeadingS = TextStyle(
     fontFamily: 'Inter',
@@ -427,14 +377,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight500,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourTextColor,
-  //   fontSize: globalTypographyFontSize150,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight500,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 
   //Label Style
   static TextStyle labelDefaultState = TextStyle(
@@ -445,14 +387,6 @@ class Constants {
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: globalColorNeutral70,
-  //   fontSize: globalTypographyFontSize100,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight400,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 
   static TextStyle labelErrorState = TextStyle(
     fontFamily: 'Inter',
@@ -462,12 +396,4 @@ class Constants {
     fontWeight: globalTypographyFontWeight400,
     fontStyle: globalTypographyFontStyleStandard,
   );
-  
-  // GoogleFonts.inter(
-  //   color: colourSemanticDanger1,
-  //   fontSize: globalTypographyFontSize50,
-  //   letterSpacing: globalTypographyFontSpacingS,
-  //   fontWeight: globalTypographyFontWeight400,
-  //   fontStyle: globalTypographyFontStyleStandard,
-  // );
 }

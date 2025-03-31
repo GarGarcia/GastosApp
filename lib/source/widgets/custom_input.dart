@@ -97,7 +97,7 @@ class _CustomInputState extends State<CustomInput> {
                 ? TextInputAction.next
                 : TextInputAction.done),
         obscureText: mPasswordVisible,
-        style: Constants.typographyBodyM,
+        style: Constants.typographyBlackBodyM,
         cursorColor: Constants.colourTextColor,
         autofocus: true,
         maxLines: (widget.maxLines ?? 1),
