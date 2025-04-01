@@ -105,21 +105,21 @@ class _CustomInputState extends State<CustomInput> {
           filled: true,
           fillColor: Constants.globalColorNeutral10,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(
               color: Constants.globalColorNeutral70,
               width: 1,
             ),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(
               color: Constants.colourSemanticDanger1,
               width: 1,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(
               color: Constants.colourSemanticDanger1,
               width: 2,
@@ -137,7 +137,7 @@ class _CustomInputState extends State<CustomInput> {
           hintStyle: Constants.labelDefaultState,
           hintText: widget.hint,
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(
               color: Constants.colourActionPrimary,
               width: 2,

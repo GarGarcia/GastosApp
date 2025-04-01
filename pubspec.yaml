@@ -9,8 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^2.5.2
-  provider: ^6.1.2
+  shared_preferences: ^2.5.3
+  provider: ^6.1.4
   supabase_flutter: ^2.8.4
   google_fonts: ^6.2.1
   flutter_tabler_icons: ^1.43.0
