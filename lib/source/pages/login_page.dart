@@ -1,6 +1,4 @@
 import 'package:flutte_scanner_empty/source/custom/constants.dart';
-import 'package:flutte_scanner_empty/source/custom/library.dart';
-import 'package:flutte_scanner_empty/source/custom/validation.dart';
 import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/source/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
       body: Padding(
         padding: EdgeInsets.only(right: 20, left: 20),
         child: Column(

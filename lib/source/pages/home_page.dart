@@ -5,7 +5,6 @@ import 'package:flutte_scanner_empty/source/custom/library.dart';
 import 'package:flutte_scanner_empty/source/models/country_model.dart';
 import 'package:flutte_scanner_empty/source/providers/global_provider.dart';
 import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
-// import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/source/widgets/navbar_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
@@ -109,6 +108,25 @@ class _HomePageState extends State<HomePage> with RouteAware {
             ),
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+          children: [
+            Image.network(
+              'https://static-cdn.jtvnw.net/jtv_user_pictures/fba09c18-f733-41bf-aace-de8eabe0820b-profile_image-70x70.png',
+            ),
+            TextButton(              
+              onPressed: () async {
+                globalContext = context;
+                Provider.of<GlobalProvider>(context, listen: false).mCountry =
+                    Country();
+                navigate(globalContext!, CustomPage.formCountry);
+              },
+              child: Text('Formulario', style: Constants.typographyBlackBodyM),
+            ),
+          ],
+        ),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
