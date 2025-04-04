@@ -14,7 +14,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   startTime(CustomPage mPage) async {
     Timer(const Duration(seconds: 3), () {
-      navigate(context, CustomPage.home);
+      navigate(context, mPage);
     });
   }
 
@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
 
     globalContext = context;
 
-    startTime(CustomPage.home);
+    startTime(CustomPage.loginPage);
   }
 
   @override

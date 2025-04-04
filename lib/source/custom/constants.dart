@@ -278,7 +278,7 @@ class Constants {
 
   static TextStyle typographyBlackBodyL = TextStyle(
     fontFamily: 'Inter',
-    color: globalColorNeutral100,
+    color: globalColorNeutral80,
     fontSize: globalTypographyFontSize100,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
@@ -287,7 +287,7 @@ class Constants {
 
   static TextStyle typographyBlackBodyM = TextStyle(
     fontFamily: 'Inter',
-    color: globalColorNeutral100,
+    color: globalColorNeutral80,
     fontSize: globalTypographyFontSize75,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
@@ -296,7 +296,7 @@ class Constants {
 
   static TextStyle typographyBlackBodyS = TextStyle(
     fontFamily: 'Inter',
-    color: globalColorNeutral100,
+    color: globalColorNeutral80,
     fontSize: globalTypographyFontSize50,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
@@ -312,7 +312,7 @@ class Constants {
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
   );
-  
+
   static TextStyle typographyLinkM = TextStyle(
     fontFamily: 'Inter',
     color: colourTextColor,
@@ -329,7 +329,7 @@ class Constants {
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight400,
     decoration: globalTypographyFontStyleUnderline,
-  ); 
+  );
 
   //Button Style
   static TextStyle typographyButtonM = TextStyle(
@@ -375,6 +375,15 @@ class Constants {
     fontSize: globalTypographyFontSize150,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight500,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyDarkHeadingM = TextStyle(
+    fontFamily: 'Inter',
+    color: globaColorPrimary80,
+    fontSize: globalTypographyFontSize300,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
     fontStyle: globalTypographyFontStyleStandard,
   );
 

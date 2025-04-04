@@ -1,4 +1,5 @@
 import 'package:flutte_scanner_empty/source/custom/constants.dart';
+import 'package:flutte_scanner_empty/source/custom/library.dart';
 import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/source/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
@@ -18,32 +19,61 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
-      body: Padding(
-        padding: EdgeInsets.only(right: 20, left: 20),
-        child: Column(
-          children: [
-            Text('¡Bienvenido!', style: Constants.typographyHeadingM),
-            SizedBox(height: 20),
-            Text(
-              'Para acceder a la aplicación, introduce tu cuenta de correo de la empresa',
-              style: Constants.typographyBodyS,
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: RefreshIndicator(
+          backgroundColor: Constants.colourBackgroundColor,
+          color: Constants.colourTextColor,
+          strokeWidth: 3,
+          displacement: 80,
+          onRefresh: () async {
+            if (mounted) {
+              globalContext = context;
+            }
+          },
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Text("¡Bienvenido!", style: Constants.typographyDarkHeadingM),
+                const SizedBox(height: 20),
+                Text(
+                  "Para acceder a la aplicación, introduce usuario y contraseña.",
+                  style: Constants.typographyBlackBodyM,
+                ),
+                const SizedBox(height: 10),
+                Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: Column(
+                    children: [
+                      const SizedBox(width: 20, height: 20),
+                      CustomInput(
+                        title: "Usuario",
+                        textInputType: TextInputType.text,
+                        validator: (value) {},
+                      ),
+                      const SizedBox(height: 10),
+                      CustomInput(
+                        title: "Contraseña",
+                        textInputType: TextInputType.text,
+                        validator: (value) {},
+                        obscurePassword: true,
+                      ),
+                    ],
+                  ),
+                ),
+                CustomButton(
+                  color: Constants.colourActionPrimary,
+                  callback: () {},
+                  child: Text('Siguiente', style: Constants.typographyButtonM),
+                ),
+              ],
             ),
-            SizedBox(height: 20),
-            Form(
-              child: Column(
-                children: [
-                  CustomInput(title: 'Correo electrónico', validator: () {}),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            CustomButton(
-              color: Constants.colourActionPrimary,
-              callback: () {},
-              child: Text('Siguiente', style: Constants.typographyButtonM),
-            ),
-          ],
+          ),
         ),
       ),
     );
