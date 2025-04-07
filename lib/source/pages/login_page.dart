@@ -4,7 +4,6 @@ import 'package:flutte_scanner_empty/source/custom/library.dart';
 import 'package:flutte_scanner_empty/source/data/services/api_service.dart';
 import 'package:flutte_scanner_empty/source/models/user_model.dart';
 import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
-import 'package:flutte_scanner_empty/source/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        // onTapCancel: () => FocusScope.of(context).unfocus(),
         child: RefreshIndicator(
           backgroundColor: Constants.colourBackgroundColor,
           color: Constants.colourTextColor,
@@ -60,26 +60,49 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       const SizedBox(width: 20, height: 20),
-                      CustomInput(
-                        title: "Usuario",
-                        textInputType: TextInputType.text,
-                        validator: (value) {
-                          setState(() {
-                            username = value;
-                          });
-                        },
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: "Usuario",
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged:
+                            (value) => setState(() {
+                              username = value;
+                            }),
                       ),
+                      // CustomInput(
+                      //   title: "Usuario",
+                      //   textInputType: TextInputType.text,
+                      //   validator: (value) {
+                      //     setState(() {
+                      //       username = value;
+                      //     });
+                      //   },
+
+                      // ),
                       const SizedBox(height: 10),
-                      CustomInput(
-                        title: "Contraseña",
-                        textInputType: TextInputType.text,
-                        validator: (value) {
-                          setState(() {
-                            password = value;
-                          });
-                        },
-                        obscurePassword: true,
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          border: OutlineInputBorder(),
+                        ),
+                        obscureText: true,
+                        obscuringCharacter: "*",
+                        onChanged:
+                            (value) => setState(() {
+                              password = value;
+                            }),
                       ),
+                      // CustomInput(
+                      //   title: "Contraseña",
+                      //   textInputType: TextInputType.text,
+                      //   validator: (value) {
+                      //     setState(() {
+                      //       password = value;
+                      //     });
+                      //   },
+                      //   obscurePassword: true,
+                      // ),
                     ],
                   ),
                 ),
