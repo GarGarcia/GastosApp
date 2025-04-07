@@ -1,22 +1,19 @@
 class UserModel {
-  final int empID;
-  final String email;
-  final bool success;
-  final String message;
+  final String accessToken;
+  final String tokenType;
+  final String expiresIn;
 
   UserModel({
-    required this.empID,
-    required this.email,
-    required this.success,
-    required this.message,
+    required this.accessToken,
+    required this.tokenType,
+    required this.expiresIn,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      empID: json['empID'],
-      email: json['email'],
-      success: json['success'],
-      message: json['message'],
+      accessToken: json['access_token'],
+      tokenType: json['token_type'],
+      expiresIn: json['expires_in'],
     );
   }
 }

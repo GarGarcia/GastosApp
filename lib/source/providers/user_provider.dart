@@ -1,3 +1,4 @@
+import 'package:flutte_scanner_empty/source/custom/configurations.dart';
 import 'package:flutte_scanner_empty/source/data/repository/user_repository.dart';
 import 'package:flutte_scanner_empty/source/data/services/api_service.dart';
 import 'package:flutte_scanner_empty/source/viewmodels/login_viewmodel.dart';
@@ -15,7 +16,7 @@ class UserProvider extends StatelessWidget {
       create:
           (_) => LoginViewModel(
             userRepository: UserRepository(
-              apiService: ApiService(baseUrl: 'https://api.example.com'),
+              apiService: ApiService(baseUrl: Configurations.mWebServiceUrl),
             ),
           ),
       child: child,

@@ -8,16 +8,14 @@ class ApiService {
   ApiService({required this.baseUrl});
 
   Future<UserModel?> login(String username, String password) async {
-    final response = await http.post(
+    final response = await http.get(
       Uri.parse('$baseUrl/login'),
-      body: jsonEncode({'username': username, 'password': password}),
-      headers: {'Content-Type': 'application/json'},
     );
 
     if (response.statusCode == 200) {
       return UserModel.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to login');
+        return null;
     }
   }
 }

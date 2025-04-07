@@ -1,5 +1,8 @@
+import 'package:flutte_scanner_empty/source/custom/configurations.dart';
 import 'package:flutte_scanner_empty/source/custom/constants.dart';
 import 'package:flutte_scanner_empty/source/custom/library.dart';
+import 'package:flutte_scanner_empty/source/data/services/api_service.dart';
+import 'package:flutte_scanner_empty/source/models/user_model.dart';
 import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/source/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +15,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Future<UserModel?>? userData;
+  ApiService apiService = ApiService(baseUrl: Configurations.mWebServiceUrl);
+
+  late String username;
+  late String password;
+
   @override
   void initState() {
     super.initState();
@@ -54,13 +63,21 @@ class _LoginPageState extends State<LoginPage> {
                       CustomInput(
                         title: "Usuario",
                         textInputType: TextInputType.text,
-                        validator: (value) {},
+                        validator: (value) {
+                          setState(() {
+                            username = value;
+                          });
+                        },
                       ),
                       const SizedBox(height: 10),
                       CustomInput(
                         title: "Contraseña",
                         textInputType: TextInputType.text,
-                        validator: (value) {},
+                        validator: (value) {
+                          setState(() {
+                            password = value;
+                          });
+                        },
                         obscurePassword: true,
                       ),
                     ],
@@ -68,8 +85,28 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 CustomButton(
                   color: Constants.colourActionPrimary,
-                  callback: () {},
+                  callback: () {
+                    setState(() {
+                      userData = apiService.login(username, password);
+                    });
+                  },
                   child: Text('Siguiente', style: Constants.typographyButtonM),
+                ),
+                FutureBuilder(
+                  future: userData,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text("Error ${snapshot.error}");
+                    } else if (snapshot.hasData) {
+                      return Text(
+                        "Token: ${snapshot.data?.accessToken}, Token type: ${snapshot.data?.tokenType}, Expires In: ${snapshot.data?.expiresIn}",
+                      );
+                    } else {
+                      return Text("No hay resultados");
+                    }
+                  },
                 ),
               ],
             ),
