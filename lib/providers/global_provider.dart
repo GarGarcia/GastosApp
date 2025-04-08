@@ -1,4 +1,4 @@
-import 'package:flutte_scanner_empty/source/models/country_model.dart';
+import 'package:flutte_scanner_empty/data/models/country_model.dart';
 import 'package:flutter/material.dart';
 
 class GlobalProvider extends ChangeNotifier{

@@ -32,6 +32,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icon/logoartero.png
+    - assets/icon/logoartero(pequenyo).png
+    - assets/icon/logoartero2.png
+    - assets/icon/logoartero3.png
   fonts:
     - family: Inter
       fonts:

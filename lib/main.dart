@@ -1,7 +1,7 @@
-import 'package:flutte_scanner_empty/source/custom/configurations.dart';
-import 'package:flutte_scanner_empty/source/custom/library.dart';
-import 'package:flutte_scanner_empty/source/pages/splash_page.dart';
-import 'package:flutte_scanner_empty/source/providers/global_provider.dart';
+import 'package:flutte_scanner_empty/core/configurations.dart';
+import 'package:flutte_scanner_empty/core/library.dart';
+import 'package:flutte_scanner_empty/ui/splash_page.dart';
+import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

@@ -1,9 +1,9 @@
-import 'package:flutte_scanner_empty/source/custom/constants.dart';
-import 'package:flutte_scanner_empty/source/pages/form_country_page.dart';
-import 'package:flutte_scanner_empty/source/pages/home_page.dart';
-import 'package:flutte_scanner_empty/source/pages/login_page.dart';
-import 'package:flutte_scanner_empty/source/pages/splash_page.dart';
-import 'package:flutte_scanner_empty/source/widgets/loading.dart';
+import 'package:flutte_scanner_empty/core/constants.dart';
+import 'package:flutte_scanner_empty/ui/form_country_page.dart';
+import 'package:flutte_scanner_empty/ui/home/home_page.dart';
+import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
+import 'package:flutte_scanner_empty/ui/splash_page.dart';
+import 'package:flutte_scanner_empty/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';

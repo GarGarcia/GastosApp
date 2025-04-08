@@ -1,11 +1,12 @@
 import 'dart:developer';
 
-import 'package:flutte_scanner_empty/source/custom/constants.dart';
-import 'package:flutte_scanner_empty/source/custom/library.dart';
-import 'package:flutte_scanner_empty/source/models/country_model.dart';
-import 'package:flutte_scanner_empty/source/providers/global_provider.dart';
-import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
-import 'package:flutte_scanner_empty/source/widgets/navbar_back.dart';
+import 'package:flutte_scanner_empty/core/constants.dart';
+import 'package:flutte_scanner_empty/core/library.dart';
+import 'package:flutte_scanner_empty/data/models/country_model.dart';
+import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
+import 'package:flutte_scanner_empty/ui/widgets/custom_drawer_label.dart';
+import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
+import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with RouteAware {
   String mOnBoarding = '';
   Countries mCountries = Countries();
-
 
   @override
   void initState() {
@@ -85,6 +85,24 @@ class _HomePageState extends State<HomePage> with RouteAware {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Constants.colourActionPrimary,
+        child: CustomButton(
+          color: Colors.transparent,
+          width: 50,
+          child: Icon(
+            TablerIcons.plus,
+            color: Constants.colourActionSecondary,
+            size: 25,
+          ),
+        ),
+        onPressed: () async {
+          globalContext = context;
+          Provider.of<GlobalProvider>(context, listen: false).mCountry =
+              Country();
+          navigate(globalContext!, CustomPage.formCountry);
+        },
+      ),
       appBar: NavbarBack(
         backgroundColor: Constants.colourBackgroundColor,
         backgroundButtonColor: Constants.colourActionPrimary,
@@ -93,39 +111,81 @@ class _HomePageState extends State<HomePage> with RouteAware {
         showBack: false,
         showMenu: true,
         mListActions: [
-          CustomButton(
-            color: Colors.transparent,
-            width: 50,
-            callback: () async {
-              globalContext = context;
-              Provider.of<GlobalProvider>(context, listen: false).mCountry =
-                  Country();
-              navigate(globalContext!, CustomPage.formCountry);
-            },
-            child: Icon(
-              TablerIcons.plus,
-              color: Constants.colourActionPrimary,
-              size: 25,
-            ),
+          Image.asset(
+            "assets/icon/logoartero(pequenyo).png",
+            height: 40,
+            width: 40,
           ),
+          const SizedBox(width: 10),
         ],
       ),
       drawer: Drawer(
         child: ListView(
-          padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+          padding: const EdgeInsets.only(top: 50, left: 15, right: 10),
           children: [
-            Image.network(
-              'https://static-cdn.jtvnw.net/jtv_user_pictures/fba09c18-f733-41bf-aace-de8eabe0820b-profile_image-70x70.png',
+            Image.asset(
+              'assets/icon/logoartero3.png',
+              height: 30,
+              width: 30,
+              alignment: Alignment.centerLeft,
             ),
-            TextButton(              
-              onPressed: () async {
+            const SizedBox(height: 15),
+            Divider(color: Constants.globalColorNeutral30),
+            const SizedBox(height: 15),
+            CustomDrawerLabel(
+              method: () async {
                 globalContext = context;
                 Provider.of<GlobalProvider>(context, listen: false).mCountry =
                     Country();
                 navigate(globalContext!, CustomPage.formCountry);
               },
-              child: Text('Formulario', style: Constants.typographyBlackBodyM),
+              icon: Icon(Icons.account_circle),
+              title: 'Perfil',
             ),
+            const SizedBox(height: 15),
+            CustomDrawerLabel(
+              method: () {},
+              icon: Icon(Icons.today),
+              title: 'Historial',
+            ),
+            const SizedBox(height: 15),
+            CustomDrawerLabel(
+              method: () {},
+              icon: Icon(Icons.business_center),
+              title: 'Empresas',
+            ),
+            const SizedBox(height: 15),
+            CustomDrawerLabel(
+              method: () {},
+              icon: Icon(Icons.settings),
+              title: 'Configuración',
+            ),
+            const SizedBox(height: 15),
+            Divider(color: Constants.globalColorNeutral30),
+            const SizedBox(height: 15),
+            TextButton(
+              onPressed: () {},
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Constants.globalColorNeutral20,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    height: 30,
+                    width: 30,
+                    child: Icon(
+                      Icons.logout,
+                      color: Constants.colourSemanticDanger1,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Text("Cerrar Sesión", style: Constants.typographyDangerBoldM),
+                ],
+              ),
+            ),
+            const SizedBox(height: 15),
+            Divider(color: Constants.globalColorNeutral30),
           ],
         ),
       ),
@@ -261,17 +321,6 @@ class _HomePageState extends State<HomePage> with RouteAware {
                             );
                           },
                         ),
-                    // Container(
-                    //   margin: EdgeInsets.only(left: 10, right: 10),
-                    //   child: CustomButton(
-                    //     color: Constants.colourActionPrimary,
-                    //     callback: () {},
-                    //     child: Text(
-                    //       'Click',
-                    //       style: Constants.typographyButtonM,
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

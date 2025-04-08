@@ -1,4 +1,4 @@
-import 'package:flutte_scanner_empty/source/custom/library.dart';
+import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
@@ -233,6 +233,15 @@ class Constants {
   static TextStyle typographyBlackBoldM = TextStyle(
     fontFamily: 'Inter',
     color: globalColorNeutral100,
+    fontSize: globalTypographyFontSize75,
+    letterSpacing: globalTypographyFontSpacingS,
+    fontWeight: globalTypographyFontWeight600,
+    fontStyle: globalTypographyFontStyleStandard,
+  );
+
+  static TextStyle typographyDangerBoldM = TextStyle(
+    fontFamily: 'Inter',
+    color: colourSemanticDanger1,
     fontSize: globalTypographyFontSize75,
     letterSpacing: globalTypographyFontSpacingS,
     fontWeight: globalTypographyFontWeight600,

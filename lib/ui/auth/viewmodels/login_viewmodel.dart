@@ -1,7 +1,7 @@
 
 
-import 'package:flutte_scanner_empty/source/data/repository/user_repository.dart';
-import 'package:flutte_scanner_empty/source/models/user_model.dart';
+import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
+import 'package:flutte_scanner_empty/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class LoginViewModel extends ChangeNotifier {

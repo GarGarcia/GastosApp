@@ -1,5 +1,5 @@
-import 'package:flutte_scanner_empty/source/custom/constants.dart';
-import 'package:flutte_scanner_empty/source/custom/library.dart';
+import 'package:flutte_scanner_empty/core/constants.dart';
+import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 

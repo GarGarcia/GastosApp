@@ -1,5 +1,5 @@
-import 'package:flutte_scanner_empty/source/custom/constants.dart';
-import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
+import 'package:flutte_scanner_empty/core/constants.dart';
+import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
@@ -91,7 +91,7 @@ class NavbarBack extends StatelessWidget implements PreferredSizeWidget {
                   ? CustomButton(
                     color: Colors.transparent,
                     child: Icon(
-                      TablerIcons.menu,
+                      Icons.menu,
                       color:
                           (tinte == Tinte.light
                               ? Constants.colourActionPrimary
@@ -102,21 +102,6 @@ class NavbarBack extends StatelessWidget implements PreferredSizeWidget {
                   )
                   : null)),
       actions: mListActions,
-
-      // actions: [
-      //   ((returnHome != null)
-      //       ? IconButton(
-      //           icon: Icon(
-      //             FontAwesomeIcons.home,
-      //             color: Constants.colorBlack,
-      //           ),
-      //           onPressed: () {
-      //             globalContext = context;
-      //             navigate(context, CustomPage.main); // receive the page
-      //           },
-      //         )
-      //       : Container())
-      // ]
     );
   }
 }

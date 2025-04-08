@@ -1,10 +1,10 @@
-import 'package:flutte_scanner_empty/source/custom/constants.dart';
-import 'package:flutte_scanner_empty/source/custom/library.dart';
-import 'package:flutte_scanner_empty/source/custom/validation.dart';
-import 'package:flutte_scanner_empty/source/providers/global_provider.dart';
-import 'package:flutte_scanner_empty/source/widgets/custom_button.dart';
-import 'package:flutte_scanner_empty/source/widgets/custom_input.dart';
-import 'package:flutte_scanner_empty/source/widgets/navbar_back.dart';
+import 'package:flutte_scanner_empty/core/constants.dart';
+import 'package:flutte_scanner_empty/core/library.dart';
+import 'package:flutte_scanner_empty/core/validation.dart';
+import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
+import 'package:flutte_scanner_empty/ui/widgets/custom_input.dart';
+import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
+import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:provider/provider.dart';

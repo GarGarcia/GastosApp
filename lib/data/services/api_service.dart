@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutte_scanner_empty/source/models/user_model.dart';
+import 'package:flutte_scanner_empty/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
