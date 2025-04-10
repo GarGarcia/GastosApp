@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
-import 'package:flutte_scanner_empty/data/models/country_model.dart';
+import 'package:flutte_scanner_empty/data/models/ticket_model.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_drawer_label.dart';
 import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
@@ -21,7 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with RouteAware {
   String mOnBoarding = '';
-  Countries mCountries = Countries();
+  Tickets mTickets = Tickets();
 
   @override
   void initState() {
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     dialogDismiss();
     log("==> mResult: $mResult");
 
-    mCountries = Countries.fromJsonList(mResult);
+    mTickets = Tickets.fromJsonList(mResult);
 
     setState(() {});
   }
@@ -98,8 +98,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
         ),
         onPressed: () async {
           globalContext = context;
-          Provider.of<GlobalProvider>(context, listen: false).mCountry =
-              Country();
+          Provider.of<GlobalProvider>(context, listen: false).mTicket =
+              TicketModel();
           navigate(globalContext!, CustomPage.formCountry);
         },
       ),
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
         backgroundColor: Constants.colourBackgroundColor,
         backgroundButtonColor: Constants.colourActionPrimary,
         tinte: Tinte.light,
-        title: "Países",
+        title: "Tickets",
         showBack: false,
         showMenu: true,
         mListActions: [
@@ -135,30 +135,10 @@ class _HomePageState extends State<HomePage> with RouteAware {
             CustomDrawerLabel(
               method: () async {
                 globalContext = context;
-                Provider.of<GlobalProvider>(context, listen: false).mCountry =
-                    Country();
-                navigate(globalContext!, CustomPage.formCountry);
+                navigate(globalContext!, CustomPage.profilePage);
               },
               icon: Icon(Icons.account_circle),
               title: 'Perfil',
-            ),
-            const SizedBox(height: 15),
-            CustomDrawerLabel(
-              method: () {},
-              icon: Icon(Icons.today),
-              title: 'Historial',
-            ),
-            const SizedBox(height: 15),
-            CustomDrawerLabel(
-              method: () {},
-              icon: Icon(Icons.business_center),
-              title: 'Empresas',
-            ),
-            const SizedBox(height: 15),
-            CustomDrawerLabel(
-              method: () {},
-              icon: Icon(Icons.settings),
-              title: 'Configuración',
             ),
             const SizedBox(height: 15),
             Divider(color: Constants.globalColorNeutral30),
@@ -210,7 +190,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 child: Column(
                   children: [
                     const SizedBox(width: 20, height: 20),
-                    mCountries.items.isEmpty
+                    mTickets.items.isEmpty
                         ? Container(
                           margin: const EdgeInsets.only(
                             top: 20,
@@ -227,7 +207,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                         : ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: mCountries.items.length,
+                          itemCount: mTickets.items.length,
                           itemBuilder: (context, index) {
                             return Card(
                               margin: const EdgeInsets.only(
@@ -247,8 +227,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                                   Provider.of<GlobalProvider>(
                                         context,
                                         listen: false,
-                                      ).mCountry =
-                                      mCountries.items[index];
+                                      ).mTicket =
+                                      mTickets.items[index];
                                   navigate(
                                     globalContext!,
                                     CustomPage.formCountry,
@@ -284,15 +264,15 @@ class _HomePageState extends State<HomePage> with RouteAware {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              mCountries
+                                              mTickets
                                                   .items[index]
-                                                  .mCountryName!,
+                                                  .mTicketModelName!,
                                               style: Constants.typographyBoldM,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             Text(
-                                              "Código ${mCountries.items[index].mCountryCode}",
+                                              "Código ${mTickets.items[index].mTicketModelCode}",
                                               style: Constants.typographyBodyM,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,

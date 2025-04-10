@@ -24,43 +24,43 @@ class _FormCountryPageState extends State<FormCountryPage> {
 
   Validation mValidation = Validation();
 
-  late TextEditingController mCountryNameController;
-  late TextEditingController mCountryCodeController;
-  late TextEditingController mCountryCodeLetterController;
+  late TextEditingController mTicketNameController;
+  late TextEditingController mTicketCodeController;
+  late TextEditingController mTicketCodeLetterController;
 
   @override
   void initState() {
     super.initState();
 
-    mCountryNameController = TextEditingController();
-    mCountryCodeController = TextEditingController();
-    mCountryCodeLetterController = TextEditingController();
+    mTicketNameController = TextEditingController();
+    mTicketCodeController = TextEditingController();
+    mTicketCodeLetterController = TextEditingController();
 
-    mCountryNameController.text =
+    mTicketNameController.text =
         Provider.of<GlobalProvider>(
           context,
           listen: false,
-        ).mCountry.mCountryName ??
+        ).mTicket.mTicketModelName ??
         '';
-    mCountryCodeController.text =
+    mTicketCodeController.text =
         Provider.of<GlobalProvider>(
           context,
           listen: false,
-        ).mCountry.mCountryCode ??
+        ).mTicket.mTicketModelCode ??
         '';
-    mCountryCodeLetterController.text =
+    mTicketCodeLetterController.text =
         Provider.of<GlobalProvider>(
           context,
           listen: false,
-        ).mCountry.mCountryCodeLetter ??
+        ).mTicket.mTicketModelCodeLetter ??
         '';
   }
 
   @override
   void dispose() {
-    mCountryNameController.dispose();
-    mCountryCodeController.dispose();
-    mCountryCodeLetterController.dispose();
+    mTicketNameController.dispose();
+    mTicketCodeController.dispose();
+    mTicketCodeLetterController.dispose();
     super.dispose();
   }
 
@@ -69,7 +69,7 @@ class _FormCountryPageState extends State<FormCountryPage> {
     if (!_formKey.currentState!.validate()) {
       _clear();
     } else {
-      if (mCountryNameController.text.isEmpty) {
+      if (mTicketNameController.text.isEmpty) {
         customShowToast(globalContext!, 'Por favor, complete todos los campos');
         return;
       }
@@ -77,13 +77,13 @@ class _FormCountryPageState extends State<FormCountryPage> {
       try {
         globalContext = context;
 
-        if (Provider.of<GlobalProvider>(context, listen: false).mCountry.mIdx ==
+        if (Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
             null) {
           progressDialogShow(globalContext!);
           await supabase.from('countries').insert({
-            'country_name': mCountryNameController.text,
-            'country_code': mCountryCodeController.text,
-            'country_code_letter': mCountryCodeLetterController.text,
+            'country_name': mTicketNameController.text,
+            'country_code': mTicketCodeController.text,
+            'country_code_letter': mTicketCodeLetterController.text,
           });
           dialogDismiss();
 
@@ -93,16 +93,16 @@ class _FormCountryPageState extends State<FormCountryPage> {
           await supabase
               .from('countries')
               .update({
-                'country_name': mCountryNameController.text,
-                'country_code': mCountryCodeController.text,
-                'country_code_letter': mCountryCodeLetterController.text,
+                'country_name': mTicketNameController.text,
+                'country_code': mTicketCodeController.text,
+                'country_code_letter': mTicketCodeLetterController.text,
               })
               .eq(
                 'idx',
                 Provider.of<GlobalProvider>(
                   context,
                   listen: false,
-                ).mCountry.mIdx!,
+                ).mTicket.mIdx!,
               );
           dialogDismiss();
 
@@ -111,9 +111,9 @@ class _FormCountryPageState extends State<FormCountryPage> {
 
         Navigator.of(globalContext!).pop();
 
-        mCountryNameController.clear();
-        mCountryCodeController.clear();
-        mCountryCodeLetterController.clear();
+        mTicketNameController.clear();
+        mTicketCodeController.clear();
+        mTicketCodeLetterController.clear();
       } catch (e) {
         globalContext = context;
         ScaffoldMessenger.of(
@@ -135,7 +135,7 @@ class _FormCountryPageState extends State<FormCountryPage> {
 
   deleteConfirmation({
     required BuildContext context,
-    required String mCountryName,
+    required String mTicketName,
   }) {
     return showModalBottomSheet(
       context: context,
@@ -157,7 +157,7 @@ class _FormCountryPageState extends State<FormCountryPage> {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  'Eliminar país',
+                  'Eliminar ticket',
                   style: Constants.typographyHeadingM,
                   textAlign: TextAlign.center,
                 ),
@@ -165,7 +165,7 @@ class _FormCountryPageState extends State<FormCountryPage> {
               const SizedBox(height: 10),
               SizedBox(
                 child: Text(
-                  '¿Confirmas eliminar a $mCountryName de la lista? ',
+                  '¿Quieres eliminar el ticket? ',
                   style: Constants.typographyBodyM,
                   textAlign: TextAlign.center,
                 ),
@@ -214,10 +214,10 @@ class _FormCountryPageState extends State<FormCountryPage> {
 
   deleteCountry() async {
     try {
-      if (Provider.of<GlobalProvider>(context, listen: false).mCountry.mIdx ==
+      if (Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
           null) {
         // alert
-        customShowToast(globalContext!, 'No fue posible eliminar registro');
+        customShowToast(globalContext!, 'No fue posible eliminar el ticket');
       } else {
         // update country into the 'countries' table
         progressDialogShow(globalContext!);
@@ -229,16 +229,16 @@ class _FormCountryPageState extends State<FormCountryPage> {
               Provider.of<GlobalProvider>(
                 context,
                 listen: false,
-              ).mCountry.mIdx!,
+              ).mTicket.mIdx!,
             );
         //Timer(Duration(seconds: 3), () {});
         dialogDismiss();
 
-        customShowToast(globalContext!, 'País eliminado exitosamente');
+        customShowToast(globalContext!, 'Ticket eliminado exitosamente');
       }
     } catch (e) {
       // Show error message if the insertion fails
-      customShowToast(globalContext!, 'Error al guardar el país: $e');
+      customShowToast(globalContext!, 'Error al guardar el ticket: $e');
     }
   }
 
@@ -250,14 +250,14 @@ class _FormCountryPageState extends State<FormCountryPage> {
         backgroundButtonColor: Constants.colourActionPrimary,
         tinte: Tinte.light,
         title:
-            Provider.of<GlobalProvider>(context, listen: false).mCountry.mIdx ==
+            Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
                     null
-                ? "Nuevo País"
-                : "Editar País",
+                ? "Nuevo Ticket"
+                : "Editar Ticket",
         showBack: true,
         showMenu: false,
         mListActions: [
-          Provider.of<GlobalProvider>(context, listen: false).mCountry.mIdx ==
+          Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
                   null
               ? const SizedBox()
               : CustomButton(
@@ -267,11 +267,11 @@ class _FormCountryPageState extends State<FormCountryPage> {
                   globalContext = context;
                   deleteConfirmation(
                     context: globalContext!,
-                    mCountryName:
+                    mTicketName:
                         Provider.of<GlobalProvider>(
                           context,
                           listen: false,
-                        ).mCountry.mCountryName!,
+                        ).mTicket.mTicketModelName!,
                   );
                 },
                 child: Icon(
@@ -309,15 +309,15 @@ class _FormCountryPageState extends State<FormCountryPage> {
                         children: [
                           const SizedBox(width: 20, height: 20),
                           CustomInput(
-                            title: "Nombre del país",
-                            controller: mCountryNameController,
+                            title: "Nombre del ticket",
+                            controller: mTicketNameController,
                             textInputType: TextInputType.text,
                             hint: 'ej: España',
                             validator: (value) {
                               return mValidation.validate(
                                 type: TypeValidation.text,
-                                name: "Nombre del país",
-                                value: mCountryNameController.text,
+                                name: "Nombre del ticket",
+                                value: mTicketNameController.text,
                                 isRequired: true,
                                 min: 3,
                                 max: 80,
@@ -326,15 +326,15 @@ class _FormCountryPageState extends State<FormCountryPage> {
                           ),
                           const SizedBox(height: 10),
                           CustomInput(
-                            title: "Codigo del país",
-                            controller: mCountryCodeController,
+                            title: "Codigo del ticket",
+                            controller: mTicketCodeController,
                             textInputType: TextInputType.text,
                             hint: 'ej: 34',
                             validator: (value) {
                               return mValidation.validate(
                                 type: TypeValidation.numbers,
-                                name: "Código del país",
-                                value: mCountryCodeController.text,
+                                name: "Código del ticket",
+                                value: mTicketCodeController.text,
                                 isRequired: false,
                                 min: 1,
                                 max: 3,
@@ -343,15 +343,15 @@ class _FormCountryPageState extends State<FormCountryPage> {
                           ),
                           const SizedBox(height: 10),
                           CustomInput(
-                            title: "Codigo de letras del país",
-                            controller: mCountryCodeLetterController,
+                            title: "Codigo de letras del ticket",
+                            controller: mTicketCodeLetterController,
                             textInputType: TextInputType.text,
                             hint: 'ej: ES',
                             validator: (value) {
                               return mValidation.validate(
                                 type: TypeValidation.text,
-                                name: "Código de letras del país",
-                                value: mCountryCodeLetterController.text,
+                                name: "Código de letras del ticket",
+                                value: mTicketCodeLetterController.text,
                                 isRequired: true,
                                 min: 2,
                                 max: 2,

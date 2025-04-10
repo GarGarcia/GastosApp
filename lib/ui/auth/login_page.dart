@@ -78,7 +78,6 @@ class _LoginPageState extends State<LoginPage> {
                       //       username = value;
                       //     });
                       //   },
-
                       // ),
                       const SizedBox(height: 10),
                       TextField(

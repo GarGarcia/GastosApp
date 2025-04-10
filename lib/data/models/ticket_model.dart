@@ -3,18 +3,18 @@
 
 import 'dart:convert';
 
-class Countries {
-  List<Country> items = [];
+class Tickets {
+  List<TicketModel> items = [];
 
-  Countries();
+  Tickets();
 
-  Countries.fromJsonList(List<dynamic>? jsonList) {
+  Tickets.fromJsonList(List<dynamic>? jsonList) {
     if (jsonList == null) {
       return;
     } else {
       for (var item in jsonList) {
-        final mCountry = Country.fromJsonMap(item);
-        items.add(mCountry);
+        final mTicketModel = TicketModel.fromJsonMap(item);
+        items.add(mTicketModel);
       }
     }
   }
@@ -33,31 +33,31 @@ class Countries {
   }
 }
 
-class Country {
+class TicketModel {
   String? mIdx;
-  String? mCountryName;
-  String? mCountryCodeLetter;
-  String? mCountryCode;
-  String? mCountryFlagUrl;
+  String? mTicketModelName;
+  String? mTicketModelCodeLetter;
+  String? mTicketModelCode;
+  String? mTicketModelFlagUrl;
   DateTime? mCreatedAt;
   DateTime? mUpdatedAt;
 
-  Country({
+  TicketModel({
     mIdx,
-    mCountryName,
-    mCountryCodeLetter,
-    mCountryCode,
-    mCountryFlagUrl,
+    mTicketModelName,
+    mTicketModelCodeLetter,
+    mTicketModelCode,
+    mTicketModelFlagUrl,
     mCreatedAt,
     mUpdatedAt,
   });
 
-  Country.fromJsonMap(Map<String, dynamic> json) {
+  TicketModel.fromJsonMap(Map<String, dynamic> json) {
     mIdx = json['idx'];
-    mCountryName = json['country_name'];
-    mCountryCodeLetter = json['country_code_letter'];
-    mCountryCode = json['country_code'];
-    mCountryFlagUrl = json['country_flag_url'];
+    mTicketModelName = json['country_name'];
+    mTicketModelCodeLetter = json['country_code_letter'];
+    mTicketModelCode = json['country_code'];
+    mTicketModelFlagUrl = json['country_flag_url'];
     mCreatedAt = json['created_at'] == null ? null : DateTime.parse(json['created_at']);
     mUpdatedAt = json['updated_at'] == null ? null : DateTime.parse(json['updated_at']);
   }
@@ -68,10 +68,10 @@ class Country {
 
   Map<String, dynamic> _toJsonMap() => {
     'idx': mIdx,
-    'country_name': mCountryName,
-    'country_code_letter': mCountryCodeLetter,
-    'country_code': mCountryCode,
-    'country_flag_url': mCountryFlagUrl,
+    'country_name': mTicketModelName,
+    'country_code_letter': mTicketModelCodeLetter,
+    'country_code': mTicketModelCode,
+    'country_flag_url': mTicketModelFlagUrl,
     'created_at': mCreatedAt,
     'updated_at': mUpdatedAt,
   };
