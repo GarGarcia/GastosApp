@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Constants.colourBackgroundColor,
         backgroundButtonColor: Constants.colourActionPrimary,
         tinte: Tinte.light,
-        title: "Tickets",
+        title: "Perfil",
         showBack: true,
         showMenu: false,
         mListActions: [
@@ -79,6 +79,28 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 15),
             Divider(color: Constants.globalColorNeutral30),
           ],
+        ),
+      ),
+      body: SafeArea(
+        child: GestureDetector(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 50),
+                Text(
+                  "Artero Consultores",
+                  style: Constants.typographyDarkHeadingM,
+                ),
+                Center(
+                  child: Image.network(
+                    "https://media.licdn.com/dms/image/v2/D4D22AQHlLJcv4xsUyw/feedshare-shrink_800/feedshare-shrink_800/0/1731403359709?e=2147483647&v=beta&t=dZpucAOhR7RF6J6i10FFMBg1BH_S4hrawMEPLtiTIBs",
+                    height: 400,
+                    width: 300,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

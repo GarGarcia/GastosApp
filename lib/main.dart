@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
       title: 'MAC Invoice Scanner',
       navigatorObservers: [mRouteObserver],
       theme: ThemeData(
+        brightness: Brightness.light,
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         fontFamily: 'Inter',
