@@ -15,6 +15,8 @@ Future<void> main() async {
   );
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     MultiProvider(

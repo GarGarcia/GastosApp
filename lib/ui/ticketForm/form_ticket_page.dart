@@ -10,19 +10,19 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class FormCountryPage extends StatefulWidget {
-  const FormCountryPage({super.key});
+class FormTicketPage extends StatefulWidget {
+  const FormTicketPage({super.key});
 
   @override
-  State<FormCountryPage> createState() => _FormCountryPageState();
+  State<FormTicketPage> createState() => _FormTicketPageState();
 }
 
-class _FormCountryPageState extends State<FormCountryPage> {
+class _FormTicketPageState extends State<FormTicketPage> {
   final supabase = Supabase.instance.client;
 
   final _formKey = GlobalKey<FormState>();
 
-  Validation mValidation = Validation();
+  Validation _validation = Validation();
 
   late TextEditingController mTicketNameController;
   late TextEditingController mTicketCodeController;
@@ -62,6 +62,158 @@ class _FormCountryPageState extends State<FormCountryPage> {
     mTicketCodeController.dispose();
     mTicketCodeLetterController.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          navigate(context, CustomPage.cameraScreen);
+        },
+        backgroundColor: Constants.colourActionPrimary,
+        child: CustomButton(
+          color: Colors.transparent,
+          width: 50,
+          child: Icon(
+            Icons.camera_alt,
+            color: Constants.colourActionSecondary,
+            size: 25,
+          ),
+        ),
+      ),
+      appBar: NavbarBack(
+        backgroundColor: Constants.colourBackgroundColor,
+        backgroundButtonColor: Constants.colourActionPrimary,
+        tinte: Tinte.light,
+        title:
+            Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
+                    null
+                ? "Nuevo Ticket"
+                : "Editar Ticket",
+        showBack: true,
+        showMenu: false,
+        mListActions: [
+          Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
+                  null
+              ? const SizedBox()
+              : CustomButton(
+                color: Colors.transparent,
+                width: 50,
+                callback: () async {
+                  globalContext = context;
+                  deleteConfirmation(
+                    context: globalContext!,
+                    mTicketName:
+                        Provider.of<GlobalProvider>(
+                          context,
+                          listen: false,
+                        ).mTicket.mTicketModelName!,
+                  );
+                },
+                child: Icon(
+                  TablerIcons.trash,
+                  color: Constants.colourActionPrimary,
+                  size: 25,
+                ),
+              ),
+        ],
+      ),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: RefreshIndicator(
+          backgroundColor: Constants.colourBackgroundColor,
+          color: Constants.colourTextColor,
+          strokeWidth: 3,
+          displacement: 80,
+          onRefresh: () async {
+            if (mounted) {
+              globalContext = context;
+            }
+          },
+          child: SizedBox(
+            height: double.infinity,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Container(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Column(
+                  children: [
+                    Form(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          const SizedBox(width: 20, height: 20),
+                          CustomInput(
+                            title: "Nombre del ticket",
+                            controller: mTicketNameController,
+                            textInputType: TextInputType.text,
+                            validator: (value) {
+                              return _validation.validate(
+                                type: TypeValidation.text,
+                                name: "Nombre del ticket",
+                                value: mTicketNameController.text,
+                                isRequired: true,
+                                min: 3,
+                                max: 80,
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          CustomInput(
+                            title: "Codigo del ticket",
+                            controller: mTicketCodeController,
+                            textInputType: TextInputType.text,
+                            validator: (value) {
+                              return _validation.validate(
+                                type: TypeValidation.numbers,
+                                name: "Código del ticket",
+                                value: mTicketCodeController.text,
+                                isRequired: false,
+                                min: 1,
+                                max: 3,
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          CustomInput(
+                            title: "Codigo de letras del ticket",
+                            controller: mTicketCodeLetterController,
+                            textInputType: TextInputType.text,
+                            validator: (value) {
+                              return _validation.validate(
+                                type: TypeValidation.text,
+                                name: "Código de letras del ticket",
+                                value: mTicketCodeLetterController.text,
+                                isRequired: true,
+                                min: 2,
+                                max: 2,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    CustomButton(
+                      color: Constants.colourActionPrimary,
+                      callback: () async {
+                        _formValidation();
+                      },
+                      child: Text(
+                        'Guardar',
+                        style: Constants.typographyButtonM,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   _formValidation() async {
@@ -226,10 +378,7 @@ class _FormCountryPageState extends State<FormCountryPage> {
             .delete()
             .eq(
               'idx',
-              Provider.of<GlobalProvider>(
-                context,
-                listen: false,
-              ).mTicket.mIdx!,
+              Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx!,
             );
         //Timer(Duration(seconds: 3), () {});
         dialogDismiss();
@@ -240,145 +389,5 @@ class _FormCountryPageState extends State<FormCountryPage> {
       // Show error message if the insertion fails
       customShowToast(globalContext!, 'Error al guardar el ticket: $e');
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: NavbarBack(
-        backgroundColor: Constants.colourBackgroundColor,
-        backgroundButtonColor: Constants.colourActionPrimary,
-        tinte: Tinte.light,
-        title:
-            Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
-                    null
-                ? "Nuevo Ticket"
-                : "Editar Ticket",
-        showBack: true,
-        showMenu: false,
-        mListActions: [
-          Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
-                  null
-              ? const SizedBox()
-              : CustomButton(
-                color: Colors.transparent,
-                width: 50,
-                callback: () async {
-                  globalContext = context;
-                  deleteConfirmation(
-                    context: globalContext!,
-                    mTicketName:
-                        Provider.of<GlobalProvider>(
-                          context,
-                          listen: false,
-                        ).mTicket.mTicketModelName!,
-                  );
-                },
-                child: Icon(
-                  TablerIcons.trash,
-                  color: Constants.colourActionPrimary,
-                  size: 25,
-                ),
-              ),
-        ],
-      ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        child: RefreshIndicator(
-          backgroundColor: Constants.colourBackgroundColor,
-          color: Constants.colourTextColor,
-          strokeWidth: 3,
-          displacement: 80,
-          onRefresh: () async {
-            if (mounted) {
-              globalContext = context;
-            }
-          },
-          child: SizedBox(
-            height: double.infinity,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Container(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Column(
-                  children: [
-                    Form(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          const SizedBox(width: 20, height: 20),
-                          CustomInput(
-                            title: "Nombre del ticket",
-                            controller: mTicketNameController,
-                            textInputType: TextInputType.text,
-                            hint: 'ej: España',
-                            validator: (value) {
-                              return mValidation.validate(
-                                type: TypeValidation.text,
-                                name: "Nombre del ticket",
-                                value: mTicketNameController.text,
-                                isRequired: true,
-                                min: 3,
-                                max: 80,
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          CustomInput(
-                            title: "Codigo del ticket",
-                            controller: mTicketCodeController,
-                            textInputType: TextInputType.text,
-                            hint: 'ej: 34',
-                            validator: (value) {
-                              return mValidation.validate(
-                                type: TypeValidation.numbers,
-                                name: "Código del ticket",
-                                value: mTicketCodeController.text,
-                                isRequired: false,
-                                min: 1,
-                                max: 3,
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          CustomInput(
-                            title: "Codigo de letras del ticket",
-                            controller: mTicketCodeLetterController,
-                            textInputType: TextInputType.text,
-                            hint: 'ej: ES',
-                            validator: (value) {
-                              return mValidation.validate(
-                                type: TypeValidation.text,
-                                name: "Código de letras del ticket",
-                                value: mTicketCodeLetterController.text,
-                                isRequired: true,
-                                min: 2,
-                                max: 2,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    CustomButton(
-                      color: Constants.colourActionPrimary,
-                      callback: () async {
-                        _formValidation();
-                      },
-                      child: Text(
-                        'Guardar',
-                        style: Constants.typographyButtonM,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
