@@ -1,4 +1,5 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
+import 'package:flutte_scanner_empty/ui/ticketForm/camera_screen.dart';
 import 'package:flutte_scanner_empty/ui/ticketForm/form_ticket_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_page.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
@@ -67,7 +68,7 @@ navigate(
     case CustomPage.cameraScreen:
       Navigator.push(
         globalContext!,
-        _goPage(FormTicketPage(), TypeAnimation.transition, 500),
+        _goPage(CameraScreen(), TypeAnimation.transition, 500),
       );
       break;
   }

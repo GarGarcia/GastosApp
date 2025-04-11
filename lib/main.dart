@@ -15,12 +15,14 @@ Future<void> main() async {
   );
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-  
+
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => GlobalProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => GlobalProvider()),
+      ],
       child: const MyApp(),
     ),
   );
