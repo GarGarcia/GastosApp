@@ -22,7 +22,6 @@ dependencies:
   path_provider: ^2.1.5
   path: ^1.9.1
   image_picker: ^1.1.2
-  camera_android_camerax: ^0.6.14+1
   # material_color_utilities: ^0.12.0 --- Incompatible actualmente
 
 dev_dependencies:

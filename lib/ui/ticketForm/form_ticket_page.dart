@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/core/validation.dart';
@@ -7,6 +9,7 @@ import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
 import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -64,12 +67,67 @@ class _FormTicketPageState extends State<FormTicketPage> {
     super.dispose();
   }
 
+  File? _image;
+
+  final _picker = ImagePicker();
+
+  pickImage(option) async {
+    late XFile? pickedFile;
+
+    switch (option) {
+      case "galeria":
+        pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      case "camara":
+        pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    }
+
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      setState(() {});
+    }
+  }
+
+  pickOption() {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Escanear ticket", style: Constants.typographyBlackBodyL),
+          content: SingleChildScrollView(
+            child: Text(
+              'Elije una opción para escanear el ticket',
+              style: Constants.typographyBlackBodyM,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                pickImage("galeria");
+                Navigator.pop(context);
+              },
+              child: const Text("Galeria"),
+            ),
+            TextButton(
+              onPressed: () {
+                pickImage("camara");
+                Navigator.pop(context);
+              },
+              child: const Text("Camara"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          navigate(context, CustomPage.cameraScreen);
+          //navigate(context, CustomPage.cameraScreen);
+          pickOption();
         },
         backgroundColor: Constants.colourActionPrimary,
         child: CustomButton(
@@ -194,6 +252,20 @@ class _FormTicketPageState extends State<FormTicketPage> {
                           ),
                         ],
                       ),
+                    ),
+                    Center(
+                      heightFactor: 1,
+                      child:
+                          _image == null
+                              ? Text(
+                                "Ticket no escaneado",
+                                style: Constants.typographyBlackBodyL,
+                              )
+                              : SizedBox(
+                                height: 300,
+                                width: double.infinity,
+                                child: Image.file(_image!),
+                              ),
                     ),
                     const SizedBox(height: 20),
                     CustomButton(
