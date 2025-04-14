@@ -106,14 +106,20 @@ class _FormTicketPageState extends State<FormTicketPage> {
                 pickImage("galeria");
                 Navigator.pop(context);
               },
-              child: const Text("Galeria"),
+              child: Text("Galeria", style: Constants.typographyBoldM),
             ),
             TextButton(
               onPressed: () {
                 pickImage("camara");
                 Navigator.pop(context);
               },
-              child: const Text("Camara"),
+              child: Text("Camara", style: Constants.typographyBoldM),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Close", style: Constants.typographyDangerBoldM),
             ),
           ],
         );
