@@ -1,5 +1,8 @@
 import 'package:flutte_scanner_empty/core/configurations.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
+import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
+import 'package:flutte_scanner_empty/data/services/api_service.dart';
+import 'package:flutte_scanner_empty/ui/auth/viewmodels/login_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/splash_page.dart';
 import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +25,16 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => GlobalProvider()),
+        ChangeNotifierProvider(
+          create:
+              (_) => LoginViewModel(
+                userRepository: UserRepository(
+                  apiService: ApiService(
+                    baseUrl: Configurations.mWebServiceUrl,
+                  ),
+                ),
+              ),
+        ),
       ],
       child: const MyApp(),
     ),

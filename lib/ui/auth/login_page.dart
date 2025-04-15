@@ -1,10 +1,9 @@
-import 'package:flutte_scanner_empty/core/configurations.dart';
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
-import 'package:flutte_scanner_empty/data/services/api_service.dart';
-import 'package:flutte_scanner_empty/data/models/user_model.dart';
+import 'package:flutte_scanner_empty/ui/auth/viewmodels/login_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,12 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Future<UserModel?>? userData;
-  ApiService apiService = ApiService(baseUrl: Configurations.mWebServiceUrl);
-
-  late String username;
-  late String password;
-
   @override
   void initState() {
     super.initState();
@@ -27,10 +20,11 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final loginViewModel = context.watch<LoginViewModel>();
+
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        // onTapCancel: () => FocusScope.of(context).unfocus(),
         child: RefreshIndicator(
           backgroundColor: Constants.colourBackgroundColor,
           color: Constants.colourTextColor,
@@ -65,10 +59,10 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: "Usuario",
                           border: OutlineInputBorder(),
                         ),
-                        onChanged:
-                            (value) => setState(() {
-                              username = value;
-                            }),
+                        onChanged: (value) => loginViewModel.username = value,
+                            // (value) => setState(() {
+                            //   username = value;
+                            // }),
                       ),
                       // CustomInput(
                       //   title: "Usuario",
@@ -88,9 +82,10 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: true,
                         obscuringCharacter: "*",
                         onChanged:
-                            (value) => setState(() {
-                              password = value;
-                            }),
+                            (value) => loginViewModel.password = value,
+                        // (value) => setState(() {
+                        //   password = value;
+                        // }),
                       ),
                       // CustomInput(
                       //   title: "Contraseña",
@@ -109,33 +104,17 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   color: Constants.colourActionPrimary,
                   callback: () {
-                    // setState(() {
-                    //   userData = apiService.login(username, password);
-                    // });
-
-                    navigate(globalContext!, CustomPage.home);
+                    loginViewModel.login();
+                    Future.delayed(Duration(seconds: 5), () {
+                      navigate(globalContext!, CustomPage.home);
+                    });
                   },
                   child: Text('Siguiente', style: Constants.typographyButtonM),
                 ),
                 const SizedBox(height: 20),
                 Center(
-                  child: FutureBuilder(
-                    future: userData,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return Text("Error ${snapshot.error}");
-                      } else if (snapshot.hasData) {
-                        return Text(
-                          "Token: ${snapshot.data?.accessToken}, Token type: ${snapshot.data?.tokenType}, Expires In: ${snapshot.data?.expiresIn}",
-                        );
-                      } else {
-                        return Text("No hay resultados");
-                      }
-                    },
-                  ),
-                ),
+                  child: loginViewModel.data(),
+                ) 
               ],
             ),
           ),
