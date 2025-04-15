@@ -60,9 +60,6 @@ class _LoginPageState extends State<LoginPage> {
                           border: OutlineInputBorder(),
                         ),
                         onChanged: (value) => loginViewModel.username = value,
-                            // (value) => setState(() {
-                            //   username = value;
-                            // }),
                       ),
                       // CustomInput(
                       //   title: "Usuario",
@@ -83,9 +80,6 @@ class _LoginPageState extends State<LoginPage> {
                         obscuringCharacter: "*",
                         onChanged:
                             (value) => loginViewModel.password = value,
-                        // (value) => setState(() {
-                        //   password = value;
-                        // }),
                       ),
                       // CustomInput(
                       //   title: "Contraseña",

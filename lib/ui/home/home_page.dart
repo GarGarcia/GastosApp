@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
         backgroundColor: Constants.colourBackgroundColor,
         backgroundButtonColor: Constants.colourActionPrimary,
         tinte: Tinte.light,
-        title: "Tickets",
+        title: "Gastos",
         showBack: false,
         showMenu: true,
         mListActions: [

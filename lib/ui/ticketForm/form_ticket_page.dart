@@ -132,7 +132,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //navigate(context, CustomPage.cameraScreen);
           pickOption();
         },
         backgroundColor: Constants.colourActionPrimary,
