@@ -32,11 +32,11 @@ class Validation {
 
     switch (type) {
       case TypeValidation.text: // text and numbers
-        pattern = r"^[A-Za-zÁÉÍÓÚáéíóúñÑ]+$";
+        pattern = r"^[ A-Za-zÁÉÍÓÚáéíóúñÑ]+$";
         message = "$name debe ser solo texto";
         break;
       case TypeValidation.txtnum: // text and numbers
-        pattern = r"^[A-Za-zÁÉÍÓÚáéíóúñÑ0-9]+$";
+        pattern = r"^[ A-Za-zÁÉÍÓÚáéíóúñÑ0-9]+$";
         message = "$name debe ser solo texto y números";
         break;
       case TypeValidation.txtnumWoSpaces: // text and numbers whitout spaces
@@ -64,7 +64,8 @@ class Validation {
         message = "$name debe ser coordenadas válidas";
         break;
       case TypeValidation.date:
-        pattern = r"^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$";
+        pattern =
+            r"^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$";
         message = "$name debe ser una fecha válida";
         break;
       case TypeValidation.phone:
@@ -80,11 +81,13 @@ class Validation {
         message = "$name debe ser texto, números y caracteres especiales";
         break;
       case TypeValidation.datetime:
-        pattern = r"^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$";
+        pattern =
+            r"^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$";
         message = "$name debe ser una fecha y hora válida";
         break;
       case TypeValidation.ip:
-        pattern = r"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+        pattern =
+            r"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
         message = "$name debe ser una IP válida";
         break;
       case TypeValidation.email:

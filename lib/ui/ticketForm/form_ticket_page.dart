@@ -27,43 +27,43 @@ class _FormTicketPageState extends State<FormTicketPage> {
 
   Validation _validation = Validation();
 
-  late TextEditingController mTicketNameController;
-  late TextEditingController mTicketCodeController;
-  late TextEditingController mTicketCodeLetterController;
+  late TextEditingController mTicketImportController;
+  late TextEditingController mTicketClientController;
+  late TextEditingController mTicketDescriptionController;
 
   @override
   void initState() {
     super.initState();
 
-    mTicketNameController = TextEditingController();
-    mTicketCodeController = TextEditingController();
-    mTicketCodeLetterController = TextEditingController();
+    mTicketImportController = TextEditingController();
+    mTicketClientController = TextEditingController();
+    mTicketDescriptionController = TextEditingController();
 
-    mTicketNameController.text =
+    mTicketImportController.text =
         Provider.of<GlobalProvider>(
           context,
           listen: false,
-        ).mTicket.mTicketModelName ??
+        ).mTicket.mTicketModelImport ??
         '';
-    mTicketCodeController.text =
+    mTicketClientController.text =
         Provider.of<GlobalProvider>(
           context,
           listen: false,
-        ).mTicket.mTicketModelCode ??
+        ).mTicket.mTicketModelClient ??
         '';
-    mTicketCodeLetterController.text =
+    mTicketDescriptionController.text =
         Provider.of<GlobalProvider>(
           context,
           listen: false,
-        ).mTicket.mTicketModelCodeLetter ??
+        ).mTicket.mTicketModelDescription ??
         '';
   }
 
   @override
   void dispose() {
-    mTicketNameController.dispose();
-    mTicketCodeController.dispose();
-    mTicketCodeLetterController.dispose();
+    mTicketImportController.dispose();
+    mTicketClientController.dispose();
+    mTicketDescriptionController.dispose();
     super.dispose();
   }
 
@@ -127,6 +127,22 @@ class _FormTicketPageState extends State<FormTicketPage> {
     );
   }
 
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,8 +168,8 @@ class _FormTicketPageState extends State<FormTicketPage> {
         title:
             Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
                     null
-                ? "Nuevo Ticket"
-                : "Editar Ticket",
+                ? "Nuevo Gasto"
+                : "Editar Gasto",
         showBack: true,
         showMenu: false,
         mListActions: [
@@ -171,7 +187,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                         Provider.of<GlobalProvider>(
                           context,
                           listen: false,
-                        ).mTicket.mTicketModelName!,
+                        ).mTicket.mTicketModelClient!,
                   );
                 },
                 child: Icon(
@@ -208,50 +224,79 @@ class _FormTicketPageState extends State<FormTicketPage> {
                       child: Column(
                         children: [
                           const SizedBox(width: 20, height: 20),
-                          CustomInput(
-                            title: "Nombre del ticket",
-                            controller: mTicketNameController,
-                            textInputType: TextInputType.text,
-                            validator: (value) {
-                              return _validation.validate(
-                                type: TypeValidation.text,
-                                name: "Nombre del ticket",
-                                value: mTicketNameController.text,
-                                isRequired: true,
-                                min: 3,
-                                max: 80,
-                              );
-                            },
+                          Row(
+                            spacing: 22,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                    color: Constants.colourActionPrimary,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text("Fecha: $selectedDate"),
+                                ),
+                              ),
+                              const SizedBox(height: 30),
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: WidgetStateProperty.all(
+                                    Constants.colourActionPrimary,
+                                  ),
+                                  foregroundColor: WidgetStateProperty.all(
+                                    Constants.colourTextDefault,
+                                  ),
+                                ),
+                                onPressed: () => _selectDate(context),
+                                child: const Text('Seleccionar fecha'),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 10),
                           CustomInput(
-                            title: "Codigo del ticket",
-                            controller: mTicketCodeController,
-                            textInputType: TextInputType.text,
+                            title: "Importe",
+                            controller: mTicketImportController,
+                            textInputType: TextInputType.numberWithOptions(
+                              decimal: true,
+                            ),
                             validator: (value) {
                               return _validation.validate(
                                 type: TypeValidation.numbers,
-                                name: "Código del ticket",
-                                value: mTicketCodeController.text,
-                                isRequired: false,
-                                min: 1,
-                                max: 3,
+                                name: "Importe",
+                                value: mTicketImportController.text,
+                                isRequired: true,
+                                max: 15,
                               );
                             },
                           ),
                           const SizedBox(height: 10),
                           CustomInput(
-                            title: "Codigo de letras del ticket",
-                            controller: mTicketCodeLetterController,
+                            title: "Cliente",
+                            controller: mTicketClientController,
                             textInputType: TextInputType.text,
                             validator: (value) {
                               return _validation.validate(
                                 type: TypeValidation.text,
-                                name: "Código de letras del ticket",
-                                value: mTicketCodeLetterController.text,
+                                name: "Cliente",
+                                value: mTicketClientController.text,
                                 isRequired: true,
-                                min: 2,
-                                max: 2,
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          CustomInput(
+                            title: "Descripción",
+                            controller: mTicketDescriptionController,
+                            textInputType: TextInputType.text,
+                            validator: (value) {
+                              return _validation.validate(
+                                type: TypeValidation.text,
+                                name: "Descripción",
+                                value: mTicketDescriptionController.text,
+                                isRequired: false,
                               );
                             },
                           ),
@@ -298,7 +343,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
     if (!_formKey.currentState!.validate()) {
       _clear();
     } else {
-      if (mTicketNameController.text.isEmpty) {
+      if (mTicketImportController.text.isEmpty) {
         customShowToast(globalContext!, 'Por favor, complete todos los campos');
         return;
       }
@@ -309,22 +354,26 @@ class _FormTicketPageState extends State<FormTicketPage> {
         if (Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
             null) {
           progressDialogShow(globalContext!);
-          await supabase.from('countries').insert({
-            'country_name': mTicketNameController.text,
-            'country_code': mTicketCodeController.text,
-            'country_code_letter': mTicketCodeLetterController.text,
+          await supabase.from('gastos').insert({
+            'created_at':
+                "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
+            'import': mTicketImportController.text,
+            'client': mTicketClientController.text,
+            'description': mTicketDescriptionController.text,
           });
           dialogDismiss();
 
-          customShowToast(globalContext!, 'País creado exitosamente');
+          customShowToast(globalContext!, 'Gasto creado exitosamente');
         } else {
           progressDialogShow(globalContext!);
           await supabase
-              .from('countries')
+              .from('gastos')
               .update({
-                'country_name': mTicketNameController.text,
-                'country_code': mTicketCodeController.text,
-                'country_code_letter': mTicketCodeLetterController.text,
+                'created_at':
+                    "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
+                'import': mTicketImportController.text,
+                'client': mTicketClientController.text,
+                'description': mTicketDescriptionController.text,
               })
               .eq(
                 'idx',
@@ -335,19 +384,19 @@ class _FormTicketPageState extends State<FormTicketPage> {
               );
           dialogDismiss();
 
-          customShowToast(globalContext!, 'País actualizado exitosamente');
+          customShowToast(globalContext!, 'Gasto actualizado exitosamente');
         }
 
         Navigator.of(globalContext!).pop();
 
-        mTicketNameController.clear();
-        mTicketCodeController.clear();
-        mTicketCodeLetterController.clear();
+        mTicketImportController.clear();
+        mTicketClientController.clear();
+        mTicketDescriptionController.clear();
       } catch (e) {
         globalContext = context;
-        ScaffoldMessenger.of(
-          globalContext!,
-        ).showSnackBar(SnackBar(content: Text('Error al guardar el país: $e')));
+        ScaffoldMessenger.of(globalContext!).showSnackBar(
+          SnackBar(content: Text('Error al guardar el gasto: $e')),
+        );
       }
     }
 
@@ -386,7 +435,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  'Eliminar ticket',
+                  'Eliminar gasto',
                   style: Constants.typographyHeadingM,
                   textAlign: TextAlign.center,
                 ),
@@ -394,7 +443,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
               const SizedBox(height: 10),
               SizedBox(
                 child: Text(
-                  '¿Quieres eliminar el ticket? ',
+                  '¿Quieres eliminar el gasto?',
                   style: Constants.typographyBodyM,
                   textAlign: TextAlign.center,
                 ),
@@ -446,12 +495,12 @@ class _FormTicketPageState extends State<FormTicketPage> {
       if (Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
           null) {
         // alert
-        customShowToast(globalContext!, 'No fue posible eliminar el ticket');
+        customShowToast(globalContext!, 'No fue posible eliminar el gasto');
       } else {
         // update country into the 'countries' table
         progressDialogShow(globalContext!);
         await supabase
-            .from('countries')
+            .from('gastos')
             .delete()
             .eq(
               'idx',
@@ -460,11 +509,11 @@ class _FormTicketPageState extends State<FormTicketPage> {
         //Timer(Duration(seconds: 3), () {});
         dialogDismiss();
 
-        customShowToast(globalContext!, 'Ticket eliminado exitosamente');
+        customShowToast(globalContext!, 'Gasto eliminado exitosamente');
       }
     } catch (e) {
       // Show error message if the insertion fails
-      customShowToast(globalContext!, 'Error al guardar el ticket: $e');
+      customShowToast(globalContext!, 'Error al guardar el gasto: $e');
     }
   }
 }

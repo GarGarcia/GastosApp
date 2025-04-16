@@ -1,5 +1,4 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
-import 'package:flutte_scanner_empty/ui/ticketForm/camera_screen.dart';
 import 'package:flutte_scanner_empty/ui/ticketForm/form_ticket_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_page.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
@@ -12,7 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:overlay_loading_progress/overlay_loading_progress.dart';
 
-enum CustomPage { splash, home, formCountry, loginPage, profilePage, cameraScreen }
+enum CustomPage { splash, home, formCountry, loginPage, profilePage }
 
 enum TypeAnimation { transition }
 
@@ -63,12 +62,6 @@ navigate(
       Navigator.push(
         globalContext!,
         _goPage(const ProfilePage(), TypeAnimation.transition, 500),
-      );
-      break;
-    case CustomPage.cameraScreen:
-      Navigator.push(
-        globalContext!,
-        _goPage(CameraScreen(), TypeAnimation.transition, 500),
       );
       break;
   }

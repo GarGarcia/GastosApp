@@ -35,29 +35,26 @@ class Tickets {
 
 class TicketModel {
   String? mIdx;
-  String? mTicketModelName;
-  String? mTicketModelCodeLetter;
-  String? mTicketModelCode;
-  String? mTicketModelFlagUrl;
+  String? mTicketModelImport;
+  String? mTicketModelClient;
+  String? mTicketModelDescription;
   DateTime? mCreatedAt;
   DateTime? mUpdatedAt;
 
   TicketModel({
     mIdx,
-    mTicketModelName,
-    mTicketModelCodeLetter,
-    mTicketModelCode,
-    mTicketModelFlagUrl,
+    mTicketModelImport,
+    mTicketModelClient,
+    mTicketModelDescription,
     mCreatedAt,
     mUpdatedAt,
   });
 
   TicketModel.fromJsonMap(Map<String, dynamic> json) {
     mIdx = json['idx'];
-    mTicketModelName = json['country_name'];
-    mTicketModelCodeLetter = json['country_code_letter'];
-    mTicketModelCode = json['country_code'];
-    mTicketModelFlagUrl = json['country_flag_url'];
+    mTicketModelImport = json['import'];
+    mTicketModelClient = json['client'];
+    mTicketModelDescription = json['description'];
     mCreatedAt = json['created_at'] == null ? null : DateTime.parse(json['created_at']);
     mUpdatedAt = json['updated_at'] == null ? null : DateTime.parse(json['updated_at']);
   }
@@ -68,10 +65,9 @@ class TicketModel {
 
   Map<String, dynamic> _toJsonMap() => {
     'idx': mIdx,
-    'country_name': mTicketModelName,
-    'country_code_letter': mTicketModelCodeLetter,
-    'country_code': mTicketModelCode,
-    'country_flag_url': mTicketModelFlagUrl,
+    'import': mTicketModelImport,
+    'client': mTicketModelClient,
+    'description': mTicketModelDescription,
     'created_at': mCreatedAt,
     'updated_at': mUpdatedAt,
   };

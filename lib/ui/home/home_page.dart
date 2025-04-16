@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       FocusScope.of(context).requestFocus(FocusNode());
-      getCountries();
+      getGastos();
     });
   }
 
@@ -65,15 +65,15 @@ class _HomePageState extends State<HomePage> with RouteAware {
   @override
   void didPopNext() {
     print('HomePage es ahora visible');
-    getCountries();
+    getGastos();
   }
 
-  getCountries() async {
+  getGastos() async {
     // Get a reference your Supabase client
     final mSupabase = Supabase.instance.client;
 
     progressDialogShow(globalContext!);
-    final mResult = await mSupabase.from('countries').select();
+    final mResult = await mSupabase.from('gastos').select();
     dialogDismiss();
     log("==> mResult: $mResult");
 
@@ -179,7 +179,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
           onRefresh: () async {
             if (mounted) {
               globalContext = context;
-              getCountries();
+              getGastos();
             }
           },
           child: SizedBox(
@@ -229,6 +229,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                                         listen: false,
                                       ).mTicket =
                                       mTickets.items[index];
+
                                   navigate(
                                     globalContext!,
                                     CustomPage.formCountry,
@@ -266,13 +267,13 @@ class _HomePageState extends State<HomePage> with RouteAware {
                                             Text(
                                               mTickets
                                                   .items[index]
-                                                  .mTicketModelName!,
+                                                  .mTicketModelClient!,
                                               style: Constants.typographyBoldM,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             Text(
-                                              "Código ${mTickets.items[index].mTicketModelCode}",
+                                              "Importe: ${mTickets.items[index].mTicketModelImport}",
                                               style: Constants.typographyBodyM,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
