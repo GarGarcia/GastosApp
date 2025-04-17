@@ -1,6 +1,6 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
-import 'package:flutte_scanner_empty/ui/auth/viewmodels/login_viewmodel.dart';
+import 'package:flutte_scanner_empty/ui/auth/login_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

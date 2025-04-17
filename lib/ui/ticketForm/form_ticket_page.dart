@@ -27,7 +27,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
 
   Validation _validation = Validation();
 
-  late TextEditingController mTicketImportController;
+  double? importInput;
   late TextEditingController mTicketClientController;
   late TextEditingController mTicketDescriptionController;
 
@@ -35,16 +35,12 @@ class _FormTicketPageState extends State<FormTicketPage> {
   void initState() {
     super.initState();
 
-    mTicketImportController = TextEditingController();
+    importInput = 0;
     mTicketClientController = TextEditingController();
     mTicketDescriptionController = TextEditingController();
 
-    mTicketImportController.text =
-        Provider.of<GlobalProvider>(
-          context,
-          listen: false,
-        ).mTicket.mTicketModelImport ??
-        '';
+    importInput = Provider.of<GlobalProvider>(context).mTicket.mTicketModelImport;
+
     mTicketClientController.text =
         Provider.of<GlobalProvider>(
           context,
@@ -61,7 +57,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
 
   @override
   void dispose() {
-    mTicketImportController.dispose();
     mTicketClientController.dispose();
     mTicketDescriptionController.dispose();
     super.dispose();
@@ -258,7 +253,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
                           const SizedBox(height: 10),
                           CustomInput(
                             title: "Importe",
-                            controller: mTicketImportController,
                             textInputType: TextInputType.numberWithOptions(
                               decimal: true,
                             ),
@@ -266,7 +260,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                               return _validation.validate(
                                 type: TypeValidation.numbers,
                                 name: "Importe",
-                                value: mTicketImportController.text,
+                                value: value,
                                 isRequired: true,
                                 max: 15,
                               );
@@ -343,7 +337,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
     if (!_formKey.currentState!.validate()) {
       _clear();
     } else {
-      if (mTicketImportController.text.isEmpty) {
+      if (importInput == null) {
         customShowToast(globalContext!, 'Por favor, complete todos los campos');
         return;
       }
@@ -357,7 +351,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
           await supabase.from('gastos').insert({
             'created_at':
                 "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
-            'import': mTicketImportController.text,
+            'import': importInput,
             'client': mTicketClientController.text,
             'description': mTicketDescriptionController.text,
           });
@@ -371,7 +365,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
               .update({
                 'created_at':
                     "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
-                'import': mTicketImportController.text,
+                'import': importInput,
                 'client': mTicketClientController.text,
                 'description': mTicketDescriptionController.text,
               })
@@ -389,7 +383,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
 
         Navigator.of(globalContext!).pop();
 
-        mTicketImportController.clear();
         mTicketClientController.clear();
         mTicketDescriptionController.clear();
       } catch (e) {
@@ -471,7 +464,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                       width: double.infinity,
                       color: Constants.colourActionPrimary,
                       callback: () {
-                        deleteCountry();
+                        deleteGasto();
                         Navigator.pop(globalContext!);
                         Navigator.pop(globalContext!);
                       },
@@ -490,7 +483,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
     );
   }
 
-  deleteCountry() async {
+  deleteGasto() async {
     try {
       if (Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
           null) {

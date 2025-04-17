@@ -1,4 +1,7 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
+import 'package:flutte_scanner_empty/data/repository/ticket_repository.dart';
+import 'package:flutte_scanner_empty/data/services/local_service.dart';
+import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/ticketForm/form_ticket_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_page.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
@@ -18,6 +21,10 @@ enum TypeAnimation { transition }
 enum Preference { onboarding }
 
 BuildContext? globalContext;
+
+HomeViewModel homeViewModel = HomeViewModel(
+  ticketRepository: TicketRepository(localService: LocalService()),
+);
 
 final RouteObserver<ModalRoute<void>> mRouteObserver =
     RouteObserver<ModalRoute<void>>();
@@ -42,7 +49,11 @@ navigate(
     case CustomPage.home:
       Navigator.pushAndRemoveUntil(
         globalContext!,
-        _goPage(const HomePage(), TypeAnimation.transition, 500),
+        _goPage(
+          HomePage(homeViewModel: homeViewModel,),
+          TypeAnimation.transition,
+          500,
+        ),
         (Route<dynamic> route) => false,
       );
       break;

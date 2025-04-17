@@ -1,8 +1,11 @@
 import 'package:flutte_scanner_empty/core/configurations.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
+import 'package:flutte_scanner_empty/data/repository/ticket_repository.dart';
 import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
 import 'package:flutte_scanner_empty/data/services/api_service.dart';
-import 'package:flutte_scanner_empty/ui/auth/viewmodels/login_viewmodel.dart';
+import 'package:flutte_scanner_empty/data/services/local_service.dart';
+import 'package:flutte_scanner_empty/ui/auth/login_viewmodel.dart';
+import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/splash_page.dart';
 import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +38,14 @@ Future<void> main() async {
                 ),
               ),
         ),
+        ChangeNotifierProvider(
+          create:
+              (_) => HomeViewModel(
+                ticketRepository: TicketRepository(
+                  localService: LocalService(),
+                ),
+              ),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -52,7 +63,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'MAC Invoice Scanner',
+      title: 'MAC GastosApp',
       navigatorObservers: [mRouteObserver],
       theme: ThemeData(
         brightness: Brightness.light,

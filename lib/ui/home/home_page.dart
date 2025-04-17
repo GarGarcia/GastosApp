@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/data/models/ticket_model.dart';
+import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_drawer_label.dart';
 import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
@@ -10,10 +11,10 @@ import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final HomeViewModel homeViewModel;
+  const HomePage({super.key, required this.homeViewModel});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,7 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with RouteAware {
   String mOnBoarding = '';
-  Tickets mTickets = Tickets();
+  List<TicketModel> mTickets = [];
 
   @override
   void initState() {
@@ -69,15 +70,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
   }
 
   getGastos() async {
-    // Get a reference your Supabase client
-    final mSupabase = Supabase.instance.client;
 
     progressDialogShow(globalContext!);
-    final mResult = await mSupabase.from('gastos').select();
+    await widget.homeViewModel.getGastos();
     dialogDismiss();
-    log("==> mResult: $mResult");
-
-    mTickets = Tickets.fromJsonList(mResult);
+    
+    mTickets = widget.homeViewModel.ticketList;
 
     setState(() {});
   }
@@ -190,7 +188,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                 child: Column(
                   children: [
                     const SizedBox(width: 20, height: 20),
-                    mTickets.items.isEmpty
+                    mTickets.isEmpty
                         ? Container(
                           margin: const EdgeInsets.only(
                             top: 20,
@@ -207,7 +205,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                         : ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: mTickets.items.length,
+                          itemCount: mTickets.length,
                           itemBuilder: (context, index) {
                             return Card(
                               margin: const EdgeInsets.only(
@@ -228,7 +226,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                                         context,
                                         listen: false,
                                       ).mTicket =
-                                      mTickets.items[index];
+                                      mTickets[index];
 
                                   navigate(
                                     globalContext!,
@@ -266,14 +264,14 @@ class _HomePageState extends State<HomePage> with RouteAware {
                                           children: [
                                             Text(
                                               mTickets
-                                                  .items[index]
+                                                  [index]
                                                   .mTicketModelClient!,
                                               style: Constants.typographyBoldM,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             Text(
-                                              "Importe: ${mTickets.items[index].mTicketModelImport}",
+                                              "Importe: ${mTickets[index].mTicketModelImport}",
                                               style: Constants.typographyBodyM,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,

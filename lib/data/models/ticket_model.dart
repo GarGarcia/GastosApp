@@ -3,39 +3,9 @@
 
 import 'dart:convert';
 
-class Tickets {
-  List<TicketModel> items = [];
-
-  Tickets();
-
-  Tickets.fromJsonList(List<dynamic>? jsonList) {
-    if (jsonList == null) {
-      return;
-    } else {
-      for (var item in jsonList) {
-        final mTicketModel = TicketModel.fromJsonMap(item);
-        items.add(mTicketModel);
-      }
-    }
-  }
-
-  String toArrayJson() {
-    String jsonArray = '';
-    for (var i = 0; i < items.length; i++) {
-      jsonArray += items[i].toJson();
-
-      if ((i + 1) < items.length) {
-        jsonArray += ", ";
-      }
-    }
-
-    return jsonArray = '[$jsonArray]';
-  }
-}
-
 class TicketModel {
   String? mIdx;
-  String? mTicketModelImport;
+  double? mTicketModelImport;
   String? mTicketModelClient;
   String? mTicketModelDescription;
   DateTime? mCreatedAt;
