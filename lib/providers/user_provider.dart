@@ -1,6 +1,7 @@
 import 'package:flutte_scanner_empty/core/configurations.dart';
 import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
 import 'package:flutte_scanner_empty/data/services/api_service.dart';
+import 'package:flutte_scanner_empty/data/services/auth_service.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_viewmodel.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ class UserProvider extends StatelessWidget {
     return ChangeNotifierProvider(
       create:
           (_) => LoginViewModel(
+            AuthService(),
             userRepository: UserRepository(
               apiService: ApiService(baseUrl: Configurations.mWebServiceUrl),
             ),

@@ -1,15 +1,17 @@
 
 import 'package:flutte_scanner_empty/data/models/ticket_model.dart';
 import 'package:flutte_scanner_empty/data/repository/ticket_repository.dart';
+import 'package:flutte_scanner_empty/data/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ChangeNotifier with RouteAware {
   final TicketRepository ticketRepository;
+  final AuthService authService;
 
   List<TicketModel> ticketList = [];
   bool isLoading = false;
 
-  HomeViewModel({required this.ticketRepository});
+  HomeViewModel(this.authService, {required this.ticketRepository});
 
   Future<void> getGastos() async {
     isLoading = true;
@@ -24,5 +26,9 @@ class HomeViewModel extends ChangeNotifier with RouteAware {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  void logOut () async {
+    await authService.signOut();
   }
 }

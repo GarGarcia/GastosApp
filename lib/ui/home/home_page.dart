@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      FocusScope.of(context).requestFocus(FocusNode());
+      // FocusScope.of(context).requestFocus(FocusNode());
       getGastos();
     });
   }
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    mRouteObserver.subscribe(this, ModalRoute.of(context)!);
+    // mRouteObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
   @override
@@ -142,7 +142,10 @@ class _HomePageState extends State<HomePage> with RouteAware {
             Divider(color: Constants.globalColorNeutral30),
             const SizedBox(height: 15),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                widget.homeViewModel.logOut();
+                Navigator.pop(context);
+              },
               child: Row(
                 children: [
                   Container(

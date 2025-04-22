@@ -1,5 +1,6 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/data/repository/ticket_repository.dart';
+import 'package:flutte_scanner_empty/data/services/auth_service.dart';
 import 'package:flutte_scanner_empty/data/services/local_service.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/ticketForm/form_ticket_page.dart';
@@ -23,6 +24,7 @@ enum Preference { onboarding }
 BuildContext? globalContext;
 
 HomeViewModel homeViewModel = HomeViewModel(
+  AuthService(),
   ticketRepository: TicketRepository(localService: LocalService()),
 );
 
@@ -50,7 +52,7 @@ navigate(
       Navigator.pushAndRemoveUntil(
         globalContext!,
         _goPage(
-          HomePage(homeViewModel: homeViewModel,),
+          HomePage(homeViewModel: homeViewModel),
           TypeAnimation.transition,
           500,
         ),

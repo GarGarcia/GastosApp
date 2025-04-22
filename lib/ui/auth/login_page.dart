@@ -1,7 +1,9 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
+import 'package:flutte_scanner_empty/core/validation.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
+import 'package:flutte_scanner_empty/ui/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Validation _validation = Validation();
+
   @override
   void initState() {
     super.initState();
@@ -54,43 +58,53 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       const SizedBox(width: 20, height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "Usuario",
-                          border: OutlineInputBorder(),
-                        ),
-                        onChanged: (value) => loginViewModel.username = value,
-                      ),
-                      // CustomInput(
-                      //   title: "Usuario",
-                      //   textInputType: TextInputType.text,
-                      //   validator: (value) {
-                      //     setState(() {
-                      //       username = value;
-                      //     });
-                      //   },
+                      // TextField(
+                      //   decoration: InputDecoration(
+                      //     hintText: "Usuario",
+                      //     border: OutlineInputBorder(),
+                      //   ),
+                      //   onChanged: (value) => loginViewModel.username = value,
                       // ),
+                      CustomInput(
+                        title: "Usuario",
+                        textInputType: TextInputType.text,
+                        validator: (value) {
+                          loginViewModel.username = value;
+                          return _validation.validate(
+                            type: TypeValidation.email,
+                            name: "Usuario",
+                            value: value,
+                            isRequired: true,
+                            max: 30,
+                          );
+                        },
+                      ),
                       const SizedBox(height: 10),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          border: OutlineInputBorder(),
-                        ),
-                        obscureText: true,
-                        obscuringCharacter: "*",
-                        onChanged:
-                            (value) => loginViewModel.password = value,
-                      ),
-                      // CustomInput(
-                      //   title: "Contraseña",
-                      //   textInputType: TextInputType.text,
-                      //   validator: (value) {
-                      //     setState(() {
-                      //       password = value;
-                      //     });
-                      //   },
-                      //   obscurePassword: true,
+                      // TextField(
+                      //   decoration: InputDecoration(
+                      //     hintText: "Password",
+                      //     border: OutlineInputBorder(),
+                      //   ),
+                      //   obscureText: true,
+                      //   obscuringCharacter: "*",
+                      //   onChanged:
+                      //       (value) => loginViewModel.password = value,
                       // ),
+                      CustomInput(
+                        title: "Contraseña",
+                        textInputType: TextInputType.text,
+                        validator: (value) {
+                          loginViewModel.password = value;
+                          return _validation.validate(
+                            type: TypeValidation.txtnum,
+                            name: "Contraseña",
+                            value: value,
+                            isRequired: true,
+                            max: 30,
+                          );
+                        },
+                        obscurePassword: true,
+                      ),
                     ],
                   ),
                 ),
@@ -98,17 +112,15 @@ class _LoginPageState extends State<LoginPage> {
                 CustomButton(
                   color: Constants.colourActionPrimary,
                   callback: () {
-                    loginViewModel.login();
-                    Future.delayed(Duration(seconds: 5), () {
-                      navigate(globalContext!, CustomPage.home);
-                    });
+                    loginViewModel.login(context);
+                    // Future.delayed(Duration(seconds: 5), () {
+                    //   navigate(globalContext!, CustomPage.home);
+                    // });
                   },
                   child: Text('Siguiente', style: Constants.typographyButtonM),
                 ),
                 const SizedBox(height: 20),
-                Center(
-                  child: loginViewModel.data(),
-                ) 
+                Center(child: loginViewModel.data()),
               ],
             ),
           ),
