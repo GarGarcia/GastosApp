@@ -31,4 +31,8 @@ class HomeViewModel extends ChangeNotifier with RouteAware {
   void logOut () async {
     await authService.signOut();
   }
+
+  String? getEmail () {
+    return authService.getCurrentUserEmail();
+  }
 }

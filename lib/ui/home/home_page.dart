@@ -144,7 +144,9 @@ class _HomePageState extends State<HomePage> with RouteAware {
             TextButton(
               onPressed: () {
                 widget.homeViewModel.logOut();
-                Navigator.pop(context);
+                globalContext = context;
+                Navigator.pop(globalContext!);
+                navigate(globalContext!, CustomPage.loginPage);
               },
               child: Row(
                 children: [
@@ -303,6 +305,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                             );
                           },
                         ),
+                        SizedBox(height: 40,),
+                        Text(widget.homeViewModel.getEmail() ?? "No hay email")
                   ],
                 ),
               ),

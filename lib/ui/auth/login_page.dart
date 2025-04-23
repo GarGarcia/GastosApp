@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                         validator: (value) {
                           loginViewModel.password = value;
                           return _validation.validate(
-                            type: TypeValidation.txtnum,
+                            type: TypeValidation.pass,
                             name: "Contraseña",
                             value: value,
                             isRequired: true,

@@ -15,6 +15,7 @@ enum TypeValidation {
   ip,
   email,
   rut,
+  pass,
 }
 
 class Validation {
@@ -39,6 +40,10 @@ class Validation {
         pattern = r"^[ A-Za-zÁÉÍÓÚáéíóúñÑ0-9]+$";
         message = "$name debe ser solo texto y números";
         break;
+      case TypeValidation.pass: // text and numbers
+        pattern = r"^[$.A-Za-zÁÉÍÓÚáéíóúñÑ0-9]+$";
+        message = "$name debe ser solo texto y números";
+        break;  
       case TypeValidation.txtnumWoSpaces: // text and numbers whitout spaces
         pattern = r"^[A-Za-zÁÉÍÓÚáéíóúñÑ0-9]+$";
         message = "$name debe ser solo texto y números sin espacios";

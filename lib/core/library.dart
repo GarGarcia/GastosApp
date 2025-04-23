@@ -2,6 +2,7 @@ import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/data/repository/ticket_repository.dart';
 import 'package:flutte_scanner_empty/data/services/auth_service.dart';
 import 'package:flutte_scanner_empty/data/services/local_service.dart';
+import 'package:flutte_scanner_empty/ui/auth/auth_gate.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/ticketForm/form_ticket_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_page.dart';
@@ -15,7 +16,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:overlay_loading_progress/overlay_loading_progress.dart';
 
-enum CustomPage { splash, home, formCountry, loginPage, profilePage }
+enum CustomPage { splash, home, formCountry, loginPage, profilePage, authGate }
 
 enum TypeAnimation { transition }
 
@@ -77,6 +78,12 @@ navigate(
         _goPage(const ProfilePage(), TypeAnimation.transition, 500),
       );
       break;
+    case CustomPage.authGate:
+      Navigator.push(
+        globalContext!,
+        _goPage(AuthGate(), TypeAnimation.transition, 500),
+      );
+      break;  
   }
 }
 
