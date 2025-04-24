@@ -41,87 +41,90 @@ class _LoginPageState extends State<LoginPage> {
           },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Text("¡Bienvenido!", style: Constants.typographyDarkHeadingM),
-                const SizedBox(height: 20),
-                Text(
-                  "Para acceder a la aplicación, introduce usuario y contraseña.",
-                  style: Constants.typographyBlackBodyM,
-                ),
-                const SizedBox(height: 10),
-                Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  child: Column(
-                    children: [
-                      const SizedBox(width: 20, height: 20),
-                      // TextField(
-                      //   decoration: InputDecoration(
-                      //     hintText: "Usuario",
-                      //     border: OutlineInputBorder(),
-                      //   ),
-                      //   onChanged: (value) => loginViewModel.username = value,
-                      // ),
-                      CustomInput(
-                        title: "Usuario",
-                        textInputType: TextInputType.text,
-                        validator: (value) {
-                          loginViewModel.username = value;
-                          return _validation.validate(
-                            type: TypeValidation.email,
-                            name: "Usuario",
-                            value: value,
-                            isRequired: true,
-                            max: 30,
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      // TextField(
-                      //   decoration: InputDecoration(
-                      //     hintText: "Password",
-                      //     border: OutlineInputBorder(),
-                      //   ),
-                      //   obscureText: true,
-                      //   obscuringCharacter: "*",
-                      //   onChanged:
-                      //       (value) => loginViewModel.password = value,
-                      // ),
-                      CustomInput(
-                        title: "Contraseña",
-                        textInputType: TextInputType.text,
-                        validator: (value) {
-                          loginViewModel.password = value;
-                          return _validation.validate(
-                            type: TypeValidation.pass,
-                            name: "Contraseña",
-                            value: value,
-                            isRequired: true,
-                            max: 30,
-                          );
-                        },
-                        obscurePassword: true,
-                      ),
-                    ],
+            child: Container(
+              padding: EdgeInsets.all(20),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Text("¡Bienvenido!", style: Constants.typographyDarkHeadingM),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Para acceder a la aplicación, introduce usuario y contraseña.",
+                    style: Constants.typographyBlackBodyM,
                   ),
-                ),
-                const SizedBox(height: 50),
-                CustomButton(
-                  color: Constants.colourActionPrimary,
-                  callback: () {
-                    loginViewModel.login(context);
-                    // Future.delayed(Duration(seconds: 5), () {
-                    //   navigate(globalContext!, CustomPage.home);
-                    // });
-                  },
-                  child: Text('Siguiente', style: Constants.typographyButtonM),
-                ),
-                const SizedBox(height: 20),
-                Center(child: loginViewModel.data()),
-              ],
+                  const SizedBox(height: 10),
+                  Form(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        // TextField(
+                        //   decoration: InputDecoration(
+                        //     hintText: "Usuario",
+                        //     border: OutlineInputBorder(),
+                        //   ),
+                        //   onChanged: (value) => loginViewModel.username = value,
+                        // ),
+                        CustomInput(
+                          title: "Usuario",
+                          textInputType: TextInputType.text,
+                          validator: (value) {
+                            loginViewModel.username = value;
+                            return _validation.validate(
+                              type: TypeValidation.email,
+                              name: "Usuario",
+                              value: value,
+                              isRequired: true,
+                              max: 30,
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        // TextField(
+                        //   decoration: InputDecoration(
+                        //     hintText: "Password",
+                        //     border: OutlineInputBorder(),
+                        //   ),
+                        //   obscureText: true,
+                        //   obscuringCharacter: "*",
+                        //   onChanged:
+                        //       (value) => loginViewModel.password = value,
+                        // ),
+                        CustomInput(
+                          title: "Contraseña",
+                          textInputType: TextInputType.text,
+                          validator: (value) {
+                            loginViewModel.password = value;
+                            return _validation.validate(
+                              type: TypeValidation.pass,
+                              name: "Contraseña",
+                              value: value,
+                              isRequired: true,
+                              max: 30,
+                            );
+                          },
+                          obscurePassword: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  CustomButton(
+                    color: Constants.colourActionPrimary,
+                    callback: () {
+                      loginViewModel.login(context);
+                    },
+                    child: Text(
+                      'Siguiente',
+                      style: Constants.typographyButtonM,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Center(child: loginViewModel.data()),
+                ],
+              ),
             ),
           ),
         ),

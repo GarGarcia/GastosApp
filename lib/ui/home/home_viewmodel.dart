@@ -1,12 +1,12 @@
 
 import 'package:flutte_scanner_empty/data/models/ticket_model.dart';
 import 'package:flutte_scanner_empty/data/repository/ticket_repository.dart';
-import 'package:flutte_scanner_empty/data/services/auth_service.dart';
+import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ChangeNotifier with RouteAware {
   final TicketRepository ticketRepository;
-  final AuthService authService;
+  final SupabaseAuthService authService;
 
   List<TicketModel> ticketList = [];
   bool isLoading = false;

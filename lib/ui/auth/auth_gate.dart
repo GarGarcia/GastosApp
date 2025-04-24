@@ -1,5 +1,5 @@
 import 'package:flutte_scanner_empty/data/repository/ticket_repository.dart';
-import 'package:flutte_scanner_empty/data/services/auth_service.dart';
+import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
 import 'package:flutte_scanner_empty/data/services/local_service.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_page.dart';
@@ -22,7 +22,7 @@ class AuthGate extends StatelessWidget {
         final session = snapshot.hasData ? snapshot.data!.session : null;
 
         if(session != null){
-          return HomePage(homeViewModel: HomeViewModel(AuthService(), ticketRepository: TicketRepository(localService: LocalService())));
+          return HomePage(homeViewModel: HomeViewModel(SupabaseAuthService(), ticketRepository: TicketRepository(localService: LocalService())));
         } else {
           return LoginPage();
         }

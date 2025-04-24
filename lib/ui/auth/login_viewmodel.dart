@@ -1,12 +1,12 @@
 import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
 import 'package:flutte_scanner_empty/data/models/user_model.dart';
-import 'package:flutte_scanner_empty/data/services/auth_service.dart';
+import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final UserRepository userRepository;
-  final AuthService authService;
+  final SupabaseAuthService authService;
 
   String username = '';
   String password = '';

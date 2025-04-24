@@ -35,11 +35,10 @@ class _FormTicketPageState extends State<FormTicketPage> {
   void initState() {
     super.initState();
 
-    importInput = 0;
     mTicketClientController = TextEditingController();
     mTicketDescriptionController = TextEditingController();
 
-    importInput = Provider.of<GlobalProvider>(context).mTicket.mTicketModelImport;
+    importInput = Provider.of<GlobalProvider>(context).mTicket.mTicketModelImport ?? 0;
 
     mTicketClientController.text =
         Provider.of<GlobalProvider>(

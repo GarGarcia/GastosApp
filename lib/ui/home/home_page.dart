@@ -40,16 +40,13 @@ class _HomePageState extends State<HomePage> with RouteAware {
       }
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // FocusScope.of(context).requestFocus(FocusNode());
-      getGastos();
-    });
+    getGastos();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // mRouteObserver.subscribe(this, ModalRoute.of(context)!);
+    mRouteObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
   @override
@@ -60,12 +57,12 @@ class _HomePageState extends State<HomePage> with RouteAware {
 
   @override
   void didPush() {
-    print('HomePage fue empujada');
+    log('HomePage fue empujada');
   }
 
   @override
   void didPopNext() {
-    print('HomePage es ahora visible');
+    log('HomePage es ahora visible');
     getGastos();
   }
 

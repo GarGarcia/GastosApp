@@ -3,7 +3,7 @@ import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/data/repository/ticket_repository.dart';
 import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
 import 'package:flutte_scanner_empty/data/services/api_service.dart';
-import 'package:flutte_scanner_empty/data/services/auth_service.dart';
+import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
 import 'package:flutte_scanner_empty/data/services/local_service.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
@@ -32,7 +32,7 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create:
               (_) => LoginViewModel(
-                AuthService(),
+                SupabaseAuthService(),
                 userRepository: UserRepository(
                   apiService: ApiService(
                     baseUrl: Configurations.mWebServiceUrl,
@@ -43,7 +43,7 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create:
               (_) => HomeViewModel(
-                AuthService(),
+                SupabaseAuthService(),
                 ticketRepository: TicketRepository(
                   localService: LocalService(),
                 ),
