@@ -116,10 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                     callback: () {
                       loginViewModel.login(context);
                     },
-                    child: Text(
-                      'Siguiente',
-                      style: Constants.typographyButtonM,
-                    ),
+                    child: Text('Entrar', style: Constants.typographyButtonM),
                   ),
                   const SizedBox(height: 20),
                   Center(child: loginViewModel.data()),

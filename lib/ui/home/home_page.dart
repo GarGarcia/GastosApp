@@ -67,11 +67,10 @@ class _HomePageState extends State<HomePage> with RouteAware {
   }
 
   getGastos() async {
-
     progressDialogShow(globalContext!);
     await widget.homeViewModel.getGastos();
     dialogDismiss();
-    
+
     mTickets = widget.homeViewModel.ticketList;
 
     setState(() {});
@@ -265,8 +264,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              mTickets
-                                                  [index]
+                                              mTickets[index]
                                                   .mTicketModelClient!,
                                               style: Constants.typographyBoldM,
                                               maxLines: 1,
@@ -302,8 +300,8 @@ class _HomePageState extends State<HomePage> with RouteAware {
                             );
                           },
                         ),
-                        SizedBox(height: 40,),
-                        Text(widget.homeViewModel.getEmail() ?? "No hay email")
+                    SizedBox(height: 40),
+                    Text(widget.homeViewModel.getEmail() ?? "No hay email"),
                   ],
                 ),
               ),

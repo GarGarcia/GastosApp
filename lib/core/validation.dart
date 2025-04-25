@@ -16,6 +16,7 @@ enum TypeValidation {
   email,
   rut,
   pass,
+  dec
 }
 
 class Validation {
@@ -49,7 +50,7 @@ class Validation {
         message = "$name debe ser solo texto y números sin espacios";
         break;
       case TypeValidation.numbers:
-        pattern = r"^[0-9\.]+([.,][0-9]+)?$";
+        pattern = r"^[0-9\.]+([.][0-9]+)?$";
         message = "$name debe ser solo números";
         break;
       case TypeValidation.tinyint:
@@ -102,6 +103,10 @@ class Validation {
       case TypeValidation.rut:
         pattern = r"^[0-9]{5,12}([0-9]|k|K){1}$";
         message = "$name debe ser un RUT válido";
+        break;
+      case TypeValidation.dec:
+        pattern = r"^\d+\.\d+$";
+        message = "$name debe ser decimal con '.'";
         break;
       default:
         pattern = r"^$";

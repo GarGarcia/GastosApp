@@ -10,6 +10,7 @@ import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -27,18 +28,38 @@ class _FormTicketPageState extends State<FormTicketPage> {
 
   Validation _validation = Validation();
 
-  double? importInput;
+  DateTime createdAt = DateTime.now();
+  late TextEditingController mTicketImportController;
   late TextEditingController mTicketClientController;
   late TextEditingController mTicketDescriptionController;
 
   @override
   void initState() {
     super.initState();
-
+    mTicketImportController = TextEditingController();
     mTicketClientController = TextEditingController();
     mTicketDescriptionController = TextEditingController();
+  }
 
-    importInput = Provider.of<GlobalProvider>(context).mTicket.mTicketModelImport ?? 0;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    createdAt =
+        Provider.of<GlobalProvider>(context).mTicket.mCreatedAt ??
+        DateTime.now();
+
+    mTicketImportController.text =
+        Provider.of<GlobalProvider>(
+                  context,
+                  listen: false,
+                ).mTicket.mTicketModelImport !=
+                null
+            ? Provider.of<GlobalProvider>(
+              context,
+              listen: false,
+            ).mTicket.mTicketModelImport.toString()
+            : '';
 
     mTicketClientController.text =
         Provider.of<GlobalProvider>(
@@ -56,6 +77,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
 
   @override
   void dispose() {
+    mTicketImportController.dispose();
     mTicketClientController.dispose();
     mTicketDescriptionController.dispose();
     super.dispose();
@@ -121,18 +143,17 @@ class _FormTicketPageState extends State<FormTicketPage> {
     );
   }
 
-  DateTime selectedDate = DateTime.now();
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
+      initialDate: createdAt,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
     );
-    if (picked != null && picked != selectedDate) {
+    if (picked != null && picked != createdAt) {
       setState(() {
-        selectedDate = picked;
+        createdAt = picked;
+        // Provider.of<GlobalProvider>(context).mTicket.mCreatedAt = picked;
       });
     }
   }
@@ -225,16 +246,17 @@ class _FormTicketPageState extends State<FormTicketPage> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(
-                                    color: Constants.colourActionPrimary,
-                                    width: 2,
+                                    color: Constants.globalColorNeutral70,
+                                    width: 1,
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Text("Fecha: $selectedDate"),
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text(
+                                    "Fecha: ${DateFormat.yMMMd().format(createdAt)}",
+                                  ),
                                 ),
                               ),
-                              const SizedBox(height: 30),
                               ElevatedButton(
                                 style: ButtonStyle(
                                   backgroundColor: WidgetStateProperty.all(
@@ -245,21 +267,22 @@ class _FormTicketPageState extends State<FormTicketPage> {
                                   ),
                                 ),
                                 onPressed: () => _selectDate(context),
-                                child: const Text('Seleccionar fecha'),
+                                child: const Text('Selecciona'),
                               ),
                             ],
                           ),
                           const SizedBox(height: 10),
                           CustomInput(
                             title: "Importe",
+                            controller: mTicketImportController,
                             textInputType: TextInputType.numberWithOptions(
                               decimal: true,
                             ),
                             validator: (value) {
                               return _validation.validate(
-                                type: TypeValidation.numbers,
+                                type: TypeValidation.dec,
                                 name: "Importe",
-                                value: value,
+                                value: mTicketImportController.text,
                                 isRequired: true,
                                 max: 15,
                               );
@@ -336,11 +359,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
     if (!_formKey.currentState!.validate()) {
       _clear();
     } else {
-      if (importInput == null) {
-        customShowToast(globalContext!, 'Por favor, complete todos los campos');
-        return;
-      }
-
       try {
         globalContext = context;
 
@@ -349,8 +367,8 @@ class _FormTicketPageState extends State<FormTicketPage> {
           progressDialogShow(globalContext!);
           await supabase.from('gastos').insert({
             'created_at':
-                "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
-            'import': importInput,
+                "${createdAt.year}-${createdAt.month}-${createdAt.day}",
+            'import': double.tryParse(mTicketImportController.text),
             'client': mTicketClientController.text,
             'description': mTicketDescriptionController.text,
           });
@@ -363,8 +381,8 @@ class _FormTicketPageState extends State<FormTicketPage> {
               .from('gastos')
               .update({
                 'created_at':
-                    "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
-                'import': importInput,
+                    "${createdAt.year}-${createdAt.month}-${createdAt.day}",
+                'import': double.tryParse(mTicketImportController.text),
                 'client': mTicketClientController.text,
                 'description': mTicketDescriptionController.text,
               })
@@ -382,6 +400,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
 
         Navigator.of(globalContext!).pop();
 
+        mTicketImportController.clear();
         mTicketClientController.clear();
         mTicketDescriptionController.clear();
       } catch (e) {
