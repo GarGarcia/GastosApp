@@ -1,4 +1,3 @@
-
 import 'package:flutte_scanner_empty/data/models/ticket_model.dart';
 import 'package:flutte_scanner_empty/data/repository/ticket_repository.dart';
 import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
@@ -20,7 +19,7 @@ class HomeViewModel extends ChangeNotifier with RouteAware {
     try {
       ticketList = await ticketRepository.getGastos();
       notifyListeners();
-    } catch (e){
+    } catch (e) {
       debugPrint("Error al obtener los tickets: $e");
     } finally {
       isLoading = false;
@@ -28,11 +27,11 @@ class HomeViewModel extends ChangeNotifier with RouteAware {
     }
   }
 
-  void logOut () async {
+  void logOut() async {
     await authService.signOut();
   }
 
-  String? getEmail () {
+  String? getEmail() {
     return authService.getCurrentUserEmail();
   }
 }

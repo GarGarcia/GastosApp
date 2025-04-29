@@ -83,7 +83,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
     super.dispose();
   }
 
-  File? _image;
+  late File _image;
 
   final _picker = ImagePicker();
 
@@ -322,7 +322,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                     Center(
                       heightFactor: 1,
                       child:
-                          _image == null
+                          _image.path.isEmpty
                               ? Text(
                                 "Ticket no escaneado",
                                 style: Constants.typographyBlackBodyL,
@@ -330,7 +330,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                               : SizedBox(
                                 height: 300,
                                 width: double.infinity,
-                                child: Image.file(_image!),
+                                child: Image.file(_image),
                               ),
                     ),
                     const SizedBox(height: 20),
@@ -354,7 +354,32 @@ class _FormTicketPageState extends State<FormTicketPage> {
     );
   }
 
-  _formValidation() async {
+  Future<void> uploadImage() async {
+    final storageResponse = await supabase.storage
+        .from('images')
+        .upload('public/${_image.path.split('/').last}', _image);
+
+    if (storageResponse.isNotEmpty) {
+      final imageUrl = supabase.storage
+          .from('image')
+          .getPublicUrl('public/${_image.path.split('/').last}');
+      final response = await supabase.from('your-table-name').insert({
+        'image_url': imageUrl,
+      });
+
+      if (response.error == null) {
+        customShowToast(globalContext!, 'URL guardada exitosamente');
+      } else {
+        customShowToast(globalContext!, 'Error al guardar la URL: ${response.error.message}',
+        );
+      }
+    } else {
+      customShowToast(globalContext!, 'Error al subir la imagen: ${_image.path.split('/').last}',
+      );
+    }
+  }
+
+  Future<void> _formValidation() async {
     String mMessage = "";
     if (!_formKey.currentState!.validate()) {
       _clear();
@@ -365,6 +390,11 @@ class _FormTicketPageState extends State<FormTicketPage> {
         if (Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
             null) {
           progressDialogShow(globalContext!);
+
+
+
+
+          
           await supabase.from('gastos').insert({
             'created_at':
                 "${createdAt.year}-${createdAt.month}-${createdAt.day}",
@@ -398,11 +428,13 @@ class _FormTicketPageState extends State<FormTicketPage> {
           customShowToast(globalContext!, 'Gasto actualizado exitosamente');
         }
 
-        Navigator.of(globalContext!).pop();
 
+        Navigator.of(globalContext!).pop();
         mTicketImportController.clear();
         mTicketClientController.clear();
         mTicketDescriptionController.clear();
+
+        
       } catch (e) {
         globalContext = context;
         ScaffoldMessenger.of(globalContext!).showSnackBar(
@@ -508,7 +540,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
         // alert
         customShowToast(globalContext!, 'No fue posible eliminar el gasto');
       } else {
-        // update country into the 'countries' table
         progressDialogShow(globalContext!);
         await supabase
             .from('gastos')

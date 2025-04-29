@@ -52,11 +52,7 @@ navigate(
     case CustomPage.home:
       Navigator.pushAndRemoveUntil(
         globalContext!,
-        _goPage(
-          HomePage(homeViewModel: homeViewModel),
-          TypeAnimation.transition,
-          500,
-        ),
+        _goPage(HomePage(), TypeAnimation.transition, 500),
         (Route<dynamic> route) => false,
       );
       break;
@@ -83,7 +79,7 @@ navigate(
         globalContext!,
         _goPage(AuthGate(), TypeAnimation.transition, 500),
       );
-      break;  
+      break;
   }
 }
 

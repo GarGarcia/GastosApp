@@ -24,12 +24,14 @@ class LocalService {
     String client,
     String description,
     DateTime fecha,
+    String imageUrl,
   ) async {
     await _client.from('gastos').insert({
       'import': import,
       'client': client,
       'description': description,
       'created_at': fecha,
+      'imageUrl': imageUrl,
     });
   }
 
@@ -39,6 +41,7 @@ class LocalService {
     double import,
     String client,
     String description,
+    String imageUrl,
   ) async {
     await _client
         .from('gastos')
@@ -47,6 +50,7 @@ class LocalService {
           'import': import,
           'client': client,
           'description': description,
+          'imageUrl': imageUrl,
         })
         .eq('idx', idx);
   }

@@ -10,6 +10,7 @@ class TicketModel {
   String? mTicketModelDescription;
   DateTime? mCreatedAt;
   DateTime? mUpdatedAt;
+  String? mImageUrl;
 
   TicketModel({
     mIdx,
@@ -18,6 +19,7 @@ class TicketModel {
     mTicketModelDescription,
     mCreatedAt,
     mUpdatedAt,
+    mImageUrl,
   });
 
   TicketModel.fromJsonMap(Map<String, dynamic> json) {
@@ -27,6 +29,7 @@ class TicketModel {
     mTicketModelDescription = json['description'];
     mCreatedAt = json['created_at'] == null ? null : DateTime.parse(json['created_at']);
     mUpdatedAt = json['updated_at'] == null ? null : DateTime.parse(json['updated_at']);
+    mImageUrl = json['imageUrl'];
   }
 
   String toJson() {
@@ -40,5 +43,6 @@ class TicketModel {
     'description': mTicketModelDescription,
     'created_at': mCreatedAt,
     'updated_at': mUpdatedAt,
+    'imageUrl' : mImageUrl,
   };
 }

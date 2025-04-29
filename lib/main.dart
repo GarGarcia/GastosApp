@@ -5,10 +5,14 @@ import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
 import 'package:flutte_scanner_empty/data/services/api_service.dart';
 import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
 import 'package:flutte_scanner_empty/data/services/local_service.dart';
+import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_viewmodel.dart';
+import 'package:flutte_scanner_empty/ui/home/home_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/splash_page.dart';
 import 'package:flutte_scanner_empty/providers/global_provider.dart';
+import 'package:flutte_scanner_empty/ui/ticketForm/form_ticket_page.dart';
+import 'package:flutte_scanner_empty/ui/ticketForm/form_ticket_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +43,7 @@ Future<void> main() async {
                   ),
                 ),
               ),
+          child: LoginPage(),
         ),
         ChangeNotifierProvider(
           create:
@@ -47,7 +52,17 @@ Future<void> main() async {
                 ticketRepository: TicketRepository(
                   localService: LocalService(),
                 ),
+              )..getGastos(),
+          child: HomePage(),
+        ),
+        ChangeNotifierProvider(
+          create:
+              (_) => FormTicketViewmodel(
+                ticketRepository: TicketRepository(
+                  localService: LocalService(),
+                ),
               ),
+          child: FormTicketPage(),
         ),
       ],
       child: const MyApp(),

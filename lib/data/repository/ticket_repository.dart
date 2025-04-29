@@ -16,8 +16,9 @@ class TicketRepository {
     double import,
     String client,
     String description,
+    String imageUrl,
   ) async {
-    await localService.updateGasto(id, fecha, import, client, description);
+    await localService.updateGasto(id, fecha, import, client, description, imageUrl);
   }
 
   Future<void> addGasto(
@@ -25,8 +26,9 @@ class TicketRepository {
     double import,
     String client,
     String description,
+    String imageUrl,
   ) async {
-    await localService.addGastos(import, client, description, fecha);
+    await localService.addGastos(import, client, description, fecha, imageUrl);
   }
 
   deleteGasto(String id) async {
