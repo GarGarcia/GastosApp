@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/core/validation.dart';
+import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_input.dart';
 import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
@@ -21,12 +22,33 @@ class FormTicketPage extends StatefulWidget {
   State<FormTicketPage> createState() => _FormTicketPageState();
 }
 
+enum Cliente { absara, aceitesmestral, aeroxadvanced, agrosana, alinatur }
+
+extension ClienteExtension on Cliente {
+  String get label {
+    switch (this) {
+      case Cliente.absara:
+        return 'ABSARA';
+      case Cliente.aceitesmestral:
+        return 'ACEITES MESTRAL';
+      case Cliente.aeroxadvanced:
+        return 'AEROX ADVANCED';
+      case Cliente.agrosana:
+        return 'AGROSANA';
+      case Cliente.alinatur:
+        return 'ALINATUR';
+    }
+  }
+}
+
 class _FormTicketPageState extends State<FormTicketPage> {
   final supabase = Supabase.instance.client;
 
   final _formKey = GlobalKey<FormState>();
 
   Validation _validation = Validation();
+
+  Cliente? _selectedCliente;
 
   DateTime createdAt = DateTime.now();
   late TextEditingController mTicketImportController;
@@ -61,12 +83,25 @@ class _FormTicketPageState extends State<FormTicketPage> {
             ).mTicket.mTicketModelImport.toString()
             : '';
 
-    mTicketClientController.text =
-        Provider.of<GlobalProvider>(
-          context,
-          listen: false,
-        ).mTicket.mTicketModelClient ??
-        '';
+    final clientString =
+        context.read<GlobalProvider>().mTicket.mTicketModelClient;
+
+    if (clientString != null) {
+      try {
+        _selectedCliente = Cliente.values.firstWhere(
+          (c) => c.name.toLowerCase() == clientString.toLowerCase(),
+        );
+      } catch (e) {
+        _selectedCliente = null; // o un valor por defecto
+      }
+    }
+
+    // mTicketClientController.text =
+    //     Provider.of<GlobalProvider>(
+    //       context,
+    //       listen: false,
+    //     ).mTicket.mTicketModelClient ??
+    //     '';
     mTicketDescriptionController.text =
         Provider.of<GlobalProvider>(
           context,
@@ -83,7 +118,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
     super.dispose();
   }
 
-  late File _image;
+  File? _image;
 
   final _picker = ImagePicker();
 
@@ -146,6 +181,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
+      locale: const Locale("es", "ES"),
       initialDate: createdAt,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
@@ -153,7 +189,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
     if (picked != null && picked != createdAt) {
       setState(() {
         createdAt = picked;
-        // Provider.of<GlobalProvider>(context).mTicket.mCreatedAt = picked;
       });
     }
   }
@@ -289,19 +324,71 @@ class _FormTicketPageState extends State<FormTicketPage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          CustomInput(
-                            title: "Cliente",
-                            controller: mTicketClientController,
-                            textInputType: TextInputType.text,
+                          DropdownButtonFormField<Cliente>(
+                            value: _selectedCliente,
+                            decoration: InputDecoration(
+                              labelText: 'Cliente',
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: BorderSide(
+                                  color: Constants.globalColorNeutral70,
+                                  width: 1,
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: BorderSide(
+                                  color: Constants.colourSemanticDanger1,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: BorderSide(
+                                  color: Constants.colourSemanticDanger1,
+                                  width: 2,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: BorderSide(
+                                  color: Constants.colourActionPrimary,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                            items:
+                                Cliente.values.map((cliente) {
+                                  return DropdownMenuItem(
+                                    value: cliente,
+                                    child: Text(cliente.label),
+                                  );
+                                }).toList(),
+                            onChanged: (Cliente? value) {
+                              setState(() {
+                                _selectedCliente = value;
+                              });
+                            },
                             validator: (value) {
-                              return _validation.validate(
-                                type: TypeValidation.text,
-                                name: "Cliente",
-                                value: mTicketClientController.text,
-                                isRequired: true,
-                              );
+                              if (value == null) {
+                                return 'Selecciona un cliente';
+                              }
+                              return null;
                             },
                           ),
+                          // CustomInput(
+                          //   title: "Cliente",
+                          //   controller: mTicketClientController,
+                          //   textInputType: TextInputType.text,
+                          //   validator: (value) {
+                          //     return _validation.validate(
+                          //       type: TypeValidation.text,
+                          //       name: "Cliente",
+                          //       value: mTicketClientController.text,
+                          //       isRequired: true,
+                          //     );
+                          //   },
+                          // ),
                           const SizedBox(height: 10),
                           CustomInput(
                             title: "Descripción",
@@ -322,7 +409,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                     Center(
                       heightFactor: 1,
                       child:
-                          _image.path.isEmpty
+                          _image == null
                               ? Text(
                                 "Ticket no escaneado",
                                 style: Constants.typographyBlackBodyL,
@@ -330,7 +417,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                               : SizedBox(
                                 height: 300,
                                 width: double.infinity,
-                                child: Image.file(_image),
+                                child: Image.file(_image!),
                               ),
                     ),
                     const SizedBox(height: 20),
@@ -338,6 +425,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                       color: Constants.colourActionPrimary,
                       callback: () async {
                         _formValidation();
+                        context.read<HomeViewModel>().getGastos();
                       },
                       child: Text(
                         'Guardar',
@@ -354,31 +442,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
     );
   }
 
-  Future<void> uploadImage() async {
-    final storageResponse = await supabase.storage
-        .from('images')
-        .upload('public/${_image.path.split('/').last}', _image);
-
-    if (storageResponse.isNotEmpty) {
-      final imageUrl = supabase.storage
-          .from('image')
-          .getPublicUrl('public/${_image.path.split('/').last}');
-      final response = await supabase.from('your-table-name').insert({
-        'image_url': imageUrl,
-      });
-
-      if (response.error == null) {
-        customShowToast(globalContext!, 'URL guardada exitosamente');
-      } else {
-        customShowToast(globalContext!, 'Error al guardar la URL: ${response.error.message}',
-        );
-      }
-    } else {
-      customShowToast(globalContext!, 'Error al subir la imagen: ${_image.path.split('/').last}',
-      );
-    }
-  }
-
   Future<void> _formValidation() async {
     String mMessage = "";
     if (!_formKey.currentState!.validate()) {
@@ -390,16 +453,12 @@ class _FormTicketPageState extends State<FormTicketPage> {
         if (Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
             null) {
           progressDialogShow(globalContext!);
-
-
-
-
-          
           await supabase.from('gastos').insert({
             'created_at':
                 "${createdAt.year}-${createdAt.month}-${createdAt.day}",
             'import': double.tryParse(mTicketImportController.text),
-            'client': mTicketClientController.text,
+            'client': _selectedCliente?.name.replaceAll(' ', '') ?? '',
+            // mTicketClientController.text,
             'description': mTicketDescriptionController.text,
           });
           dialogDismiss();
@@ -413,7 +472,8 @@ class _FormTicketPageState extends State<FormTicketPage> {
                 'created_at':
                     "${createdAt.year}-${createdAt.month}-${createdAt.day}",
                 'import': double.tryParse(mTicketImportController.text),
-                'client': mTicketClientController.text,
+                'client': _selectedCliente?.name.replaceAll(' ', '') ?? '',
+                // mTicketClientController.text,
                 'description': mTicketDescriptionController.text,
               })
               .eq(
@@ -428,13 +488,10 @@ class _FormTicketPageState extends State<FormTicketPage> {
           customShowToast(globalContext!, 'Gasto actualizado exitosamente');
         }
 
-
-        Navigator.of(globalContext!).pop();
+        Navigator.pop(globalContext!, true);
         mTicketImportController.clear();
         mTicketClientController.clear();
         mTicketDescriptionController.clear();
-
-        
       } catch (e) {
         globalContext = context;
         ScaffoldMessenger.of(globalContext!).showSnackBar(
