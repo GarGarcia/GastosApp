@@ -269,7 +269,6 @@ class HomePage extends StatelessWidget {
 
     final result = await navigate(globalContext!, CustomPage.formCountry);
 
-    // Si el formulario devolvió `true`, recargamos los gastos
     if (result == true) {
       view.getGastos();
     }

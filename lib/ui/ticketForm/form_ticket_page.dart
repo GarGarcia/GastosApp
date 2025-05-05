@@ -92,7 +92,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
           (c) => c.name.toLowerCase() == clientString.toLowerCase(),
         );
       } catch (e) {
-        _selectedCliente = null; // o un valor por defecto
+        _selectedCliente = null;
       }
     }
 
@@ -325,6 +325,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                           ),
                           const SizedBox(height: 10),
                           DropdownButtonFormField<Cliente>(
+                            menuMaxHeight: 110,
                             value: _selectedCliente,
                             decoration: InputDecoration(
                               labelText: 'Cliente',
@@ -458,7 +459,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
                 "${createdAt.year}-${createdAt.month}-${createdAt.day}",
             'import': double.tryParse(mTicketImportController.text),
             'client': _selectedCliente?.name.replaceAll(' ', '') ?? '',
-            // mTicketClientController.text,
             'description': mTicketDescriptionController.text,
           });
           dialogDismiss();
@@ -473,7 +473,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
                     "${createdAt.year}-${createdAt.month}-${createdAt.day}",
                 'import': double.tryParse(mTicketImportController.text),
                 'client': _selectedCliente?.name.replaceAll(' ', '') ?? '',
-                // mTicketClientController.text,
                 'description': mTicketDescriptionController.text,
               })
               .eq(
