@@ -138,7 +138,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
     }
   }
 
-  pickOption() {
+  pickOption(BuildContext context) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -155,20 +155,20 @@ class _FormTicketPageState extends State<FormTicketPage> {
             TextButton(
               onPressed: () {
                 pickImage("galeria");
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
               child: Text("Galeria", style: Constants.typographyBoldM),
             ),
             TextButton(
               onPressed: () {
                 pickImage("camara");
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
               child: Text("Camara", style: Constants.typographyBoldM),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
               child: Text("Close", style: Constants.typographyDangerBoldM),
             ),
@@ -187,9 +187,8 @@ class _FormTicketPageState extends State<FormTicketPage> {
       lastDate: DateTime(2100),
     );
     if (picked != null && picked != createdAt) {
-      setState(() {
-        createdAt = picked;
-      });
+      createdAt = picked;
+      setState(() {});
     }
   }
 
@@ -198,7 +197,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          pickOption();
+          pickOption(context);
         },
         backgroundColor: Constants.colourActionPrimary,
         child: CustomButton(
@@ -216,28 +215,27 @@ class _FormTicketPageState extends State<FormTicketPage> {
         backgroundButtonColor: Constants.colourActionPrimary,
         tinte: Tinte.light,
         title:
-            Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
+            context.read<GlobalProvider>().mTicket.mIdx ==
                     null
                 ? "Nuevo Gasto"
                 : "Editar Gasto",
         showBack: true,
         showMenu: false,
         mListActions: [
-          Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
+          context.read<GlobalProvider>().mTicket.mIdx ==
                   null
               ? const SizedBox()
               : CustomButton(
                 color: Colors.transparent,
                 width: 50,
                 callback: () async {
-                  globalContext = context;
                   deleteConfirmation(
-                    context: globalContext!,
+                    context: context,
                     mTicketName:
-                        Provider.of<GlobalProvider>(
-                          context,
-                          listen: false,
-                        ).mTicket.mTicketModelClient!,
+                        context
+                            .read<GlobalProvider>()
+                            .mTicket
+                            .mTicketModelClient!,
                   );
                 },
                 child: Icon(
@@ -255,11 +253,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
           color: Constants.colourTextColor,
           strokeWidth: 3,
           displacement: 80,
-          onRefresh: () async {
-            if (mounted) {
-              globalContext = context;
-            }
-          },
+          onRefresh: () async {},
           child: SizedBox(
             height: double.infinity,
             child: SingleChildScrollView(
@@ -366,9 +360,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                                   );
                                 }).toList(),
                             onChanged: (Cliente? value) {
-                              setState(() {
-                                _selectedCliente = value;
-                              });
+                              _selectedCliente = value;
                             },
                             validator: (value) {
                               if (value == null) {
@@ -425,7 +417,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                     CustomButton(
                       color: Constants.colourActionPrimary,
                       callback: () async {
-                        _formValidation();
+                        _formValidation(context);
                         context.read<HomeViewModel>().getGastos();
                       },
                       child: Text(
@@ -443,17 +435,17 @@ class _FormTicketPageState extends State<FormTicketPage> {
     );
   }
 
-  Future<void> _formValidation() async {
+  Future<void> _formValidation(BuildContext context) async {
+    globalContext = context;
     String mMessage = "";
     if (!_formKey.currentState!.validate()) {
       _clear();
     } else {
       try {
-        globalContext = context;
-
-        if (Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
+        if (context.read<GlobalProvider>().mTicket.mIdx ==
             null) {
-          progressDialogShow(globalContext!);
+          progressDialogShow(context);
+
           await supabase.from('gastos').insert({
             'created_at':
                 "${createdAt.year}-${createdAt.month}-${createdAt.day}",
@@ -462,10 +454,10 @@ class _FormTicketPageState extends State<FormTicketPage> {
             'description': mTicketDescriptionController.text,
           });
           dialogDismiss();
-
+          
           customShowToast(globalContext!, 'Gasto creado exitosamente');
         } else {
-          progressDialogShow(globalContext!);
+          progressDialogShow(context);
           await supabase
               .from('gastos')
               .update({
@@ -477,10 +469,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
               })
               .eq(
                 'idx',
-                Provider.of<GlobalProvider>(
-                  context,
-                  listen: false,
-                ).mTicket.mIdx!,
+                context.read<GlobalProvider>().mTicket.mIdx!,
               );
           dialogDismiss();
 
@@ -492,7 +481,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
         mTicketClientController.clear();
         mTicketDescriptionController.clear();
       } catch (e) {
-        globalContext = context;
         ScaffoldMessenger.of(globalContext!).showSnackBar(
           SnackBar(content: Text('Error al guardar el gasto: $e')),
         );
@@ -500,7 +488,6 @@ class _FormTicketPageState extends State<FormTicketPage> {
     }
 
     if (mMessage.isNotEmpty) {
-      globalContext = context;
       customShowToast(globalContext!, mMessage);
       _clear();
     }
@@ -556,7 +543,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                     child: CustomButton(
                       width: double.infinity,
                       color: Constants.colourActionSecondary,
-                      callback: () => Navigator.pop(context),
+                      callback: () => Navigator.of(context).pop(),
                       child: Text(
                         "Atrás",
                         style: Constants.typographyButtonMSecondary,
@@ -570,9 +557,9 @@ class _FormTicketPageState extends State<FormTicketPage> {
                       width: double.infinity,
                       color: Constants.colourActionPrimary,
                       callback: () {
-                        deleteGasto();
-                        Navigator.pop(globalContext!);
-                        Navigator.pop(globalContext!);
+                        deleteGasto(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context, true);
                       },
                       child: Text(
                         "Eliminar",
@@ -589,20 +576,20 @@ class _FormTicketPageState extends State<FormTicketPage> {
     );
   }
 
-  deleteGasto() async {
+  deleteGasto(BuildContext context) async {
+    globalContext = context;
     try {
-      if (Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx ==
+      if (context.read<GlobalProvider>().mTicket.mIdx ==
           null) {
-        // alert
         customShowToast(globalContext!, 'No fue posible eliminar el gasto');
       } else {
-        progressDialogShow(globalContext!);
+        progressDialogShow(context);
         await supabase
             .from('gastos')
             .delete()
             .eq(
               'idx',
-              Provider.of<GlobalProvider>(context, listen: false).mTicket.mIdx!,
+              context.read<GlobalProvider>().mTicket.mIdx!,
             );
         //Timer(Duration(seconds: 3), () {});
         dialogDismiss();
