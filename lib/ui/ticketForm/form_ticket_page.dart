@@ -22,21 +22,21 @@ class FormTicketPage extends StatefulWidget {
   State<FormTicketPage> createState() => _FormTicketPageState();
 }
 
-enum Cliente { absara, aceitesmestral, aeroxadvanced, agrosana, alinatur }
+enum Cliente { mercadona, lidl, ikea, mediamarkt, amazon }
 
 extension ClienteExtension on Cliente {
   String get label {
     switch (this) {
-      case Cliente.absara:
-        return 'ABSARA';
-      case Cliente.aceitesmestral:
-        return 'ACEITES MESTRAL';
-      case Cliente.aeroxadvanced:
-        return 'AEROX ADVANCED';
-      case Cliente.agrosana:
-        return 'AGROSANA';
-      case Cliente.alinatur:
-        return 'ALINATUR';
+      case Cliente.mercadona:
+        return 'MERCADONA';
+      case Cliente.lidl:
+        return 'LIDL';
+      case Cliente.ikea:
+        return 'IKEA';
+      case Cliente.mediamarkt:
+        return 'MEDIA MARKT';
+      case Cliente.amazon:
+        return 'AMAZON';
     }
   }
 }
@@ -228,7 +228,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
               : CustomButton(
                 color: Colors.transparent,
                 width: 50,
-                callback: () async {
+                callback: () {
                   deleteConfirmation(
                     context: context,
                     mTicketName:
@@ -416,7 +416,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                     const SizedBox(height: 20),
                     CustomButton(
                       color: Constants.colourActionPrimary,
-                      callback: () async {
+                      callback: () {
                         _formValidation(context);
                         context.read<HomeViewModel>().getGastos();
                       },
