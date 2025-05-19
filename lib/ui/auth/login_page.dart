@@ -60,13 +60,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: [
                         const SizedBox(height: 20),
-                        // TextField(
-                        //   decoration: InputDecoration(
-                        //     hintText: "Usuario",
-                        //     border: OutlineInputBorder(),
-                        //   ),
-                        //   onChanged: (value) => loginViewModel.username = value,
-                        // ),
                         CustomInput(
                           title: "Usuario",
                           textInputType: TextInputType.text,
@@ -82,16 +75,6 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         const SizedBox(height: 10),
-                        // TextField(
-                        //   decoration: InputDecoration(
-                        //     hintText: "Password",
-                        //     border: OutlineInputBorder(),
-                        //   ),
-                        //   obscureText: true,
-                        //   obscuringCharacter: "*",
-                        //   onChanged:
-                        //       (value) => loginViewModel.password = value,
-                        // ),
                         CustomInput(
                           title: "Contraseña",
                           textInputType: TextInputType.text,
