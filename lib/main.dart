@@ -58,11 +58,7 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create:
-              (_) => FormTicketViewmodel(
-                ticketRepository: TicketRepository(
-                  localService: LocalService(),
-                ),
-              ),
+              (_) => FormTicketViewModel(),
           child: FormTicketPage(),
         ),
       ],
