@@ -15,11 +15,11 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class FormTicketPage extends StatefulWidget {
-  const FormTicketPage({super.key});
+class FormGastosPage extends StatefulWidget {
+  const FormGastosPage({super.key});
 
   @override
-  State<FormTicketPage> createState() => _FormTicketPageState();
+  State<FormGastosPage> createState() => _FormGastosPageState();
 }
 
 enum Cliente { mercadona, lidl, ikea, mediamarkt, amazon }
@@ -41,7 +41,7 @@ extension ClienteExtension on Cliente {
   }
 }
 
-class _FormTicketPageState extends State<FormTicketPage> {
+class _FormGastosPageState extends State<FormGastosPage> {
   final supabase = Supabase.instance.client;
 
   final _formKey = GlobalKey<FormState>();
@@ -51,16 +51,16 @@ class _FormTicketPageState extends State<FormTicketPage> {
   Cliente? _selectedCliente;
 
   DateTime createdAt = DateTime.now();
-  late TextEditingController mTicketImportController;
-  late TextEditingController mTicketClientController;
-  late TextEditingController mTicketDescriptionController;
+  late TextEditingController mGastosImportController;
+  late TextEditingController mGastosClientController;
+  late TextEditingController mGastosDescriptionController;
 
   @override
   void initState() {
     super.initState();
-    mTicketImportController = TextEditingController();
-    mTicketClientController = TextEditingController();
-    mTicketDescriptionController = TextEditingController();
+    mGastosImportController = TextEditingController();
+    mGastosClientController = TextEditingController();
+    mGastosDescriptionController = TextEditingController();
   }
 
   @override
@@ -68,23 +68,23 @@ class _FormTicketPageState extends State<FormTicketPage> {
     super.didChangeDependencies();
 
     createdAt =
-        Provider.of<GlobalProvider>(context).mTicket.mCreatedAt ??
+        Provider.of<GlobalProvider>(context).mGastos.mCreatedAt ??
         DateTime.now();
 
-    mTicketImportController.text =
+    mGastosImportController.text =
         Provider.of<GlobalProvider>(
                   context,
                   listen: false,
-                ).mTicket.mTicketModelImport !=
+                ).mGastos.mGastosModelImport !=
                 null
             ? Provider.of<GlobalProvider>(
               context,
               listen: false,
-            ).mTicket.mTicketModelImport.toString()
+            ).mGastos.mGastosModelImport.toString()
             : '';
 
     final clientString =
-        context.read<GlobalProvider>().mTicket.mTicketModelClient;
+        context.read<GlobalProvider>().mGastos.mGastosModelClient;
 
     if (clientString != null) {
       try {
@@ -96,25 +96,25 @@ class _FormTicketPageState extends State<FormTicketPage> {
       }
     }
 
-    // mTicketClientController.text =
+    // mGastosClientController.text =
     //     Provider.of<GlobalProvider>(
     //       context,
     //       listen: false,
-    //     ).mTicket.mTicketModelClient ??
+    //     ).mGastos.mGastosModelClient ??
     //     '';
-    mTicketDescriptionController.text =
+    mGastosDescriptionController.text =
         Provider.of<GlobalProvider>(
           context,
           listen: false,
-        ).mTicket.mTicketModelDescription ??
+        ).mGastos.mGastosModelDescription ??
         '';
   }
 
   @override
   void dispose() {
-    mTicketImportController.dispose();
-    mTicketClientController.dispose();
-    mTicketDescriptionController.dispose();
+    mGastosImportController.dispose();
+    mGastosClientController.dispose();
+    mGastosDescriptionController.dispose();
     super.dispose();
   }
 
@@ -144,10 +144,10 @@ class _FormTicketPageState extends State<FormTicketPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Escanear ticket", style: Constants.typographyBlackBodyL),
+          title: Text("Escanear Gastos", style: Constants.typographyBlackBodyL),
           content: SingleChildScrollView(
             child: Text(
-              'Elije una opción para escanear el ticket',
+              'Elije una opción para escanear el Gastos',
               style: Constants.typographyBlackBodyM,
             ),
           ),
@@ -215,15 +215,13 @@ class _FormTicketPageState extends State<FormTicketPage> {
         backgroundButtonColor: Constants.colourActionPrimary,
         tinte: Tinte.light,
         title:
-            context.read<GlobalProvider>().mTicket.mIdx ==
-                    null
+            context.read<GlobalProvider>().mGastos.mIdx == null
                 ? "Nuevo Gasto"
                 : "Editar Gasto",
         showBack: true,
         showMenu: false,
         mListActions: [
-          context.read<GlobalProvider>().mTicket.mIdx ==
-                  null
+          context.read<GlobalProvider>().mGastos.mIdx == null
               ? const SizedBox()
               : CustomButton(
                 color: Colors.transparent,
@@ -231,11 +229,11 @@ class _FormTicketPageState extends State<FormTicketPage> {
                 callback: () {
                   deleteConfirmation(
                     context: context,
-                    mTicketName:
+                    mGastosName:
                         context
                             .read<GlobalProvider>()
-                            .mTicket
-                            .mTicketModelClient!,
+                            .mGastos
+                            .mGastosModelClient!,
                   );
                 },
                 child: Icon(
@@ -303,7 +301,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                           const SizedBox(height: 10),
                           CustomInput(
                             title: "Importe",
-                            controller: mTicketImportController,
+                            controller: mGastosImportController,
                             textInputType: TextInputType.numberWithOptions(
                               decimal: true,
                             ),
@@ -311,7 +309,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                               return _validation.validate(
                                 type: TypeValidation.dec,
                                 name: "Importe",
-                                value: mTicketImportController.text,
+                                value: mGastosImportController.text,
                                 isRequired: true,
                                 max: 15,
                               );
@@ -371,13 +369,13 @@ class _FormTicketPageState extends State<FormTicketPage> {
                           ),
                           // CustomInput(
                           //   title: "Cliente",
-                          //   controller: mTicketClientController,
+                          //   controller: mGastosClientController,
                           //   textInputType: TextInputType.text,
                           //   validator: (value) {
                           //     return _validation.validate(
                           //       type: TypeValidation.text,
                           //       name: "Cliente",
-                          //       value: mTicketClientController.text,
+                          //       value: mGastosClientController.text,
                           //       isRequired: true,
                           //     );
                           //   },
@@ -385,13 +383,13 @@ class _FormTicketPageState extends State<FormTicketPage> {
                           const SizedBox(height: 10),
                           CustomInput(
                             title: "Descripción",
-                            controller: mTicketDescriptionController,
+                            controller: mGastosDescriptionController,
                             textInputType: TextInputType.text,
                             validator: (value) {
                               return _validation.validate(
                                 type: TypeValidation.text,
                                 name: "Descripción",
-                                value: mTicketDescriptionController.text,
+                                value: mGastosDescriptionController.text,
                                 isRequired: false,
                               );
                             },
@@ -404,7 +402,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
                       child:
                           _image == null
                               ? Text(
-                                "Ticket no escaneado",
+                                "Gastos no escaneado",
                                 style: Constants.typographyBlackBodyL,
                               )
                               : SizedBox(
@@ -442,19 +440,18 @@ class _FormTicketPageState extends State<FormTicketPage> {
       _clear();
     } else {
       try {
-        if (context.read<GlobalProvider>().mTicket.mIdx ==
-            null) {
+        if (context.read<GlobalProvider>().mGastos.mIdx == null) {
           progressDialogShow(context);
 
           await supabase.from('gastos').insert({
             'created_at':
                 "${createdAt.year}-${createdAt.month}-${createdAt.day}",
-            'import': double.tryParse(mTicketImportController.text),
+            'import': double.tryParse(mGastosImportController.text),
             'client': _selectedCliente?.name.replaceAll(' ', '') ?? '',
-            'description': mTicketDescriptionController.text,
+            'description': mGastosDescriptionController.text,
           });
           dialogDismiss();
-          
+
           customShowToast(globalContext!, 'Gasto creado exitosamente');
         } else {
           progressDialogShow(context);
@@ -463,23 +460,20 @@ class _FormTicketPageState extends State<FormTicketPage> {
               .update({
                 'created_at':
                     "${createdAt.year}-${createdAt.month}-${createdAt.day}",
-                'import': double.tryParse(mTicketImportController.text),
+                'import': double.tryParse(mGastosImportController.text),
                 'client': _selectedCliente?.name.replaceAll(' ', '') ?? '',
-                'description': mTicketDescriptionController.text,
+                'description': mGastosDescriptionController.text,
               })
-              .eq(
-                'idx',
-                context.read<GlobalProvider>().mTicket.mIdx!,
-              );
+              .eq('idx', context.read<GlobalProvider>().mGastos.mIdx!);
           dialogDismiss();
 
           customShowToast(globalContext!, 'Gasto actualizado exitosamente');
         }
 
         Navigator.pop(globalContext!, true);
-        mTicketImportController.clear();
-        mTicketClientController.clear();
-        mTicketDescriptionController.clear();
+        mGastosImportController.clear();
+        mGastosClientController.clear();
+        mGastosDescriptionController.clear();
       } catch (e) {
         ScaffoldMessenger.of(globalContext!).showSnackBar(
           SnackBar(content: Text('Error al guardar el gasto: $e')),
@@ -499,7 +493,7 @@ class _FormTicketPageState extends State<FormTicketPage> {
 
   deleteConfirmation({
     required BuildContext context,
-    required String mTicketName,
+    required String mGastosName,
   }) {
     return showModalBottomSheet(
       context: context,
@@ -579,18 +573,14 @@ class _FormTicketPageState extends State<FormTicketPage> {
   deleteGasto(BuildContext context) async {
     globalContext = context;
     try {
-      if (context.read<GlobalProvider>().mTicket.mIdx ==
-          null) {
+      if (context.read<GlobalProvider>().mGastos.mIdx == null) {
         customShowToast(globalContext!, 'No fue posible eliminar el gasto');
       } else {
         progressDialogShow(context);
         await supabase
             .from('gastos')
             .delete()
-            .eq(
-              'idx',
-              context.read<GlobalProvider>().mTicket.mIdx!,
-            );
+            .eq('idx', context.read<GlobalProvider>().mGastos.mIdx!);
         //Timer(Duration(seconds: 3), () {});
         dialogDismiss();
 

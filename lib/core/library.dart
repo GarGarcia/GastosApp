@@ -1,6 +1,6 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/ui/auth/auth_gate.dart';
-import 'package:flutte_scanner_empty/ui/ticketForm/form_ticket_page.dart';
+import 'package:flutte_scanner_empty/ui/gastosForm/form_gasto_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_page.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
 import 'package:flutte_scanner_empty/ui/profile/profile_page.dart';
@@ -50,7 +50,7 @@ navigate(
     case CustomPage.formCountry:
       Navigator.push(
         globalContext!,
-        _goPage(FormTicketPage(), TypeAnimation.transition, 500),
+        _goPage(FormGastosPage(), TypeAnimation.transition, 500),
       );
       break;
     case CustomPage.loginPage:

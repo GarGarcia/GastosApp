@@ -1,12 +1,12 @@
-import 'package:flutte_scanner_empty/data/models/ticket_model.dart';
+import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
 import 'package:flutte_scanner_empty/data/services/local_service.dart';
 
-class TicketRepository {
+class GastoRepository {
   final LocalService localService;
 
-  TicketRepository({required this.localService});
+  GastoRepository({required this.localService});
 
-  Future<List<TicketModel>> getGastos() async {
+  Future<List<GastoModel>> getGastos() async {
     return await localService.getGastos();
   }
 
@@ -18,7 +18,14 @@ class TicketRepository {
     String description,
     String imageUrl,
   ) async {
-    await localService.updateGasto(id, fecha, import, client, description, imageUrl);
+    await localService.updateGasto(
+      id,
+      fecha,
+      import,
+      client,
+      description,
+      imageUrl,
+    );
   }
 
   Future<void> addGasto(

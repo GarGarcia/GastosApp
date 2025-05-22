@@ -22,7 +22,7 @@ extension ClienteExtension on Cliente {
   }
 }
 
-class FormTicketViewModel extends ChangeNotifier {
+class FormGastosViewModel extends ChangeNotifier {
   final supabase = Supabase.instance.client;
   final formKey = GlobalKey<FormState>();
 
@@ -65,7 +65,7 @@ class FormTicketViewModel extends ChangeNotifier {
     final userId = supabase.auth.currentUser?.id;
     final imageBytes = await selectedImage!.readAsBytes();
     final imageName = "${DateTime.now().millisecondsSinceEpoch}_$userId.jpg";
-    final storagePath = 'tickets/$imageName';
+    final storagePath = 'Gastoss/$imageName';
 
     await supabase.storage
         .from("images")
@@ -75,11 +75,9 @@ class FormTicketViewModel extends ChangeNotifier {
           fileOptions: const FileOptions(contentType: 'image/jpeg'),
         );
 
-    final imageUrl = supabase.storage
-        .from("images")
-        .getPublicUrl(storagePath);
+    final imageUrl = supabase.storage.from("images").getPublicUrl(storagePath);
 
-    await supabase.from('tickets').insert({
+    await supabase.from('gastos').insert({
       'titulo': titleController.text.trim(),
       'precio': double.parse(priceController.text),
       'fecha': selectedDate,

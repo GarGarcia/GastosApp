@@ -1,6 +1,6 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
-import 'package:flutte_scanner_empty/data/models/ticket_model.dart';
+import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_drawer_label.dart';
@@ -44,8 +44,8 @@ class HomePage extends StatelessWidget {
         ),
       ),
       onPressed: () async {
-        globalProvider.mTicket = TicketModel();
-        _goToFormTicket(context);
+        globalProvider.mGastos = GastoModel();
+        _goToFormGastos(context);
       },
     );
   }
@@ -127,7 +127,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Cuerpo principal con la lista de tickets
+  // Cuerpo principal con la lista de Gastoss
   Widget _buildBody(BuildContext context, HomeViewModel view) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -148,7 +148,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(width: 20, height: 20),
                 view.isLoading
                     ? Center(child: CircularProgressIndicator())
-                    : view.ticketList.isEmpty
+                    : view.gastosList.isEmpty
                     ? Container(
                       margin: const EdgeInsets.only(
                         top: 20,
@@ -162,7 +162,7 @@ class HomePage extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                     )
-                    : _buildTicketList(context, view),
+                    : _buildGastosList(context, view),
                 SizedBox(height: 40),
                 Text(view.getEmail() ?? "No hay email"),
               ],
@@ -173,12 +173,12 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Lista de tickets
-  Widget _buildTicketList(BuildContext context, HomeViewModel view) {
+  // Lista de Gastoss
+  Widget _buildGastosList(BuildContext context, HomeViewModel view) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: view.ticketList.length,
+      itemCount: view.gastosList.length,
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
@@ -191,8 +191,8 @@ class HomePage extends StatelessWidget {
           child: InkWell(
             onTap: () {
               globalContext = context;
-              context.read<GlobalProvider>().mTicket = view.ticketList[index];
-              _goToFormTicket(context);
+              context.read<GlobalProvider>().mGastos = view.gastosList[index];
+              _goToFormGastos(context);
             },
             borderRadius: BorderRadius.circular(15),
             child: Row(
@@ -221,13 +221,13 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          view.ticketList[index].mTicketModelDescription!,
+                          view.gastosList[index].mGastosModelDescription!,
                           style: Constants.typographyBoldM,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          "Importe: ${view.ticketList[index].mTicketModelImport} €",
+                          "Importe: ${view.gastosList[index].mGastosModelImport} €",
                           style: Constants.typographyBodyM,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -258,7 +258,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _goToFormTicket(BuildContext context) async {
+  void _goToFormGastos(BuildContext context) async {
     final view = context.read<HomeViewModel>();
 
     final result = await navigate(context, CustomPage.formCountry);

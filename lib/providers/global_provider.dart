@@ -1,11 +1,11 @@
-import 'package:flutte_scanner_empty/data/models/ticket_model.dart';
+import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
 import 'package:flutter/material.dart';
 
-class GlobalProvider extends ChangeNotifier{
-  TicketModel _mTicket = TicketModel();
-  TicketModel get mTicket => _mTicket;
-  set mTicket (TicketModel mTicket){
-    _mTicket = mTicket;
+class GlobalProvider extends ChangeNotifier {
+  GastoModel _mGastos = GastoModel();
+  GastoModel get mGastos => _mGastos;
+  set mGastos(GastoModel mGastos) {
+    _mGastos = mGastos;
     notifyListeners();
-  } 
+  }
 }

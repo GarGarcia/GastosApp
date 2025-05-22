@@ -1,22 +1,22 @@
-import 'package:flutte_scanner_empty/data/models/ticket_model.dart';
+import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LocalService {
   final _client = Supabase.instance.client;
 
-  Future<List<TicketModel>> getGastos() async {
-    List<TicketModel> ticketList = [];
+  Future<List<GastoModel>> getGastos() async {
+    List<GastoModel> gastosList = [];
     final response = await _client
         .from('gastos')
         .select()
         .order('created_at', ascending: false);
 
     for (var item in response) {
-      final ticket = TicketModel.fromJsonMap(item);
-      ticketList.add(ticket);
+      final gastos = GastoModel.fromJsonMap(item);
+      gastosList.add(gastos);
     }
 
-    return ticketList;
+    return gastosList;
   }
 
   Future<void> addGastos(
