@@ -16,7 +16,7 @@ enum TypeValidation {
   email,
   rut,
   pass,
-  dec
+  dec,
 }
 
 class Validation {
@@ -107,7 +107,7 @@ class Validation {
       case TypeValidation.dec:
         pattern = r"^\d+\.\d{1,2}$";
         message = "$name debe ser decimal con '.' y dos cifras decimales";
-        break;
+        break;  
       default:
         pattern = r"^$";
         message = "$name no puede estar vacio";

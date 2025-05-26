@@ -55,7 +55,10 @@ Future<void> main() async {
           child: HomePage(),
         ),
         ChangeNotifierProvider(
-          create: (_) => FormGastoViewModel(GlobalProvider()),
+          create:
+              (_) => FormGastoViewModel(
+                gastoRepository: GastoRepository(localService: LocalService()),
+              ),
           child: FormGastosPage(),
         ),
       ],

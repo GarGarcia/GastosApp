@@ -1,6 +1,7 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
+import 'package:flutte_scanner_empty/ui/gastosForm/form_gasto_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
@@ -42,10 +43,10 @@ class HomePage extends StatelessWidget {
           size: 25,
         ),
       ),
-      onPressed: () async {
-        globalContext = context;
+      onPressed: () {
+        context.read<FormGastoViewModel>().clear();
         globalProvider.mGastos = GastoModel();
-        navigate(globalContext!, CustomPage.formCountry);
+        navigate(context, CustomPage.formCountry);
       },
     );
   }
