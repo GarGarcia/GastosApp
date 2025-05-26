@@ -3,7 +3,7 @@ import 'package:flutte_scanner_empty/data/repository/gasto_repository.dart';
 import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
 import 'package:flutter/material.dart';
 
-class HomeViewModel extends ChangeNotifier with RouteAware {
+class HomeViewModel extends ChangeNotifier {
   final GastoRepository gastoRepository;
   final SupabaseAuthService authService;
 

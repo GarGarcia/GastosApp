@@ -3,7 +3,6 @@ import 'package:flutte_scanner_empty/ui/auth/auth_gate.dart';
 import 'package:flutte_scanner_empty/ui/gastosForm/form_gasto_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_page.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
-import 'package:flutte_scanner_empty/ui/profile/profile_page.dart';
 import 'package:flutte_scanner_empty/ui/splash_page.dart';
 import 'package:flutte_scanner_empty/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:overlay_loading_progress/overlay_loading_progress.dart';
 
-enum CustomPage { splash, home, formCountry, loginPage, profilePage, authGate }
+enum CustomPage { splash, home, formCountry, loginPage, authGate }
 
 enum TypeAnimation { transition }
 
@@ -54,15 +53,10 @@ navigate(
       );
       break;
     case CustomPage.loginPage:
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         globalContext!,
         _goPage(const LoginPage(), TypeAnimation.transition, 500),
-      );
-      break;
-    case CustomPage.profilePage:
-      Navigator.push(
-        globalContext!,
-        _goPage(const ProfilePage(), TypeAnimation.transition, 500),
+        (Route<dynamic> route) => false,
       );
       break;
     case CustomPage.authGate:

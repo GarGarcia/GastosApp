@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/core/validation.dart';
+import 'package:flutte_scanner_empty/ui/GastosForm/form_gasto_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_input.dart';
@@ -20,25 +21,6 @@ class FormGastosPage extends StatefulWidget {
 
   @override
   State<FormGastosPage> createState() => _FormGastosPageState();
-}
-
-enum Cliente { mercadona, lidl, ikea, mediamarkt, amazon }
-
-extension ClienteExtension on Cliente {
-  String get label {
-    switch (this) {
-      case Cliente.mercadona:
-        return 'MERCADONA';
-      case Cliente.lidl:
-        return 'LIDL';
-      case Cliente.ikea:
-        return 'IKEA';
-      case Cliente.mediamarkt:
-        return 'MEDIA MARKT';
-      case Cliente.amazon:
-        return 'AMAZON';
-    }
-  }
 }
 
 class _FormGastosPageState extends State<FormGastosPage> {
@@ -68,23 +50,23 @@ class _FormGastosPageState extends State<FormGastosPage> {
     super.didChangeDependencies();
 
     createdAt =
-        Provider.of<GlobalProvider>(context).mGastos.mCreatedAt ??
+        Provider.of<GlobalProvider>(context).mGasto.mCreatedAt ??
         DateTime.now();
 
     mGastosImportController.text =
         Provider.of<GlobalProvider>(
                   context,
                   listen: false,
-                ).mGastos.mGastosModelImport !=
+                ).mGasto.mGastoModelImport !=
                 null
             ? Provider.of<GlobalProvider>(
               context,
               listen: false,
-            ).mGastos.mGastosModelImport.toString()
+            ).mGasto.mGastoModelImport.toString()
             : '';
 
     final clientString =
-        context.read<GlobalProvider>().mGastos.mGastosModelClient;
+        context.read<GlobalProvider>().mGasto.mGastoModelClient;
 
     if (clientString != null) {
       try {
@@ -106,7 +88,7 @@ class _FormGastosPageState extends State<FormGastosPage> {
         Provider.of<GlobalProvider>(
           context,
           listen: false,
-        ).mGastos.mGastosModelDescription ??
+        ).mGasto.mGastoModelDescription ??
         '';
   }
 
@@ -155,20 +137,20 @@ class _FormGastosPageState extends State<FormGastosPage> {
             TextButton(
               onPressed: () {
                 pickImage("galeria");
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
               child: Text("Galeria", style: Constants.typographyBoldM),
             ),
             TextButton(
               onPressed: () {
                 pickImage("camara");
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
               child: Text("Camara", style: Constants.typographyBoldM),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
               child: Text("Close", style: Constants.typographyDangerBoldM),
             ),
@@ -188,7 +170,7 @@ class _FormGastosPageState extends State<FormGastosPage> {
     );
     if (picked != null && picked != createdAt) {
       createdAt = picked;
-      setState(() {});
+      
     }
   }
 
@@ -215,13 +197,13 @@ class _FormGastosPageState extends State<FormGastosPage> {
         backgroundButtonColor: Constants.colourActionPrimary,
         tinte: Tinte.light,
         title:
-            context.read<GlobalProvider>().mGastos.mIdx == null
+            context.read<GlobalProvider>().mGasto.mIdx == null
                 ? "Nuevo Gasto"
                 : "Editar Gasto",
         showBack: true,
         showMenu: false,
         mListActions: [
-          context.read<GlobalProvider>().mGastos.mIdx == null
+          context.read<GlobalProvider>().mGasto.mIdx == null
               ? const SizedBox()
               : CustomButton(
                 color: Colors.transparent,
@@ -232,8 +214,8 @@ class _FormGastosPageState extends State<FormGastosPage> {
                     mGastosName:
                         context
                             .read<GlobalProvider>()
-                            .mGastos
-                            .mGastosModelClient!,
+                            .mGasto
+                            .mGastoModelClient!,
                   );
                 },
                 child: Icon(
@@ -434,13 +416,13 @@ class _FormGastosPageState extends State<FormGastosPage> {
   }
 
   Future<void> _formValidation(BuildContext context) async {
-    globalContext = context;
+    
     String mMessage = "";
     if (!_formKey.currentState!.validate()) {
       _clear();
     } else {
       try {
-        if (context.read<GlobalProvider>().mGastos.mIdx == null) {
+        if (context.read<GlobalProvider>().mGasto.mIdx == null) {
           progressDialogShow(context);
 
           await supabase.from('gastos').insert({
@@ -451,7 +433,8 @@ class _FormGastosPageState extends State<FormGastosPage> {
             'description': mGastosDescriptionController.text,
           });
           dialogDismiss();
-
+          
+          globalContext = context;
           customShowToast(globalContext!, 'Gasto creado exitosamente');
         } else {
           progressDialogShow(context);
@@ -464,20 +447,20 @@ class _FormGastosPageState extends State<FormGastosPage> {
                 'client': _selectedCliente?.name.replaceAll(' ', '') ?? '',
                 'description': mGastosDescriptionController.text,
               })
-              .eq('idx', context.read<GlobalProvider>().mGastos.mIdx!);
+              .eq('idx', context.read<GlobalProvider>().mGasto.mIdx!);
           dialogDismiss();
-
+          
+          globalContext = context;
           customShowToast(globalContext!, 'Gasto actualizado exitosamente');
         }
+        globalContext = context;
 
-        Navigator.pop(globalContext!, true);
         mGastosImportController.clear();
         mGastosClientController.clear();
         mGastosDescriptionController.clear();
+        Navigator.pop(globalContext!);
       } catch (e) {
-        ScaffoldMessenger.of(globalContext!).showSnackBar(
-          SnackBar(content: Text('Error al guardar el gasto: $e')),
-        );
+        customShowToast(globalContext!, 'Error al guardar el gasto: $e');
       }
     }
 
@@ -552,8 +535,9 @@ class _FormGastosPageState extends State<FormGastosPage> {
                       color: Constants.colourActionPrimary,
                       callback: () {
                         deleteGasto(context);
+                        context.read<HomeViewModel>().getGastos();
                         Navigator.pop(context);
-                        Navigator.pop(context, true);
+                        Navigator.pop(context);
                       },
                       child: Text(
                         "Eliminar",
@@ -573,14 +557,14 @@ class _FormGastosPageState extends State<FormGastosPage> {
   deleteGasto(BuildContext context) async {
     globalContext = context;
     try {
-      if (context.read<GlobalProvider>().mGastos.mIdx == null) {
+      if (context.read<GlobalProvider>().mGasto.mIdx == null) {
         customShowToast(globalContext!, 'No fue posible eliminar el gasto');
       } else {
         progressDialogShow(context);
         await supabase
             .from('gastos')
             .delete()
-            .eq('idx', context.read<GlobalProvider>().mGastos.mIdx!);
+            .eq('idx', context.read<GlobalProvider>().mGasto.mIdx!);
         //Timer(Duration(seconds: 3), () {});
         dialogDismiss();
 

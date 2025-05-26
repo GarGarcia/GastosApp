@@ -3,7 +3,6 @@ import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
-import 'package:flutte_scanner_empty/ui/widgets/custom_drawer_label.dart';
 import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
 import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +43,9 @@ class HomePage extends StatelessWidget {
         ),
       ),
       onPressed: () async {
+        globalContext = context;
         globalProvider.mGastos = GastoModel();
-        _goToFormGastos(context);
+        navigate(globalContext!, CustomPage.formCountry);
       },
     );
   }
@@ -85,21 +85,11 @@ class HomePage extends StatelessWidget {
           const SizedBox(height: 15),
           Divider(color: Constants.globalColorNeutral30),
           const SizedBox(height: 15),
-          CustomDrawerLabel(
-            method: () async {
-              navigate(context, CustomPage.profilePage);
-            },
-            icon: Icon(Icons.account_circle),
-            title: 'Perfil',
-          ),
-          const SizedBox(height: 15),
-          Divider(color: Constants.globalColorNeutral30),
-          const SizedBox(height: 15),
           TextButton(
             onPressed: () {
               view.logOut();
               Navigator.pop(context);
-              navigate(context, CustomPage.loginPage);
+              navigate(context, CustomPage.loginPage, finishCurrent: true);
             },
             child: Row(
               children: [
@@ -192,7 +182,7 @@ class HomePage extends StatelessWidget {
             onTap: () {
               globalContext = context;
               context.read<GlobalProvider>().mGastos = view.gastosList[index];
-              _goToFormGastos(context);
+              navigate(globalContext!, CustomPage.formCountry);
             },
             borderRadius: BorderRadius.circular(15),
             child: Row(
@@ -221,13 +211,13 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          view.gastosList[index].mGastosModelDescription!,
+                          view.gastosList[index].mGastoModelDescription!,
                           style: Constants.typographyBoldM,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          "Importe: ${view.gastosList[index].mGastosModelImport} €",
+                          "Importe: ${view.gastosList[index].mGastoModelImport} €",
                           style: Constants.typographyBodyM,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -256,15 +246,5 @@ class HomePage extends StatelessWidget {
         );
       },
     );
-  }
-
-  void _goToFormGastos(BuildContext context) async {
-    final view = context.read<HomeViewModel>();
-
-    final result = await navigate(context, CustomPage.formCountry);
-
-    if (result == true) {
-      await view.getGastos();
-    }
   }
 }

@@ -5,18 +5,18 @@ import 'dart:convert';
 
 class GastoModel {
   String? mIdx;
-  double? mGastosModelImport;
-  String? mGastosModelClient;
-  String? mGastosModelDescription;
+  double? mGastoModelImport;
+  String? mGastoModelClient;
+  String? mGastoModelDescription;
   DateTime? mCreatedAt;
   DateTime? mUpdatedAt;
   String? mImageUrl;
 
   GastoModel({
     mIdx,
-    mGastosModelImport,
-    mGastosModelClient,
-    mGastosModelDescription,
+    mGastoModelImport,
+    mGastoModelClient,
+    mGastoModelDescription,
     mCreatedAt,
     mUpdatedAt,
     mImageUrl,
@@ -24,9 +24,9 @@ class GastoModel {
 
   GastoModel.fromJsonMap(Map<String, dynamic> json) {
     mIdx = json['idx'];
-    mGastosModelImport = json['import'];
-    mGastosModelClient = json['client'];
-    mGastosModelDescription = json['description'];
+    mGastoModelImport = json['import'];
+    mGastoModelClient = json['client'];
+    mGastoModelDescription = json['description'];
     mCreatedAt =
         json['created_at'] == null ? null : DateTime.parse(json['created_at']);
     mUpdatedAt =
@@ -40,9 +40,9 @@ class GastoModel {
 
   Map<String, dynamic> _toJsonMap() => {
     'idx': mIdx,
-    'import': mGastosModelImport,
-    'client': mGastosModelClient,
-    'description': mGastosModelDescription,
+    'import': mGastoModelImport,
+    'client': mGastoModelClient,
+    'description': mGastoModelDescription,
     'created_at': mCreatedAt,
     'updated_at': mUpdatedAt,
     'imageUrl': mImageUrl,
