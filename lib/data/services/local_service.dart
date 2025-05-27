@@ -1,4 +1,5 @@
 import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
+import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LocalService {
@@ -30,7 +31,7 @@ class LocalService {
       'import': import,
       'client': client,
       'description': description,
-      'created_at': fecha,
+      'created_at': DateFormat('yyyy-MM-dd').format(fecha),
       'imageUrl': imageUrl,
     });
   }
@@ -46,10 +47,10 @@ class LocalService {
     await _client
         .from('gastos')
         .update({
-          'created_at': fecha,
-          'import': import,
+          'import': import,          
           'client': client,
           'description': description,
+          'created_at': DateFormat('yyyy-MM-dd').format(fecha),
           'imageUrl': imageUrl,
         })
         .eq('idx', idx);

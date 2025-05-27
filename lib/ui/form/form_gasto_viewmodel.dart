@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,6 +34,9 @@ class FormGastoViewModel extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   final Validation validation = Validation();
 
+  bool isLoading = false;
+
+  GastoModel _editingGasto = GastoModel();
   Cliente? selectedCliente;
   DateTime createdAt = DateTime.now();
   File? image;
@@ -45,11 +50,16 @@ class FormGastoViewModel extends ChangeNotifier {
     descriptionController = TextEditingController();
   }
 
-  void initWithGlobalProvider(GastoModel mGasto) {
-    createdAt = mGasto.mCreatedAt ?? DateTime.now();
-    importController.text = mGasto.mGastoModelImport?.toString() ?? '';
-    descriptionController.text = mGasto.mGastoModelDescription ?? '';
-    final clientString = mGasto.mGastoModelClient;
+  void initWithGlobalProvider(GastoModel gasto) {
+    _editingGasto = gasto;
+    image =
+        gasto.mImageUrl != null && gasto.mImageUrl!.isNotEmpty
+            ? File(gasto.mImageUrl!)
+            : null;
+    createdAt = gasto.mCreatedAt ?? DateTime.now();
+    importController.text = gasto.mGastoModelImport?.toString() ?? '';
+    descriptionController.text = gasto.mGastoModelDescription ?? '';
+    final clientString = gasto.mGastoModelClient;
     if (clientString != null && clientString.isNotEmpty) {
       try {
         selectedCliente = Cliente.values.firstWhere(
@@ -63,6 +73,8 @@ class FormGastoViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  GastoModel get editingGasto => _editingGasto;
 
   void setCliente(Cliente? cliente) {
     selectedCliente = cliente;
@@ -104,19 +116,20 @@ class FormGastoViewModel extends ChangeNotifier {
 
       // Subir imagen al almacenamiento de Supabase
       final response = await storage
-          .from('gastos')
+          .from('images')
           .upload(
             filePath,
             imageFile,
-            fileOptions: const FileOptions(upsert: true),
+            fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
           );
 
       if (response.isEmpty) return null;
 
       // Obtener URL pública
-      final publicUrl = storage.from('gastos').getPublicUrl(fileName);
+      final publicUrl = storage.from('images').getPublicUrl(fileName);
       return publicUrl;
     } catch (e) {
+      log('Error al subir la imagen: $e', name: 'FormGastoViewModel');
       return null;
     }
   }
@@ -129,25 +142,27 @@ class FormGastoViewModel extends ChangeNotifier {
       final segments = uri.pathSegments;
       final fileName = segments.isNotEmpty ? segments.last : null;
       if (fileName != null) {
-        await storage.from('gastos').remove([fileName]);
+        await storage.from('images').remove([fileName]);
       }
     } catch (e) {
-      // Manejar error si es necesario
+      log('Error al eliminar la imagen: $e', name: 'FormGastoViewModel');
     }
   }
 
   Future<String?> saveGasto(BuildContext context) async {
-    final globalProvider = context.read<GlobalProvider>();
+    //final globalProvider = context.read<GlobalProvider>();
     if (!formKey.currentState!.validate()) {
       clear();
       return null;
     }
+    isLoading = true;
+    notifyListeners();
     try {
-      final idx = globalProvider.mGasto.mIdx;
+      final idx = _editingGasto.mIdx;
       final importValue = double.tryParse(importController.text) ?? 0.0;
       final clientValue = selectedCliente?.name.replaceAll(' ', '') ?? '';
       final descriptionValue = descriptionController.text;
-      var imageUrl = globalProvider.mGasto.mImageUrl ?? "";
+      String imageUrl = _editingGasto.mImageUrl ?? "";
 
       if (image != null) {
         // Usa un id temporal si es nuevo, o el idx si existe
@@ -182,14 +197,19 @@ class FormGastoViewModel extends ChangeNotifier {
       }
     } catch (e) {
       return 'Error al guardar el gasto: $e';
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<String?> deleteGasto(BuildContext context) async {
-    final globalProvider = context.read<GlobalProvider>();
+    //final globalProvider = context.read<GlobalProvider>();
+    isLoading = true;
+    notifyListeners();
     try {
-      final idx = globalProvider.mGasto.mIdx;
-      final imageUrl = globalProvider.mGasto.mImageUrl;
+      final idx = _editingGasto.mIdx;
+      final imageUrl = _editingGasto.mImageUrl;
       if (idx == null) {
         return 'No fue posible eliminar el gasto';
       } else {
@@ -200,6 +220,9 @@ class FormGastoViewModel extends ChangeNotifier {
       }
     } catch (e) {
       return 'Error al eliminar el gasto: $e';
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 

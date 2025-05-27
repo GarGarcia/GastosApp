@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
       onPressed: () {
         context.read<FormGastoViewModel>().clear();
         context.read<FormGastoViewModel>().initWithGlobalProvider(GastoModel());
-        context.read<GlobalProvider>().mGasto = GastoModel();
+        //context.read<GlobalProvider>().mGasto = GastoModel();
         navigate(context, CustomPage.formCountry);
       },
     );
@@ -178,7 +178,9 @@ class HomePage extends StatelessWidget {
           surfaceTintColor: Colors.white,
           child: InkWell(
             onTap: () {
-              context.read<GlobalProvider>().mGasto = view.gastosList[index];
+              context.read<FormGastoViewModel>().clear();
+              context.read<FormGastoViewModel>().initWithGlobalProvider(view.gastosList[index]);
+              // context.read<GlobalProvider>().mGasto = view.gastosList[index];
               navigate(context, CustomPage.formCountry);
             },
             borderRadius: BorderRadius.circular(15),
