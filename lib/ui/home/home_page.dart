@@ -5,7 +5,6 @@ import 'package:flutte_scanner_empty/ui/form/form_gasto_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
-import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +41,6 @@ class HomePage extends StatelessWidget {
       onPressed: () {
         context.read<FormGastoViewModel>().clear();
         context.read<FormGastoViewModel>().initWithGlobalProvider(GastoModel());
-        //context.read<GlobalProvider>().mGasto = GastoModel();
         navigate(context, CustomPage.formCountry);
       },
     );
@@ -180,7 +178,6 @@ class HomePage extends StatelessWidget {
             onTap: () {
               context.read<FormGastoViewModel>().clear();
               context.read<FormGastoViewModel>().initWithGlobalProvider(view.gastosList[index]);
-              // context.read<GlobalProvider>().mGasto = view.gastosList[index];
               navigate(context, CustomPage.formCountry);
             },
             borderRadius: BorderRadius.circular(15),

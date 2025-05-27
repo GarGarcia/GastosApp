@@ -1,13 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
-import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutte_scanner_empty/core/validation.dart';
-import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutte_scanner_empty/data/repository/gasto_repository.dart';
-import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum Cliente { mercadona, lidl, ikea, mediamarkt, amazon }
@@ -126,16 +122,15 @@ class FormGastoViewModel extends ChangeNotifier {
       if (response.isEmpty) return null;
 
       // Obtener URL pública
-      final publicUrl = storage.from('images').getPublicUrl(fileName);
+      final publicUrl = storage.from('images').getPublicUrl(filePath);
       return publicUrl;
     } catch (e) {
-      log('Error al subir la imagen: $e', name: 'FormGastoViewModel');
-      return null;
+      return 'Error al subir la imagen: $e';
     }
   }
 
-  Future<void> deleteImage(String? imageUrl) async {
-    if (imageUrl == null || imageUrl.isEmpty) return;
+  Future<String?> deleteImage(String? imageUrl) async {
+    if (imageUrl == null || imageUrl.isEmpty) return "No se proporcionó una URL de imagen válida";
     try {
       final storage = Supabase.instance.client.storage;
       final uri = Uri.parse(imageUrl);
@@ -144,13 +139,13 @@ class FormGastoViewModel extends ChangeNotifier {
       if (fileName != null) {
         await storage.from('images').remove([fileName]);
       }
+      return "";
     } catch (e) {
-      log('Error al eliminar la imagen: $e', name: 'FormGastoViewModel');
+      return 'Error al eliminar la imagen: $e';
     }
   }
 
   Future<String?> saveGasto(BuildContext context) async {
-    //final globalProvider = context.read<GlobalProvider>();
     if (!formKey.currentState!.validate()) {
       clear();
       return null;
@@ -163,13 +158,14 @@ class FormGastoViewModel extends ChangeNotifier {
       final clientValue = selectedCliente?.name.replaceAll(' ', '') ?? '';
       final descriptionValue = descriptionController.text;
       String imageUrl = _editingGasto.mImageUrl ?? "";
-
       if (image != null) {
         // Usa un id temporal si es nuevo, o el idx si existe
         final gastoId = idx ?? DateTime.now().millisecondsSinceEpoch.toString();
         final uploadedUrl = await uploadImage(image!, gastoId);
         if (uploadedUrl != null) {
           imageUrl = uploadedUrl;
+        }else{
+          return 'Error al subir la imagen';
         }
       }
 
@@ -204,7 +200,6 @@ class FormGastoViewModel extends ChangeNotifier {
   }
 
   Future<String?> deleteGasto(BuildContext context) async {
-    //final globalProvider = context.read<GlobalProvider>();
     isLoading = true;
     notifyListeners();
     try {
@@ -213,10 +208,14 @@ class FormGastoViewModel extends ChangeNotifier {
       if (idx == null) {
         return 'No fue posible eliminar el gasto';
       } else {
-        await deleteImage(imageUrl);
-        await gastoRepository.deleteGasto(idx);
-        clear();
-        return 'Gasto eliminado exitosamente';
+        String? messageError = await deleteImage(imageUrl);
+        if(messageError != null && messageError.isNotEmpty && messageError != "") {
+          return messageError;
+        }else{
+          await gastoRepository.deleteGasto(idx);
+          clear();
+          return 'Gasto eliminado exitosamente';
+        }
       }
     } catch (e) {
       return 'Error al eliminar el gasto: $e';

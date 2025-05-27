@@ -9,7 +9,6 @@ import 'package:flutte_scanner_empty/ui/form/form_gasto_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/splash_page.dart';
-import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +29,6 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        //ChangeNotifierProvider(create: (_) => GlobalProvider()),
         ChangeNotifierProvider(
           create:
               (_) => FormGastoViewModel(
@@ -80,6 +78,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'MAC GastosApp',
       navigatorObservers: [mRouteObserver],
+      themeMode: ThemeMode.light,
       theme: ThemeData(
         brightness: Brightness.light,
         useMaterial3: true,
