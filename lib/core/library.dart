@@ -1,6 +1,6 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/ui/auth/auth_gate.dart';
-import 'package:flutte_scanner_empty/ui/gastosForm/form_gasto_page.dart';
+import 'package:flutte_scanner_empty/ui/form/form_gasto_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_page.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
 import 'package:flutte_scanner_empty/ui/splash_page.dart';
@@ -17,8 +17,6 @@ enum TypeAnimation { transition }
 
 enum Preference { onboarding }
 
-BuildContext? globalContext;
-
 final RouteObserver<ModalRoute<void>> mRouteObserver =
     RouteObserver<ModalRoute<void>>();
 
@@ -28,40 +26,40 @@ navigate(
   bool finishCurrent = false,
 }) {
   if (finishCurrent) {
-    Navigator.pop(globalContext!);
+    Navigator.pop(mContext);
   }
 
   switch (mPage) {
     case CustomPage.splash:
       Navigator.pushAndRemoveUntil(
-        globalContext!,
+        mContext,
         _goPage(const SplashPage(), TypeAnimation.transition, 500),
         (Route<dynamic> route) => false,
       );
       break;
     case CustomPage.home:
       Navigator.pushAndRemoveUntil(
-        globalContext!,
+        mContext,
         _goPage(HomePage(), TypeAnimation.transition, 500),
         (Route<dynamic> route) => false,
       );
       break;
     case CustomPage.formCountry:
       Navigator.push(
-        globalContext!,
+        mContext,
         _goPage(FormGastosPage(), TypeAnimation.transition, 500),
       );
       break;
     case CustomPage.loginPage:
       Navigator.pushAndRemoveUntil(
-        globalContext!,
+        mContext,
         _goPage(const LoginPage(), TypeAnimation.transition, 500),
         (Route<dynamic> route) => false,
       );
       break;
     case CustomPage.authGate:
       Navigator.push(
-        globalContext!,
+        mContext,
         _goPage(AuthGate(), TypeAnimation.transition, 500),
       );
       break;

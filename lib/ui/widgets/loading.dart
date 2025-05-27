@@ -1,5 +1,4 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
-import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -12,7 +11,6 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    globalContext = context;
     return Container(
       alignment: Alignment.center,
       width: (mSize ?? 20),

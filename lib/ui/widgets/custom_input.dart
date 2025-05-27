@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutte_scanner_empty/core/constants.dart';
-import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
@@ -52,12 +51,10 @@ class _CustomInputState extends State<CustomInput> {
         ((widget.obscurePassword == null) ? false : widget.obscurePassword!);
 
     super.initState();
-    globalContext = context;
   }
 
   @override
   Widget build(BuildContext context) {
-    globalContext = context;
     return Container(
       width: widget.width,
       // height: (widget.height == null ? 60 : widget.height),

@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutte_scanner_empty/core/validation.dart';
 import 'package:flutte_scanner_empty/providers/global_provider.dart';
 import 'package:flutte_scanner_empty/data/repository/gasto_repository.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum Cliente { mercadona, lidl, ikea, mediamarkt, amazon }
@@ -26,7 +28,6 @@ extension ClienteExtension on Cliente {
 }
 
 class FormGastoViewModel extends ChangeNotifier {
-  late GlobalProvider globalProvider;
   final GastoRepository gastoRepository;
   final formKey = GlobalKey<FormState>();
   final Validation validation = Validation();
@@ -44,14 +45,11 @@ class FormGastoViewModel extends ChangeNotifier {
     descriptionController = TextEditingController();
   }
 
-  void initWithGlobalProvider(GlobalProvider globalProvider) {
-    this.globalProvider = globalProvider;
-    createdAt = globalProvider.mGasto.mCreatedAt ?? DateTime.now();
-    importController.text =
-        globalProvider.mGasto.mGastoModelImport?.toString() ?? '';
-    descriptionController.text =
-        globalProvider.mGasto.mGastoModelDescription ?? '';
-    final clientString = globalProvider.mGasto.mGastoModelClient;
+  void initWithGlobalProvider(GastoModel mGasto) {
+    createdAt = mGasto.mCreatedAt ?? DateTime.now();
+    importController.text = mGasto.mGastoModelImport?.toString() ?? '';
+    descriptionController.text = mGasto.mGastoModelDescription ?? '';
+    final clientString = mGasto.mGastoModelClient;
     if (clientString != null && clientString.isNotEmpty) {
       try {
         selectedCliente = Cliente.values.firstWhere(
@@ -139,6 +137,7 @@ class FormGastoViewModel extends ChangeNotifier {
   }
 
   Future<String?> saveGasto(BuildContext context) async {
+    final globalProvider = context.read<GlobalProvider>();
     if (!formKey.currentState!.validate()) {
       clear();
       return null;
@@ -187,6 +186,7 @@ class FormGastoViewModel extends ChangeNotifier {
   }
 
   Future<String?> deleteGasto(BuildContext context) async {
+    final globalProvider = context.read<GlobalProvider>();
     try {
       final idx = globalProvider.mGasto.mIdx;
       final imageUrl = globalProvider.mGasto.mImageUrl;

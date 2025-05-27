@@ -1,7 +1,7 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
-import 'package:flutte_scanner_empty/ui/gastosForm/form_gasto_viewmodel.dart';
+import 'package:flutte_scanner_empty/ui/form/form_gasto_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
 import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
@@ -17,10 +17,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Usamos context.watch para acceder a HomeViewModel
     final view = context.watch<HomeViewModel>();
-    final globalProvider = context.read<GlobalProvider>();
 
     return Scaffold(
-      floatingActionButton: _buildFloatingActionButton(context, globalProvider),
+      floatingActionButton: _buildFloatingActionButton(context),
       appBar: _buildAppBar(),
       drawer: _buildDrawer(context, view),
       body: _buildBody(context, view),
@@ -28,10 +27,7 @@ class HomePage extends StatelessWidget {
   }
 
   // Botón flotante
-  Widget _buildFloatingActionButton(
-    BuildContext context,
-    GlobalProvider globalProvider,
-  ) {
+  Widget _buildFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: Constants.colourActionPrimary,
       child: CustomButton(
@@ -45,7 +41,8 @@ class HomePage extends StatelessWidget {
       ),
       onPressed: () {
         context.read<FormGastoViewModel>().clear();
-        globalProvider.mGastos = GastoModel();
+        context.read<FormGastoViewModel>().initWithGlobalProvider(GastoModel());
+        context.read<GlobalProvider>().mGasto = GastoModel();
         navigate(context, CustomPage.formCountry);
       },
     );
@@ -181,9 +178,8 @@ class HomePage extends StatelessWidget {
           surfaceTintColor: Colors.white,
           child: InkWell(
             onTap: () {
-              globalContext = context;
-              context.read<GlobalProvider>().mGastos = view.gastosList[index];
-              navigate(globalContext!, CustomPage.formCountry);
+              context.read<GlobalProvider>().mGasto = view.gastosList[index];
+              navigate(context, CustomPage.formCountry);
             },
             borderRadius: BorderRadius.circular(15),
             child: Row(
