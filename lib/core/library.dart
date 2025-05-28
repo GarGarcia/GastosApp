@@ -20,7 +20,7 @@ enum Preference { onboarding }
 final RouteObserver<ModalRoute<void>> mRouteObserver =
     RouteObserver<ModalRoute<void>>();
 
-navigate(
+void navigate(
   BuildContext mContext,
   CustomPage mPage, {
   bool finishCurrent = false,
@@ -104,7 +104,7 @@ extension HexColor on Color {
   }
 }
 
-setOnePreference(Preference mAuxKey, String value) async {
+Future<void> setOnePreference(Preference mAuxKey, String value) async {
   String mkey = '';
   switch (mAuxKey) {
     case Preference.onboarding:
@@ -116,7 +116,7 @@ setOnePreference(Preference mAuxKey, String value) async {
   prefs.setString(mkey, value);
 }
 
-getOnePreference(Preference mAuxKey) async {
+Future<String?> getOnePreference(Preference mAuxKey) async {
   String mkey = '';
   switch (mAuxKey) {
     case Preference.onboarding:
@@ -134,7 +134,7 @@ getOnePreference(Preference mAuxKey) async {
   return result;
 }
 
-customShowToast(BuildContext context, String message) {
+void customShowToast(BuildContext context, String message) {
   int mTime = (message.length / 3).round();
   mTime = mTime < 0 ? 1 : mTime;
 
@@ -149,7 +149,7 @@ customShowToast(BuildContext context, String message) {
   );
 }
 
-progressDialogShow(BuildContext context) {
+void progressDialogShow(BuildContext context) {
   FocusScope.of(context).requestFocus(FocusNode());
   OverlayLoadingProgress.start(
     context,
@@ -192,6 +192,6 @@ progressDialogShow(BuildContext context) {
   );
 }
 
-dialogDismiss() {
+void dialogDismiss() {
   OverlayLoadingProgress.stop();
 }

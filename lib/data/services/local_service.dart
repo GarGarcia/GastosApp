@@ -26,6 +26,7 @@ class LocalService {
     String description,
     DateTime fecha,
     String imageUrl,
+    String imageId,
   ) async {
     await _client.from('gastos').insert({
       'import': import,
@@ -33,6 +34,7 @@ class LocalService {
       'description': description,
       'created_at': DateFormat('yyyy-MM-dd').format(fecha),
       'imageUrl': imageUrl,
+      'imageId': imageId,
     });
   }
 
@@ -43,6 +45,7 @@ class LocalService {
     String client,
     String description,
     String imageUrl,
+    String imageId,
   ) async {
     await _client
         .from('gastos')
@@ -52,6 +55,7 @@ class LocalService {
           'description': description,
           'created_at': DateFormat('yyyy-MM-dd').format(fecha),
           'imageUrl': imageUrl,
+          'imageId': imageId,
         })
         .eq('idx', idx);
   }

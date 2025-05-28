@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutte_scanner_empty/core/constants.dart';
+import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/core/validation.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
@@ -85,8 +88,14 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 50),
                 CustomButton(
                   color: Constants.colourActionPrimary,
-                  callback: () {
-                    loginViewModel.login(context);
+                  callback: () async {
+                    String? messageError = await loginViewModel.login();
+                    if(!mounted) return;
+                    if (messageError != null) {
+                      customShowToast(context, messageError);
+                      return;
+                    }
+                    navigate(context, CustomPage.home);
                   },
                   child: Text('Entrar', style: Constants.typographyButtonM),
                 ),

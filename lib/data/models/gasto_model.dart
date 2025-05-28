@@ -11,15 +11,17 @@ class GastoModel {
   DateTime? mCreatedAt;
   DateTime? mUpdatedAt;
   String? mImageUrl;
+  String? mImageId;
 
   GastoModel({
-    mIdx,
-    mGastoModelImport,
-    mGastoModelClient,
-    mGastoModelDescription,
-    mCreatedAt,
-    mUpdatedAt,
-    mImageUrl,
+    String? mIdx,
+    double? mGastoModelImport,
+    String? mGastoModelClient,
+    String? mGastoModelDescription,
+    dynamic mCreatedAt,
+    dynamic mUpdatedAt,
+    String? mImageUrl,
+    String? mImageId,
   });
 
   GastoModel.fromJsonMap(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class GastoModel {
     mUpdatedAt =
         json['updated_at'] == null ? null : DateTime.parse(json['updated_at']);
     mImageUrl = json['imageUrl'];
+    mImageId = json['imageId'];
   }
 
   String toJson() {
@@ -46,5 +49,6 @@ class GastoModel {
     'created_at': mCreatedAt,
     'updated_at': mUpdatedAt,
     'imageUrl': mImageUrl,
+    'imageId': mImageId,
   };
 }

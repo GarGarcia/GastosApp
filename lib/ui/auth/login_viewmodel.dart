@@ -1,4 +1,3 @@
-import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
 import 'package:flutte_scanner_empty/data/models/user_model.dart';
 import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
@@ -16,15 +15,15 @@ class LoginViewModel extends ChangeNotifier {
 
   LoginViewModel(this.authService, {required this.userRepository});
 
-  Future<void> login(context) async {
+  Future<String?> login() async {
     isLoading = true;
     notifyListeners();
 
     try{
       await authService.signInWithEmailPassword(username, password);
-      navigate(context!, CustomPage.home);
+      return "";
     } catch (e){
-      throw customShowToast(context!, 'Usuario o contraseña no validos');
+       return 'Usuario o contraseña no validos';
     } finally {
       isLoading = false;
       notifyListeners();
@@ -41,7 +40,7 @@ class LoginViewModel extends ChangeNotifier {
     // }
   }
 
-  data() {
+  Widget data() {
     if (isLoading == true) {
       return CircularProgressIndicator();
     } else if (errorMessage != '') {

@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutte_scanner_empty/core/validation.dart';
 import 'package:flutte_scanner_empty/data/repository/gasto_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 enum Cliente { mercadona, lidl, ikea, mediamarkt, amazon }
 
@@ -26,6 +27,7 @@ extension ClienteExtension on Cliente {
 }
 
 class FormGastoViewModel extends ChangeNotifier {
+  final SupabaseStorageClient storage;
   final GastoRepository gastoRepository;
   final formKey = GlobalKey<FormState>();
   final Validation validation = Validation();
@@ -37,11 +39,12 @@ class FormGastoViewModel extends ChangeNotifier {
   DateTime createdAt = DateTime.now();
   File? image;
   final picker = ImagePicker();
+  final uuid = Uuid();
 
   late TextEditingController importController;
   late TextEditingController descriptionController;
 
-  FormGastoViewModel({required this.gastoRepository}) {
+  FormGastoViewModel({required this.gastoRepository, required this.storage}) {
     importController = TextEditingController();
     descriptionController = TextEditingController();
   }
@@ -104,10 +107,9 @@ class FormGastoViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> uploadImage(File imageFile, String gastoId) async {
+  Future<String?> uploadImage(File imageFile, String imageId) async {
     try {
-      final storage = Supabase.instance.client.storage;
-      final fileName = 'gasto_$gastoId.jpg';
+      final fileName = 'gasto_$imageId.jpg';
       final filePath = 'gastos/$fileName';
 
       // Subir imagen al almacenamiento de Supabase
@@ -122,7 +124,8 @@ class FormGastoViewModel extends ChangeNotifier {
       if (response.isEmpty) return null;
 
       // Obtener URL pública
-      final publicUrl = storage.from('images').getPublicUrl(filePath);
+      final String publicUrl = storage.from('images').getPublicUrl(filePath);
+
       return publicUrl;
     } catch (e) {
       return 'Error al subir la imagen: $e';
@@ -130,9 +133,10 @@ class FormGastoViewModel extends ChangeNotifier {
   }
 
   Future<String?> deleteImage(String? imageUrl) async {
-    if (imageUrl == null || imageUrl.isEmpty) return "No se proporcionó una URL de imagen válida";
+    if (imageUrl == null || imageUrl.isEmpty) {
+      return "No se proporcionó una URL de imagen válida";
+    }
     try {
-      final storage = Supabase.instance.client.storage;
       final uri = Uri.parse(imageUrl);
       final segments = uri.pathSegments;
       final fileName = segments.isNotEmpty ? segments.last : null;
@@ -158,13 +162,16 @@ class FormGastoViewModel extends ChangeNotifier {
       final clientValue = selectedCliente?.name.replaceAll(' ', '') ?? '';
       final descriptionValue = descriptionController.text;
       String imageUrl = _editingGasto.mImageUrl ?? "";
+      final String imageId = _editingGasto.mImageId ?? uuid.v4();
+      _editingGasto.mImageId = imageId;
+
       if (image != null) {
         // Usa un id temporal si es nuevo, o el idx si existe
         final gastoId = idx ?? DateTime.now().millisecondsSinceEpoch.toString();
         final uploadedUrl = await uploadImage(image!, gastoId);
         if (uploadedUrl != null) {
           imageUrl = uploadedUrl;
-        }else{
+        } else {
           return 'Error al subir la imagen';
         }
       }
@@ -176,6 +183,7 @@ class FormGastoViewModel extends ChangeNotifier {
           clientValue,
           descriptionValue,
           imageUrl,
+          imageId,
         );
         clear();
         return 'Gasto creado exitosamente';
@@ -187,6 +195,7 @@ class FormGastoViewModel extends ChangeNotifier {
           clientValue,
           descriptionValue,
           imageUrl,
+          imageId,
         );
         clear();
         return 'Gasto actualizado exitosamente';
@@ -209,9 +218,11 @@ class FormGastoViewModel extends ChangeNotifier {
         return 'No fue posible eliminar el gasto';
       } else {
         String? messageError = await deleteImage(imageUrl);
-        if(messageError != null && messageError.isNotEmpty && messageError != "") {
+        if (messageError != null &&
+            messageError.isNotEmpty &&
+            messageError != "") {
           return messageError;
-        }else{
+        } else {
           await gastoRepository.deleteGasto(idx);
           clear();
           return 'Gasto eliminado exitosamente';

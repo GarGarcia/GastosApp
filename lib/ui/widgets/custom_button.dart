@@ -34,7 +34,7 @@ class CustomButton extends StatefulWidget {
 }
 
 class _CustomButtonState extends State<CustomButton> {
-  get marginBottom => null;
+  dynamic get marginBottom => null;
 
   @override
   Widget build(BuildContext context) {

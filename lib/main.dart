@@ -33,6 +33,7 @@ Future<void> main() async {
           create:
               (_) => FormGastoViewModel(
                 gastoRepository: GastoRepository(localService: LocalService()),
+                storage: Supabase.instance.client.storage,
               ),
         ),
         ChangeNotifierProvider(

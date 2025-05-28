@@ -17,6 +17,7 @@ class GastoRepository {
     String client,
     String description,
     String imageUrl,
+    String imageId,
   ) async {
     await localService.updateGasto(
       id,
@@ -25,6 +26,7 @@ class GastoRepository {
       client,
       description,
       imageUrl,
+      imageId,
     );
   }
 
@@ -34,11 +36,12 @@ class GastoRepository {
     String client,
     String description,
     String imageUrl,
+    String imageId,
   ) async {
-    await localService.addGastos(import, client, description, fecha, imageUrl);
+    await localService.addGastos(import, client, description, fecha, imageUrl, imageId);
   }
 
-  deleteGasto(String id) async {
+  Future<void> deleteGasto(String id) async {
     await localService.deleteGasto(id);
   }
 }

@@ -21,7 +21,7 @@ enum TypeValidation {
 
 class Validation {
   //
-  validate({
+  String? validate({
     required TypeValidation? type,
     required String? name,
     required String? value,
