@@ -4,40 +4,35 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.8.0
 
 dependencies:
+  camera: ^0.11.1
   flutter:
     sdk: flutter
-  shared_preferences: ^2.5.3
-  provider: ^6.1.4
-  supabase_flutter: ^2.8.4
-  google_fonts: ^6.2.1
+  flutter_localizations:
+    sdk: flutter
   flutter_tabler_icons: ^1.43.0
   fluttertoast: ^8.2.12
-  overlay_loading_progress: ^1.0.2
-  loading_indicator: ^3.1.1
+  google_fonts: ^6.2.1
   http: ^1.3.0
-  camera: ^0.11.1
-  path_provider: ^2.1.5
-  path: ^1.9.1
   image_picker: ^1.1.2
-  intl: ^0.19.0
-  flutter_localizations:
-      sdk: flutter
-  
-  # material_color_utilities: ^0.12.0 --- Incompatible actualmente
+  intl: ^0.20.2
+  loading_indicator: ^3.1.1
+  overlay_loading_progress: ^1.0.2
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  provider: ^6.1.4
+  shared_preferences: ^2.5.3
+  supabase_flutter: ^2.8.4
+  uuid: ^4.5.1
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.14.3
+  flutter_lints: ^5.0.0
+  flutter_native_splash: ^2.4.6
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
-  flutter_launcher_icons: ^0.14.3
-  flutter_native_splash: ^2.4.6
-#  async: ^2.13.0 --- Incompatible actualmente
-#  fake_async: ^1.3.3 --- Incompatible actualmente
-#  leak_tracker: ^10.0.9 --- Incompatible actualmente 
-#  vm_service: ^15.0.0 --- Incompatible actualmente
 
 flutter:
   uses-material-design: true
@@ -52,11 +47,10 @@ flutter:
         - asset: assets/fonts/interItalicVariable.ttf
         - asset: assets/fonts/interVariableFont.ttf
 
-
 flutter_launcher_icons:
-    android: true
-    ios: true
-    image_path: "assets/icon/logoartero.png"
+  android: true
+  ios: true
+  image_path: "assets/icon/logoartero.png"
 
 flutter_native_splash:
   color: "#FFFFFF"

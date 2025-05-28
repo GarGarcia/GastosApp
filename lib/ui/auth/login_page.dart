@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   callback: () async {
                     String? messageError = await loginViewModel.login();
                     if(!mounted) return;
-                    if (messageError != null) {
+                    if(messageError != "" && messageError != null){
                       customShowToast(context, messageError);
                       return;
                     }

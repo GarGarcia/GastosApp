@@ -51,10 +51,10 @@ class FormGastoViewModel extends ChangeNotifier {
 
   void initWithGlobalProvider(GastoModel gasto) {
     _editingGasto = gasto;
-    image =
-        gasto.mImageUrl != null && gasto.mImageUrl!.isNotEmpty
-            ? File(gasto.mImageUrl!)
-            : null;
+    // image =
+    //     gasto.mImageUrl != null && gasto.mImageUrl!.isNotEmpty
+    //         ? File(gasto.mImageUrl!)
+    //         : null;
     createdAt = gasto.mCreatedAt ?? DateTime.now();
     importController.text = gasto.mGastoModelImport?.toString() ?? '';
     descriptionController.text = gasto.mGastoModelDescription ?? '';
