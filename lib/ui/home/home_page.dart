@@ -136,18 +136,18 @@ class HomePage extends StatelessWidget {
                     ? Center(child: CircularProgressIndicator())
                     : view.gastosList.isEmpty
                     ? Container(
-                      margin: const EdgeInsets.only(
-                        top: 20,
-                        left: 20,
-                        right: 20,
-                      ),
-                      width: double.infinity,
-                      child: Text(
-                        "No hay registros para mostrar",
-                        style: Constants.typographyBoldL,
-                        textAlign: TextAlign.center,
-                      ),
-                    )
+                        margin: const EdgeInsets.only(
+                          top: 20,
+                          left: 20,
+                          right: 20,
+                        ),
+                        width: double.infinity,
+                        child: Text(
+                          "No hay registros para mostrar",
+                          style: Constants.typographyBoldL,
+                          textAlign: TextAlign.center,
+                        ),
+                      )
                     : _buildGastosList(context, view),
                 SizedBox(height: 40),
                 Text(view.getEmail() ?? "No hay email"),
@@ -177,7 +177,9 @@ class HomePage extends StatelessWidget {
           child: InkWell(
             onTap: () {
               context.read<FormGastoViewModel>().clear();
-              context.read<FormGastoViewModel>().initWithGlobalProvider(view.gastosList[index]);
+              context.read<FormGastoViewModel>().initWithGlobalProvider(
+                view.gastosList[index],
+              );
               navigate(context, CustomPage.formCountry);
             },
             borderRadius: BorderRadius.circular(15),
@@ -208,13 +210,13 @@ class HomePage extends StatelessWidget {
                       children: [
                         Text(
                           view.gastosList[index].mGastoModelDescription!,
-                          style: Constants.typographyBoldM,
+                          style: Constants.typographyBlackBoldM,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
                           "Importe: ${view.gastosList[index].mGastoModelImport} €",
-                          style: Constants.typographyBodyM,
+                          style: Constants.typographyBlackBodyM,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),

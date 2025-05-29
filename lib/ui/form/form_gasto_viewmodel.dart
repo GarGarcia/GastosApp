@@ -7,7 +7,7 @@ import 'package:flutte_scanner_empty/data/repository/gasto_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
-enum Cliente { mercadona, lidl, ikea, mediamarkt, amazon }
+enum Cliente { mercadona, lidl, ikea, mediamarkt, amazon, nvidia, nike, adidas, microsoft, ibm, iberdrola }
 
 extension ClienteExtension on Cliente {
   String get label {
@@ -22,6 +22,18 @@ extension ClienteExtension on Cliente {
         return 'MEDIA MARKT';
       case Cliente.amazon:
         return 'AMAZON';
+      case Cliente.nvidia:
+        return 'NVIDIA';
+      case Cliente.nike:
+        return 'NIKE';
+      case Cliente.adidas:
+        return 'ADIDAS';
+      case Cliente.microsoft:
+        return 'MICROSOFT';
+      case Cliente.ibm:
+        return 'IBM';
+      case Cliente.iberdrola:
+        return 'IBERDROLA';        
     }
   }
 }
