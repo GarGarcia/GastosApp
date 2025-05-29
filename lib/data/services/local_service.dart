@@ -1,21 +1,28 @@
 import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+List<GastoModel> parseGastos(List<dynamic> response) {
+  return response.map((item) => GastoModel.fromJsonMap(item)).toList();
+}
 
 class LocalService {
   final _client = Supabase.instance.client;
 
   Future<List<GastoModel>> getGastos() async {
-    List<GastoModel> gastosList = [];
+    //List<GastoModel> gastosList = [];
     final response = await _client
         .from('gastos')
         .select()
         .order('created_at', ascending: false);
 
-    for (var item in response) {
-      final gastos = GastoModel.fromJsonMap(item);
-      gastosList.add(gastos);
-    }
+    // for (var item in response) {
+    //   final gastos = GastoModel.fromJsonMap(item);
+    //   gastosList.add(gastos);
+    // }
+
+    final gastosList = await compute(parseGastos, response);
 
     return gastosList;
   }

@@ -27,7 +27,7 @@ extension ClienteExtension on Cliente {
 }
 
 class FormGastoViewModel extends ChangeNotifier {
-  final SupabaseStorageClient storage;
+  final StorageFileApi storage;
   final GastoRepository gastoRepository;
   final formKey = GlobalKey<FormState>();
   final Validation validation = Validation();
@@ -70,7 +70,6 @@ class FormGastoViewModel extends ChangeNotifier {
     } else {
       selectedCliente = null;
     }
-    notifyListeners();
   }
 
   GastoModel get editingGasto => _editingGasto;
@@ -110,13 +109,10 @@ class FormGastoViewModel extends ChangeNotifier {
   Future<String?> uploadImage(File imageFile, String imageId) async {
     try {
       final fileName = 'gasto_$imageId.jpg';
-      final filePath = 'gastos/$fileName';
 
       // Subir imagen al almacenamiento de Supabase
-      final response = await storage
-          .from('images')
-          .upload(
-            filePath,
+      final response = await storage.upload(
+            fileName,
             imageFile,
             fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
           );
@@ -124,7 +120,7 @@ class FormGastoViewModel extends ChangeNotifier {
       if (response.isEmpty) return null;
 
       // Obtener URL pública
-      final String publicUrl = storage.from('images').getPublicUrl(filePath);
+      final String publicUrl = storage.getPublicUrl(fileName);
 
       return publicUrl;
     } catch (e) {
@@ -141,7 +137,7 @@ class FormGastoViewModel extends ChangeNotifier {
       final segments = uri.pathSegments;
       final fileName = segments.isNotEmpty ? segments.last : null;
       if (fileName != null) {
-        await storage.from('images').remove([fileName]);
+        await storage.remove([fileName]);
       }
       return "";
     } catch (e) {

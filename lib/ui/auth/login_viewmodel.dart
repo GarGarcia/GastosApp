@@ -15,7 +15,7 @@ class LoginViewModel extends ChangeNotifier {
 
   LoginViewModel(this.authService, {required this.userRepository});
 
-  Future<String?> login() async {
+  Future<String> login() async {
     isLoading = true;
     notifyListeners();
 
@@ -23,7 +23,7 @@ class LoginViewModel extends ChangeNotifier {
       await authService.signInWithEmailPassword(username, password);
       return "";
     } catch (e){
-       return 'Usuario o contraseña no validos';
+       return 'Usuario o contraseña no validos: $e';
     } finally {
       isLoading = false;
       notifyListeners();
