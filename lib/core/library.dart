@@ -3,7 +3,6 @@ import 'package:flutte_scanner_empty/ui/auth/auth_gate.dart';
 import 'package:flutte_scanner_empty/ui/form/form_gasto_page.dart';
 import 'package:flutte_scanner_empty/ui/home/home_page.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_page.dart';
-import 'package:flutte_scanner_empty/ui/splash_page.dart';
 import 'package:flutte_scanner_empty/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:overlay_loading_progress/overlay_loading_progress.dart';
 
-enum CustomPage { splash, home, formCountry, loginPage, authGate }
+enum CustomPage { home, formCountry, loginPage, authGate }
 
 enum TypeAnimation { transition }
 
@@ -30,13 +29,6 @@ void navigate(
   }
 
   switch (mPage) {
-    case CustomPage.splash:
-      Navigator.pushAndRemoveUntil(
-        mContext,
-        _goPage(const SplashPage(), TypeAnimation.transition, 500),
-        (Route<dynamic> route) => false,
-      );
-      break;
     case CustomPage.home:
       Navigator.pushAndRemoveUntil(
         mContext,

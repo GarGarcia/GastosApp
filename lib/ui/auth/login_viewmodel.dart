@@ -2,6 +2,7 @@ import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
 import 'package:flutte_scanner_empty/data/models/user_model.dart';
 import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final UserRepository userRepository;
@@ -10,20 +11,34 @@ class LoginViewModel extends ChangeNotifier {
   String username = '';
   String password = '';
   UserModel? user;
-  String? errorMessage = '';
+  String? errorMessage;
   bool isLoading = false;
 
   LoginViewModel(this.authService, {required this.userRepository});
 
   Future<String> login() async {
     isLoading = true;
+    errorMessage = null;
     notifyListeners();
 
-    try{
-      await authService.signInWithEmailPassword(username, password);
+    try {
+      // Llama a tu servicio de autenticación de Supabase
+      final response = await authService.signInWithEmailPassword(
+        username,
+        password,
+      );
+      if (response.user == null) {
+        errorMessage = "Usuario o contraseña incorrectos";
+        return errorMessage!;
+      }
+      // Login correcto
       return "";
-    } catch (e){
-       return 'Usuario o contraseña no validos: $e';
+    } on AuthException catch (e) {
+      errorMessage = e.message;
+      return errorMessage!;
+    } catch (e) {
+      errorMessage = "Error inesperado";
+      return errorMessage!;
     } finally {
       isLoading = false;
       notifyListeners();
@@ -38,19 +53,5 @@ class LoginViewModel extends ChangeNotifier {
     //   isLoading = false;
     //   notifyListeners();
     // }
-  }
-
-  Widget data() {
-    if (isLoading == true) {
-      return CircularProgressIndicator();
-    } else if (errorMessage != '') {
-      return Text("$errorMessage, Usuario: $username, Password: $password");
-    } else if (user != null) {
-      return Text(
-        "Token: ${user?.accessToken}, Token type: ${user?.tokenType}, Expires In: ${user?.expiresIn}, Usuario: $username, Password: $password",
-      );
-    } else {
-      return Text("No hay resultados");
-    }
   }
 }

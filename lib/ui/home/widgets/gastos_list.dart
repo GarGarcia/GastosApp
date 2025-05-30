@@ -12,9 +12,21 @@ class GastosList extends StatelessWidget {
     return Selector<HomeViewModel, List<GastoModel>>(
       selector: (_, vm) => vm.gastosList,
       builder: (context, gastosList, _) {
+        final isLoading = context.select<HomeViewModel, bool>((vm) => vm.isLoading);
+
+        if (isLoading) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+
         if (gastosList.isEmpty) {
           return const Center(child: Text("No hay registros para mostrar"));
         }
+
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

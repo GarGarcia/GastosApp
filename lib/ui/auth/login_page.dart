@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/core/validation.dart';
@@ -17,12 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Validation _validation = Validation();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final Validation _validation = Validation();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +26,9 @@ class _LoginPageState extends State<LoginPage> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 10),
                 Form(
+                  key: _formKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     children: [
@@ -86,21 +81,46 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                CustomButton(
-                  color: Constants.colourActionPrimary,
-                  callback: () async {
-                    String? messageError = await loginViewModel.login();
-                    if(!mounted) return;
-                    if(messageError != "") {
-                      customShowToast(context, messageError);
-                      return;
-                    }
-                    navigate(context, CustomPage.home);
-                  },
-                  child: Text('Entrar', style: Constants.typographyButtonM),
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomButton(
+                    color: Constants.colourActionPrimary,
+                    callback: loginViewModel.isLoading
+                        ? null
+                        : () async {
+                            // Validación antes de login
+                            if (_formKey.currentState?.validate() ?? false) {
+                              String? messageError = await loginViewModel
+                                  .login();
+                              if (!context.mounted) return;
+                              if (messageError != "") {
+                                customShowToast(context, messageError);
+                                return;
+                              }
+                              navigate(context, CustomPage.home);
+                            }
+                          },
+                    child: loginViewModel.isLoading
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Text('Entrar', style: Constants.typographyButtonM),
+                  ),
                 ),
                 const SizedBox(height: 20),
-                Center(child: loginViewModel.data()),
+                if (loginViewModel.errorMessage != null &&
+                    loginViewModel.errorMessage!.isNotEmpty)
+                  Center(
+                    child: Text(
+                      loginViewModel.errorMessage!,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ),
               ],
             ),
           ),
