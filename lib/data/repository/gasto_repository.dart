@@ -10,6 +10,18 @@ class GastoRepository {
     return await localService.getGastos();
   }
 
+  Future<List<GastoModel>> getGastosByDate(DateTime from, DateTime to) async {
+    return await localService.getGastosByDate(from, to);
+  }
+
+  Future<List<GastoModel>> getGastosByFilter({
+    required DateTime from,
+    required DateTime to,
+    String? cliente,
+  }) async {
+    return await localService.getGastosByFilter(from, to, cliente);
+  }
+
   Future<void> updateGasto(
     String id,
     DateTime fecha,

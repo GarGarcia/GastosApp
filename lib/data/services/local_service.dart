@@ -27,6 +27,36 @@ class LocalService {
     return gastosList;
   }
 
+  Future<List<GastoModel>> getGastosByDate(DateTime from, DateTime to) async {
+    final response = await _client
+        .from('gastos')
+        .select()
+        .gte('created_at', DateFormat('yyyy-MM-dd').format(from))
+        .lte('created_at', DateFormat('yyyy-MM-dd').format(to))
+        .order('created_at', ascending: false);
+
+    final gastosList = await compute(parseGastos, response);
+    return gastosList;
+  }
+
+  Future<List<GastoModel>> getGastosByFilter(
+    DateTime from,
+    DateTime to,
+    String? cliente,
+  ) async {
+    var query = _client
+        .from('gastos')
+        .select()
+        .gte('created_at', DateFormat('yyyy-MM-dd').format(from))
+        .lte('created_at', DateFormat('yyyy-MM-dd').format(to));
+    if (cliente != null && cliente.isNotEmpty) {
+      query = query.eq('client', cliente);
+    }
+    final response = await query.order('created_at', ascending: false);
+    final gastosList = await compute(parseGastos, response);
+    return gastosList;
+  }
+
   Future<void> addGastos(
     double import,
     String client,
