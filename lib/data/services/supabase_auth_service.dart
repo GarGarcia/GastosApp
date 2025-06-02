@@ -33,6 +33,4 @@ class SupabaseAuthService {
     final user = session?.user;
     return user?.email;
   }
-
-
 }

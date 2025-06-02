@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final loginViewModel = context.watch<LoginViewModel>();
+    final view = context.watch<LoginViewModel>();
 
     return Scaffold(
       body: GestureDetector(
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                         title: "Usuario",
                         textInputType: TextInputType.text,
                         validator: (value) {
-                          loginViewModel.username = value;
+                          view.username = value;
                           return _validation.validate(
                             type: TypeValidation.email,
                             name: "Usuario",
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                         title: "Contraseña",
                         textInputType: TextInputType.text,
                         validator: (value) {
-                          loginViewModel.password = value;
+                          view.password = value;
                           return _validation.validate(
                             type: TypeValidation.pass,
                             name: "Contraseña",
@@ -85,12 +85,11 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   child: CustomButton(
                     color: Constants.colourActionPrimary,
-                    callback: loginViewModel.isLoading
+                    callback: view.isLoading
                         ? null
                         : () async {
-                            // Validación antes de login
                             if (_formKey.currentState?.validate() ?? false) {
-                              String? messageError = await loginViewModel
+                              String? messageError = await view
                                   .login();
                               if (!context.mounted) return;
                               if (messageError != "") {
@@ -100,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                               navigate(context, CustomPage.home);
                             }
                           },
-                    child: loginViewModel.isLoading
+                    child: view.isLoading
                         ? const SizedBox(
                             width: 24,
                             height: 24,
@@ -113,11 +112,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                if (loginViewModel.errorMessage != null &&
-                    loginViewModel.errorMessage!.isNotEmpty)
+                if (view.errorMessage != null &&
+                    view.errorMessage!.isNotEmpty)
                   Center(
                     child: Text(
-                      loginViewModel.errorMessage!,
+                      view.errorMessage!,
                       style: const TextStyle(color: Colors.red),
                     ),
                   ),

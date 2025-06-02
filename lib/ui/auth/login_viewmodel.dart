@@ -22,7 +22,6 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Llama a tu servicio de autenticación de Supabase
       final response = await authService.signInWithEmailPassword(
         username,
         password,
@@ -31,7 +30,6 @@ class LoginViewModel extends ChangeNotifier {
         errorMessage = "Usuario o contraseña incorrectos";
         return errorMessage!;
       }
-      // Login correcto
       return "";
     } on AuthException catch (e) {
       errorMessage = e.message;

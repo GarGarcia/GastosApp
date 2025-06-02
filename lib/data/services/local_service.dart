@@ -16,12 +16,7 @@ class LocalService {
         .from('gastos')
         .select()
         .order('created_at', ascending: false);
-
-    // for (var item in response) {
-    //   final gastos = GastoModel.fromJsonMap(item);
-    //   gastosList.add(gastos);
-    // }
-
+        
     final gastosList = await compute(parseGastos, response);
 
     return gastosList;
