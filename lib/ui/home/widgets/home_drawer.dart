@@ -9,20 +9,12 @@ class HomeDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<HomeViewModel, bool>(
-        selector: (_, vm) => vm.isLoading,
-        builder: (_, isLoading, _) =>
-            _buildDrawer(context, context.read<HomeViewModel>()),
-      );
-  }
-
-  Widget _buildDrawer(BuildContext context, HomeViewModel view) {
     return Drawer(
       child: ListView(
         padding: const EdgeInsets.only(top: 50, left: 15, right: 10),
         children: [
           Image.asset(
-            'assets/icon/logoartero3.png',
+            'assets/icon/logoartero3.webp',
             height: 30,
             width: 30,
             alignment: Alignment.centerLeft,
@@ -32,7 +24,7 @@ class HomeDrawer extends StatelessWidget {
           const SizedBox(height: 15),
           TextButton(
             onPressed: () {
-              view.logOut();
+              context.read<HomeViewModel>().logOut();
               Navigator.pop(context);
               navigate(context, CustomPage.loginPage, finishCurrent: true);
             },
@@ -50,7 +42,7 @@ class HomeDrawer extends StatelessWidget {
                     color: Constants.colourSemanticDanger1,
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text("Cerrar Sesión", style: Constants.typographyDangerBoldM),
               ],
             ),

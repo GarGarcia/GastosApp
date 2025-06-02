@@ -26,7 +26,7 @@ class AddGastoButton extends StatelessWidget {
       onPressed: () {
         context.read<FormGastoViewModel>().clear();
         context.read<FormGastoViewModel>().initWithGlobalProvider(GastoModel());
-        navigate(context, CustomPage.formCountry);
+        navigate(context, CustomPage.formGasto);
       },
     );
   }

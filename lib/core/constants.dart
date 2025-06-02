@@ -1,6 +1,5 @@
 import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
 
 class Constants {
   //Radius

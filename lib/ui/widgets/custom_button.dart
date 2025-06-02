@@ -39,7 +39,6 @@ class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: (widget.height ?? 48),
       width: widget.width,
       margin: EdgeInsets.only(
         top: widget.marginTop ?? 0,

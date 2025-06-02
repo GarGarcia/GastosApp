@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
       showMenu: true,
       mListActions: [
         Image.asset(
-          "assets/icon/logoartero(pequenyo).png",
+          "assets/icon/logoartero(pequenyo).webp",
           height: 40,
           width: 40,
         ),
@@ -38,6 +38,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-
-

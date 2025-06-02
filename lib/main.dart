@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         fontFamily: 'Inter',
       ),
-      home: AuthGate(),
+      home: const AuthGate(),
     );
   }
 }
