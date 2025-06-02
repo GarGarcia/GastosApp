@@ -5,10 +5,10 @@ import 'package:flutte_scanner_empty/data/repository/user_repository.dart';
 import 'package:flutte_scanner_empty/data/services/api_service.dart';
 import 'package:flutte_scanner_empty/data/services/supabase_auth_service.dart';
 import 'package:flutte_scanner_empty/data/services/local_service.dart';
+import 'package:flutte_scanner_empty/ui/auth/auth_gate.dart';
 import 'package:flutte_scanner_empty/ui/form/form_gasto_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/auth/login_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
-import 'package:flutte_scanner_empty/ui/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         fontFamily: 'Inter',
       ),
-      home: const SplashPage(),
+      home: const AuthGate(),
     );
   }
 }
