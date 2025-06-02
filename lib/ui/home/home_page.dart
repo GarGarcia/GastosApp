@@ -1,52 +1,23 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
-import 'package:flutte_scanner_empty/core/library.dart';
-import 'package:flutte_scanner_empty/data/models/gasto_model.dart';
-import 'package:flutte_scanner_empty/ui/form/form_gasto_viewmodel.dart';
-import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
-import 'package:flutte_scanner_empty/ui/widgets/custom_button.dart';
+import 'package:flutte_scanner_empty/ui/home/widgets/add_gasto_button.dart';
+import 'package:flutte_scanner_empty/ui/home/widgets/home_body.dart';
+import 'package:flutte_scanner_empty/ui/home/widgets/home_drawer.dart';
 import 'package:flutte_scanner_empty/ui/widgets/navbar_back.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Usamos context.watch para acceder a HomeViewModel
-    final view = context.watch<HomeViewModel>();
-
     return Scaffold(
-      floatingActionButton: _buildFloatingActionButton(context),
+      floatingActionButton: AddGastoButton(),
       appBar: _buildAppBar(),
-      drawer: _buildDrawer(context, view),
-      body: _buildBody(context, view),
+      drawer: HomeDrawer(),
+      body: HomeBody(),
     );
   }
 
-  // Botón flotante
-  Widget _buildFloatingActionButton(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: Constants.colourActionPrimary,
-      child: CustomButton(
-        color: Colors.transparent,
-        width: 50,
-        child: Icon(
-          TablerIcons.plus,
-          color: Constants.colourActionSecondary,
-          size: 25,
-        ),
-      ),
-      onPressed: () {
-        context.read<FormGastoViewModel>().clear();
-        context.read<FormGastoViewModel>().initWithGlobalProvider(GastoModel());
-        navigate(context, CustomPage.formCountry);
-      },
-    );
-  }
-
-  // AppBar personalizada
   NavbarBack _buildAppBar() {
     return NavbarBack(
       backgroundColor: Constants.colourBackgroundColor,
@@ -57,192 +28,12 @@ class HomePage extends StatelessWidget {
       showMenu: true,
       mListActions: [
         Image.asset(
-          "assets/icon/logoartero(pequenyo).png",
+          "assets/icon/logoartero(pequenyo).webp",
           height: 40,
           width: 40,
         ),
         const SizedBox(width: 10),
       ],
-    );
-  }
-
-  // Drawer del menú lateral
-  Widget _buildDrawer(BuildContext context, HomeViewModel view) {
-    return Drawer(
-      child: ListView(
-        padding: const EdgeInsets.only(top: 50, left: 15, right: 10),
-        children: [
-          Image.asset(
-            'assets/icon/logoartero3.png',
-            height: 30,
-            width: 30,
-            alignment: Alignment.centerLeft,
-          ),
-          const SizedBox(height: 15),
-          Divider(color: Constants.globalColorNeutral30),
-          const SizedBox(height: 15),
-          TextButton(
-            onPressed: () {
-              view.logOut();
-              Navigator.pop(context);
-              navigate(context, CustomPage.loginPage, finishCurrent: true);
-            },
-            child: Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Constants.globalColorNeutral20,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  height: 30,
-                  width: 30,
-                  child: Icon(
-                    Icons.logout,
-                    color: Constants.colourSemanticDanger1,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Text("Cerrar Sesión", style: Constants.typographyDangerBoldM),
-              ],
-            ),
-          ),
-          const SizedBox(height: 15),
-          Divider(color: Constants.globalColorNeutral30),
-        ],
-      ),
-    );
-  }
-
-  // Cuerpo principal con la lista de Gastoss
-  Widget _buildBody(BuildContext context, HomeViewModel view) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: RefreshIndicator(
-        backgroundColor: Constants.colourBackgroundColor,
-        color: Constants.colourTextColor,
-        strokeWidth: 3,
-        displacement: 80,
-        onRefresh: () async {
-          await view.getGastos();
-        },
-        child: SizedBox(
-          height: double.infinity,
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              children: [
-                const SizedBox(width: 20, height: 20),
-                view.isLoading
-                    ? Center(child: CircularProgressIndicator())
-                    : view.gastosList.isEmpty
-                    ? Container(
-                        margin: const EdgeInsets.only(
-                          top: 20,
-                          left: 20,
-                          right: 20,
-                        ),
-                        width: double.infinity,
-                        child: Text(
-                          "No hay registros para mostrar",
-                          style: Constants.typographyBoldL,
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    : _buildGastosList(context, view),
-                SizedBox(height: 40),
-                Text(view.getEmail() ?? "No hay email"),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Lista de Gastoss
-  Widget _buildGastosList(BuildContext context, HomeViewModel view) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: view.gastosList.length,
-      itemBuilder: (context, index) {
-        return Card(
-          margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          color: Colors.white,
-          surfaceTintColor: Colors.white,
-          child: InkWell(
-            onTap: () {
-              context.read<FormGastoViewModel>().clear();
-              context.read<FormGastoViewModel>().initWithGlobalProvider(
-                view.gastosList[index],
-              );
-              navigate(context, CustomPage.formCountry);
-            },
-            borderRadius: BorderRadius.circular(15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 70,
-                  height: 70,
-                  child: Container(
-                    width: 40,
-                    height: double.infinity,
-                    alignment: Alignment.center,
-                    child: Icon(
-                      TablerIcons.map_pin,
-                      color: Constants.colourIconColor,
-                      size: Constants.globalIconSizeL,
-                    ),
-                  ),
-                ),
-                Flexible(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 70,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          view.gastosList[index].mGastoModelDescription!,
-                          style: Constants.typographyBlackBoldM,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          "Importe: ${view.gastosList[index].mGastoModelImport} €",
-                          style: Constants.typographyBlackBodyM,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 50,
-                  height: 70,
-                  child: Container(
-                    width: 40,
-                    height: double.infinity,
-                    alignment: Alignment.center,
-                    child: Icon(
-                      TablerIcons.chevron_right,
-                      color: Constants.colourIconColor,
-                      size: Constants.globalIconSizeM,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

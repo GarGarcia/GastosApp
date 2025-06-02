@@ -20,7 +20,7 @@ class HomeViewModel extends ChangeNotifier {
       gastosList = await gastoRepository.getGastos();
       notifyListeners();
     } catch (e) {
-      debugPrint("Error al obtener los Gastoss: $e");
+      debugPrint("Error al obtener los Gastos: $e");
     } finally {
       isLoading = false;
       notifyListeners();

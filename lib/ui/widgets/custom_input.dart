@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutte_scanner_empty/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
@@ -57,7 +55,6 @@ class _CustomInputState extends State<CustomInput> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.width,
-      // height: (widget.height == null ? 60 : widget.height),
       alignment: Alignment.topCenter,
       margin: const EdgeInsets.only(bottom: 10),
       child: TextFormField(
@@ -69,7 +66,6 @@ class _CustomInputState extends State<CustomInput> {
         },
         onFieldSubmitted: (String text) {
           int mCount = widget.controller!.text.split('\n').length;
-          log('==> son $mCount Enters');
           if (widget.maxLines != null) {
             if (mCount <= widget.maxLines!) {
               widget.controller!.value = TextEditingValue(

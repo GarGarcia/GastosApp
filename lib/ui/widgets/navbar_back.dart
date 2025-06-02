@@ -37,20 +37,18 @@ class NavbarBack extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       systemOverlayStyle: SystemUiOverlayStyle(
-        // Status bar color
         statusBarColor:
             (tinte == Tinte.light
                 ? Constants.globalColorSemanticsBlue50
                 : Constants.globalColorSemanticsBlue80),
-        // Status bar brightness (optional)
         statusBarIconBrightness:
             (tinte == Tinte.light
                 ? Brightness.light
-                : Brightness.dark), // For Android (dark icons)
+                : Brightness.dark),
         statusBarBrightness:
             (tinte == Tinte.light
                 ? Brightness.light
-                : Brightness.dark), // For iOS (dark icons)
+                : Brightness.dark),
       ),
       surfaceTintColor: (backgroundColor ?? Constants.colourBackgroundColor),
       backgroundColor: (backgroundColor ?? Constants.colourBackgroundColor),

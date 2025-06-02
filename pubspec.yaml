@@ -23,24 +23,22 @@ dependencies:
   path: ^1.9.1
   path_provider: ^2.1.5
   provider: ^6.1.5
-  shared_preferences: ^2.5.3
   supabase_flutter: ^2.9.0
   uuid: ^4.5.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.3
   flutter_lints: ^6.0.0
-  flutter_native_splash: ^2.4.6
   flutter_test:
     sdk: flutter
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/icon/logoartero.png
-    - assets/icon/logoartero(pequenyo).png
-    - assets/icon/logoartero2.png
-    - assets/icon/logoartero3.png
+    - assets/icon/logoartero.webp
+    - assets/icon/logoartero(pequenyo).webp
+    - assets/icon/logoartero2.webp
+    - assets/icon/logoartero3.webp
   fonts:
     - family: Inter
       fonts:
@@ -50,11 +48,4 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icon/logoartero.png"
-
-flutter_native_splash:
-  color: "#FFFFFF"
-  image: assets/icon/logoartero3.png
-  android: true
-  ios: true
-  web: false
+  image_path: "assets/icon/logoartero.webp"
