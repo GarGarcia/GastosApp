@@ -9,24 +9,34 @@ class HomeViewModel extends ChangeNotifier {
 
   List<GastoModel> gastosList = [];
   bool isLoading = false;
+  String errorMessage = "";
 
   HomeViewModel(this.authService, {required this.gastoRepository});
 
   Future<void> getGastos() async {
     isLoading = true;
     notifyListeners();
+
     try {
       gastosList = await gastoRepository.getGastos();
+      errorMessage = "";
     } catch (e) {
-      debugPrint("Error al obtener los Gastos: $e");
+      errorMessage = "Error al obtener los gastos: $e";
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
 
-  void logOut() async {
-    await authService.signOut();
+  Future<void> logOut() async {
+    try {
+      await authService.signOut();
+      errorMessage = "";
+    } catch (e) {
+      errorMessage = "Error al cerrar sesión: $e";
+    } finally {
+      notifyListeners(); 
+    }
   }
 
   String? getEmail() {

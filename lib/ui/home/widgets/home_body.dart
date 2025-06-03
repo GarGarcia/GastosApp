@@ -1,4 +1,5 @@
 import 'package:flutte_scanner_empty/core/constants.dart';
+import 'package:flutte_scanner_empty/core/library.dart';
 import 'package:flutte_scanner_empty/ui/home/home_viewmodel.dart';
 import 'package:flutte_scanner_empty/ui/home/widgets/home_gasto_list.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,11 @@ class HomeBody extends StatelessWidget {
         displacement: 80,
         onRefresh: () async {
           await view.getGastos();
+          if(view.errorMessage != "" && view.errorMessage.isNotEmpty && context.mounted) {
+            customShowToast(context, view.errorMessage);
+          }else if(context.mounted) {
+            customShowToast(context, "Gastos actualizados correctamente");
+          }
         },
         child: SizedBox(
           height: double.infinity,

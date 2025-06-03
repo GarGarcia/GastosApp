@@ -41,7 +41,7 @@ extension ClienteExtension on Cliente {
 class FormGastoViewModel extends ChangeNotifier {
   final StorageFileApi storage;
   final GastoRepository gastoRepository;
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final Validation validation = Validation();
 
   bool isLoading = false;
@@ -50,8 +50,8 @@ class FormGastoViewModel extends ChangeNotifier {
   Cliente? selectedCliente;
   DateTime createdAt = DateTime.now();
   File? image;
-  final picker = ImagePicker();
-  final uuid = Uuid();
+  final ImagePicker picker = ImagePicker();
+  final Uuid uuid = Uuid();
 
   late TextEditingController importController;
   late TextEditingController descriptionController;
@@ -70,7 +70,7 @@ class FormGastoViewModel extends ChangeNotifier {
     createdAt = gasto.mCreatedAt ?? DateTime.now();
     importController.text = gasto.mGastoModelImport?.toString() ?? '';
     descriptionController.text = gasto.mGastoModelDescription ?? '';
-    final clientString = gasto.mGastoModelClient;
+    final String? clientString = gasto.mGastoModelClient;
     if (clientString != null && clientString.isNotEmpty) {
       try {
         selectedCliente = Cliente.values.firstWhere(
@@ -120,10 +120,10 @@ class FormGastoViewModel extends ChangeNotifier {
 
   Future<String?> uploadImage(File imageFile, String imageId) async {
     try {
-      final fileName = 'gasto_$imageId.jpg';
+      final String fileName = 'gasto_$imageId.jpg';
 
       // Subir imagen al almacenamiento de Supabase
-      final response = await storage.upload(
+      final String response = await storage.upload(
             fileName,
             imageFile,
             fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
@@ -145,9 +145,9 @@ class FormGastoViewModel extends ChangeNotifier {
       return "No se proporcionó una URL de imagen válida";
     }
     try {
-      final uri = Uri.parse(imageUrl);
-      final segments = uri.pathSegments;
-      final fileName = segments.isNotEmpty ? segments.last : null;
+      final Uri uri = Uri.parse(imageUrl);
+      final List<String> segments = uri.pathSegments;
+      final String? fileName = segments.isNotEmpty ? segments.last : null;
       if (fileName != null) {
         await storage.remove([fileName]);
       }
@@ -165,18 +165,18 @@ class FormGastoViewModel extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-      final idx = _editingGasto.mIdx;
-      final importValue = double.tryParse(importController.text) ?? 0.0;
-      final clientValue = selectedCliente?.name.replaceAll(' ', '') ?? '';
-      final descriptionValue = descriptionController.text;
+      final String? idx = _editingGasto.mIdx;
+      final double importValue = double.tryParse(importController.text) ?? 0.0;
+      final String clientValue = selectedCliente?.name.replaceAll(' ', '') ?? '';
+      final String descriptionValue = descriptionController.text;
       String imageUrl = _editingGasto.mImageUrl ?? "";
       final String imageId = _editingGasto.mImageId ?? uuid.v4();
       _editingGasto.mImageId = imageId;
 
       if (image != null) {
         // Usa un id temporal si es nuevo, o el idx si existe
-        final gastoId = idx ?? DateTime.now().millisecondsSinceEpoch.toString();
-        final uploadedUrl = await uploadImage(image!, gastoId);
+        final String gastoId = idx ?? DateTime.now().millisecondsSinceEpoch.toString();
+        final String? uploadedUrl = await uploadImage(image!, gastoId);
         if (uploadedUrl != null) {
           imageUrl = uploadedUrl;
         } else {
@@ -220,8 +220,8 @@ class FormGastoViewModel extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-      final idx = _editingGasto.mIdx;
-      final imageUrl = _editingGasto.mImageUrl;
+      final String? idx = _editingGasto.mIdx;
+      final String? imageUrl = _editingGasto.mImageUrl;
       if (idx == null) {
         return 'No fue posible eliminar el gasto';
       } else {

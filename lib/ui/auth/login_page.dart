@@ -89,14 +89,13 @@ class _LoginPageState extends State<LoginPage> {
                         ? null
                         : () async {
                             if (_formKey.currentState?.validate() ?? false) {
-                              String? messageError = await view
-                                  .login();
-                              if (!context.mounted) return;
-                              if (messageError != "") {
-                                customShowToast(context, messageError);
-                                return;
+                              await view.login();
+                              if (view.errorMessage != "" && context.mounted) {
+                                customShowToast(context, view.errorMessage);
+                              }else if (view.user != null && context.mounted) {
+                                customShowToast(context, "Bienvenido ${view.username}");
+                                navigate(context, CustomPage.home);
                               }
-                              navigate(context, CustomPage.home);
                             }
                           },
                     child: view.isLoading
@@ -111,15 +110,6 @@ class _LoginPageState extends State<LoginPage> {
                         : Text('Entrar', style: Constants.typographyButtonM),
                   ),
                 ),
-                const SizedBox(height: 20),
-                if (view.errorMessage != null &&
-                    view.errorMessage!.isNotEmpty)
-                  Center(
-                    child: Text(
-                      view.errorMessage!,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                  ),
               ],
             ),
           ),

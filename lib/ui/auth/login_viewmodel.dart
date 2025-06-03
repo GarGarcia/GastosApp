@@ -11,32 +11,29 @@ class LoginViewModel extends ChangeNotifier {
   String username = '';
   String password = '';
   UserModel? user;
-  String? errorMessage;
+  String errorMessage = "";
   bool isLoading = false;
 
   LoginViewModel(this.authService, {required this.userRepository});
 
-  Future<String> login() async {
+  Future<void> login() async {
     isLoading = true;
-    errorMessage = null;
     notifyListeners();
 
     try {
-      final response = await authService.signInWithEmailPassword(
+      final AuthResponse response = await authService.signInWithEmailPassword(
         username,
         password,
       );
       if (response.user == null) {
         errorMessage = "Usuario o contraseña incorrectos";
-        return errorMessage!;
+      }else{
+        errorMessage = '';
       }
-      return "";
     } on AuthException catch (e) {
-      errorMessage = e.message;
-      return errorMessage!;
+      errorMessage = "Error: $e";
     } catch (e) {
-      errorMessage = "Error inesperado";
-      return errorMessage!;
+      errorMessage = "Error: $e";
     } finally {
       isLoading = false;
       notifyListeners();

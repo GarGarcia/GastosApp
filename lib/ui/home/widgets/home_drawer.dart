@@ -23,10 +23,19 @@ class HomeDrawer extends StatelessWidget {
           Divider(color: Constants.globalColorNeutral30),
           const SizedBox(height: 15),
           TextButton(
-            onPressed: () {
-              context.read<HomeViewModel>().logOut();
-              Navigator.pop(context);
-              navigate(context, CustomPage.loginPage, finishCurrent: true);
+            onPressed: () async {
+              HomeViewModel view = context.read<HomeViewModel>();
+              await view.logOut();
+              if(context.mounted) {
+                if (view.errorMessage != "") {
+                  Navigator.pop(context);
+                  customShowToast(context, view.errorMessage);
+                } else {
+                  Navigator.pop(context);
+                  navigate(context, CustomPage.loginPage, finishCurrent: true);
+                }
+              }
+              
             },
             child: Row(
               children: [
