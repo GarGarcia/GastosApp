@@ -63,14 +63,10 @@ class FormGastoViewModel extends ChangeNotifier {
 
   void initWithGlobalProvider(GastoModel gasto) {
     _editingGasto = gasto;
-    // image =
-    //     gasto.mImageUrl != null && gasto.mImageUrl!.isNotEmpty
-    //         ? File(gasto.mImageUrl!)
-    //         : null;
-    createdAt = gasto.mCreatedAt ?? DateTime.now();
-    importController.text = gasto.mGastoModelImport?.toString() ?? '';
-    descriptionController.text = gasto.mGastoModelDescription ?? '';
-    final String? clientString = gasto.mGastoModelClient;
+    createdAt = gasto.gastoModelCreatedAt ?? DateTime.now();
+    importController.text = gasto.gastoModelImport?.toString() ?? '';
+    descriptionController.text = gasto.gastoModelDescription ?? '';
+    final String? clientString = gasto.gastoModelClient;
     if (clientString != null && clientString.isNotEmpty) {
       try {
         selectedCliente = Cliente.values.firstWhere(
@@ -165,13 +161,13 @@ class FormGastoViewModel extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-      final String? idx = _editingGasto.mIdx;
-      final double importValue = double.tryParse(importController.text) ?? 0.0;
+      final String? idx = _editingGasto.idx;
+      final double importValue = double.parse(importController.text);
       final String clientValue = selectedCliente?.name.replaceAll(' ', '') ?? '';
       final String descriptionValue = descriptionController.text;
-      String imageUrl = _editingGasto.mImageUrl ?? "";
-      final String imageId = _editingGasto.mImageId ?? uuid.v4();
-      _editingGasto.mImageId = imageId;
+      String imageUrl = _editingGasto.gastoModelImageUrl ?? "";
+      final String imageId = _editingGasto.gastoModelImageId ?? uuid.v4();
+      _editingGasto.gastoModelImageId = imageId;
 
       if (image != null) {
         // Usa un id temporal si es nuevo, o el idx si existe
@@ -220,8 +216,8 @@ class FormGastoViewModel extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-      final String? idx = _editingGasto.mIdx;
-      final String? imageUrl = _editingGasto.mImageUrl;
+      final String? idx = _editingGasto.idx;
+      final String? imageUrl = _editingGasto.gastoModelImageUrl;
       if (idx == null) {
         return 'No fue posible eliminar el gasto';
       } else {

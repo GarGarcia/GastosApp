@@ -1,37 +1,44 @@
 import 'dart:convert';
 
 class GastoModel {
-  String? mIdx;
-  double? mGastoModelImport;
-  String? mGastoModelClient;
-  String? mGastoModelDescription;
-  DateTime? mCreatedAt;
-  DateTime? mUpdatedAt;
-  String? mImageUrl;
-  String? mImageId;
+  String? idx;
+  double? gastoModelImport;
+  String? gastoModelClient;
+  String? gastoModelDescription;
+  DateTime? gastoModelCreatedAt;
+  DateTime? gastoModelUpdatedAt;
+  String? gastoModelImageUrl;
+  String? gastoModelImageId;
 
   GastoModel({
-    String? mIdx,
-    double? mGastoModelImport,
-    String? mGastoModelClient,
-    String? mGastoModelDescription,
-    dynamic mCreatedAt,
-    dynamic mUpdatedAt,
-    String? mImageUrl,
-    String? mImageId,
+    String? idx,
+    double? gastoModelImport,
+    String? gastoModelClient,
+    String? gastoModelDescription,
+    dynamic gastoModelCreatedAt,
+    dynamic gastoModelUpdatedAt,
+    String? gastoModelImageUrl,
+    String? gastoModelImageId,
   });
 
   GastoModel.fromJsonMap(Map<String, dynamic> json) {
-    mIdx = json['idx'];
-    mGastoModelImport = json['import'];
-    mGastoModelClient = json['client'];
-    mGastoModelDescription = json['description'];
-    mCreatedAt =
+    idx = json['idx'];
+    final importValue = json['import'];
+    if (importValue is int) {
+      gastoModelImport = importValue.toDouble();
+    } else if (importValue is double) {
+      gastoModelImport = importValue;
+    } else {
+      gastoModelImport = null;
+    }
+    gastoModelClient = json['client'];
+    gastoModelDescription = json['description'];
+    gastoModelCreatedAt =
         json['created_at'] == null ? null : DateTime.parse(json['created_at']);
-    mUpdatedAt =
+    gastoModelUpdatedAt =
         json['updated_at'] == null ? null : DateTime.parse(json['updated_at']);
-    mImageUrl = json['imageUrl'];
-    mImageId = json['imageId'];
+    gastoModelImageUrl = json['imageUrl'];
+    gastoModelImageId = json['imageId'];
   }
 
   String toJson() {
@@ -39,13 +46,13 @@ class GastoModel {
   }
 
   Map<String, dynamic> _toJsonMap() => {
-    'idx': mIdx,
-    'import': mGastoModelImport,
-    'client': mGastoModelClient,
-    'description': mGastoModelDescription,
-    'created_at': mCreatedAt,
-    'updated_at': mUpdatedAt,
-    'imageUrl': mImageUrl,
-    'imageId': mImageId,
+    'idx': idx,
+    'import': gastoModelImport,
+    'client': gastoModelClient,
+    'description': gastoModelDescription,
+    'created_at': gastoModelCreatedAt,
+    'updated_at': gastoModelUpdatedAt,
+    'imageUrl': gastoModelImageUrl,
+    'imageId': gastoModelImageId,
   };
 }

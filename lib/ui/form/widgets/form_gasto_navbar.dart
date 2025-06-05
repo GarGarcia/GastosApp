@@ -23,11 +23,11 @@ class FormGastoNavbar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Constants.colourBackgroundColor,
       backgroundButtonColor: Constants.colourActionPrimary,
       tinte: Tinte.light,
-      title: vm.editingGasto.mIdx == null ? "Nuevo Gasto" : "Editar Gasto",
+      title: vm.editingGasto.idx == null ? "Nuevo Gasto" : "Editar Gasto",
       showBack: true,
       showMenu: false,
       mListActions: [
-        vm.editingGasto.mIdx == null
+        vm.editingGasto.idx == null
             ? const SizedBox()
             : CustomButton(
                 color: Colors.transparent,

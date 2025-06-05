@@ -24,10 +24,10 @@ class FormGastoFields extends StatelessWidget {
               CustomInput(
                 title: "Importe",
                 controller: vm.importController,
-                textInputType: TextInputType.numberWithOptions(decimal: true),
+                textInputType: TextInputType.number,
                 validator: (value) {
                   return vm.validation.validate(
-                    type: TypeValidation.dec,
+                    type: TypeValidation.numbers,
                     name: "Importe",
                     value: vm.importController.text,
                     isRequired: true,

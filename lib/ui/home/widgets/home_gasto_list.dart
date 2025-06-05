@@ -61,13 +61,13 @@ class HomeGastoList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          view.gastosList[index].mGastoModelDescription!,
+                          view.gastosList[index].gastoModelDescription!,
                           style: Constants.typographyBlackBoldM,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          "Importe: ${view.gastosList[index].mGastoModelImport} €",
+                          "Importe: ${view.gastosList[index].gastoModelImport} €",
                           style: Constants.typographyBlackBodyM,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

@@ -13,8 +13,8 @@ class FormGastoImage extends StatelessWidget {
         return Center(
           heightFactor: 1,
           child:
-              (vm.editingGasto.mImageUrl == null ||
-                      vm.editingGasto.mImageUrl!.isEmpty) &&
+              (vm.editingGasto.gastoModelImageUrl == null ||
+                      vm.editingGasto.gastoModelImageUrl!.isEmpty) &&
                   vm.image == null
               ? Text(
                   "Gasto no escaneado",
@@ -26,7 +26,7 @@ class FormGastoImage extends StatelessWidget {
                   child: vm.image != null
                       ? Image.file(vm.image!)
                       : Image.network(
-                          vm.editingGasto.mImageUrl!,
+                          vm.editingGasto.gastoModelImageUrl!,
                           loadingBuilder: (context, child, loadingProgress) {
                             if (loadingProgress == null) {
                               return child;
